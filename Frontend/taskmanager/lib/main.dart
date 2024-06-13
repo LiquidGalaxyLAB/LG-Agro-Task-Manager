@@ -9,21 +9,27 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io' as io;
 
-
 import 'view/main_view.dart';
 
 Future<void> main() async {
-
-  DataBaseService.initialize(dbService)
-
+  // Ensuring that plugin services are initialized.
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize the sqflite ffi
+  sqfliteFfiInit();
+
+  // Setting the database factory to FFI
+  databaseFactory = databaseFactoryFfi;
+
+  // Initialize the database service
+  await DataBaseService.getInstance();
 
   runApp(MaterialApp(
     home: const MainView(),
     routes: {
       '/add_task': (context) => const AddTaskView(),
       '/crop_page': (context) => const CropsPage(),
-      '/robot_page' : (context) => const RobotsView(),
+      '/robot_page': (context) => const RobotsView(),
     },
   ));
 }

@@ -7,12 +7,31 @@ import 'package:path/path.dart' as p;
 import '../model/crop_db.dart';
 
 class DataBaseService {
+  static DataBaseService? _singleton;
   final Database _database;
-  static late DataBaseService singleton;
 
-  DataBaseService(this._database);
+  DataBaseService._internal(this._database);
 
-  Database get database {
+  static Future<DataBaseService> getInstance() async {
+    if (_singleton == null) {
+      final io
+          .Directory appDocumentsDir = await getApplicationDocumentsDirectory();
+      String dbPath = p.join(appDocumentsDir.path, "databases", "crop.db");
+      var db = await databaseFactoryFfi.openDatabase(
+        dbPath,
+        options: OpenDatabaseOptions(
+          version: 1,
+          onCreate: (db, version) async {
+            await DataBaseService._onCreate(db, version);
+          },
+        ),
+      );
+      _singleton = DataBaseService._internal(db);
+    }
+    return _singleton!;
+  }
+
+  Future<Database> get database async {
     return _database;
   }
 
@@ -20,15 +39,8 @@ class DataBaseService {
     return inMemoryDatabasePath;
   }
 
-  static void initialize() async {
-    final io.Directory appDocumentsDir = await getApplicationDocumentsDirectory();
-    String dbPath = p.join(appDocumentsDir.path, "databases", "crop.db");
-    var db = await databaseFactoryFfi.openDatabase(dbPath);
-    singleton = DataBaseService(db);
-  }
-
-  Future<void> create(Database database, int version) async {
-    await CropRobotDB().createCropTable(database);
-    await CropRobotDB().createRobotTable(database);
+  static Future<void> _onCreate(Database db, int version) async {
+    await CropRobotDB().createCropTable(db);
+    await CropRobotDB().createRobotTable(db);
   }
 }
