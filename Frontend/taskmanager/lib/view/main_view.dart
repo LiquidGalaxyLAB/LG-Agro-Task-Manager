@@ -40,9 +40,9 @@ class _MainViewState extends State<MainView> {
               Container(
                 padding: EdgeInsets.all(20.0),
                 child: Container(
-                  width: 200,
-                  height: 200,
-                  color: myGreen,
+                  width: 250,
+                  height: 250,
+                  color: Colors.grey[900],
                   child: Center(
                       child: Image.asset('resources/logo.png')),
                 ),
