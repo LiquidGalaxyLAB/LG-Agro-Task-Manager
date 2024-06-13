@@ -11,7 +11,7 @@ import '../model/robot.dart';
 import '../widgets/add_robot_widget.dart';
 
 class RobotsView extends StatefulWidget {
-  const RobotsView({super.key});
+  const RobotsView({Key? key}) : super(key: key);
 
   @override
   State<RobotsView> createState() => _RobotsViewState();
@@ -24,24 +24,56 @@ class _RobotsViewState extends State<RobotsView> {
   TextEditingController itemController = TextEditingController();
   final cropRobotDB = CropRobotDB();
 
+  late StreamController<List<String>> queueController;
+  late StreamController<List<Robot>> robotsController;
+
   @override
   void initState() {
     super.initState();
-    fetchQueue();
-    fetchRobots();
+    queueController = StreamController<List<String>>();
+    robotsController = StreamController<List<Robot>>();
+    fetchInitialData();
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    fetchQueue();
-    fetchRobots();
+  void dispose() {
+    queueController.close();
+    robotsController.close();
+    super.dispose();
   }
 
-  void fetchRobots() async{
+  void fetchInitialData() async {
+    try {
+      // Fetch initial data
+      await fetchQueue();
+      await fetchRobots();
+
+      // Set up periodic updates
+      const updateInterval = Duration(seconds: 4);
+      Timer.periodic(updateInterval, (_) async {
+        await fetchQueue();
+        await fetchRobots();
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error in fetchInitialData: $e');
+      }
+    }
+  }
+
+  Future<void> fetchRobots() async {
     List<Robot> tempRobots = await cropRobotDB.fetchAllRobots();
-    setState(()  {
-      robots = tempRobots;
+    robotsController.add(tempRobots);
+  }
+
+  Future<void> fetchQueue() async {
+    List<String> tempQueue = await APIService.singleton.sendRequest('get_queue');
+    queueController.add(tempQueue);
+
+    Task taskGetter = await APIService.singleton.askCurrentTask('get_current_task');
+    setState(() {
+      currentTask.setName(taskGetter.taskName);
+      currentTask.setComplete(taskGetter.completionPercentage);
     });
   }
 
@@ -70,7 +102,7 @@ class _RobotsViewState extends State<RobotsView> {
                     child: CircularProgressIndicator(
                       value: currentTask.completionPercentage / 100,
                       valueColor:
-                          const AlwaysStoppedAnimation<Color>(Colors.teal),
+                      const AlwaysStoppedAnimation<Color>(Colors.teal),
                       backgroundColor: Colors.grey,
                       strokeWidth: 10.0,
                     ),
@@ -79,20 +111,44 @@ class _RobotsViewState extends State<RobotsView> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 2,
                     width: MediaQuery.of(context).size.height,
-                    child: ListView.builder(
-                      itemCount: queue.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(queue[index]),
-                        );
+                    child: StreamBuilder<List<String>>(
+                      stream: queueController.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(snapshot.data![index]),
+                              );
+                            },
+                          );
+                        } else {
+                          return const Center(child: CircularProgressIndicator());
+                        }
                       },
                     ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/add_task');
+                    },
+                    child: const Text('Afegeix tasques'),
                   ),
                 ],
               ),
             ),
             Expanded(
-              child: RobotPage(robots: robots),
+              child: StreamBuilder<List<Robot>>(
+                stream: robotsController.stream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return RobotPage(robots: snapshot.data!);
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -106,8 +162,7 @@ class _RobotsViewState extends State<RobotsView> {
                     robotIP: robotIP,
                     serialCode: robotSN,
                   );
-                  //if (!mounted) return;
-                  await cropRobotDB.fetchAllRobots();
+                  await fetchRobots(); // Actualitzar la llista de robots després d'afegir-ne un
                   Navigator.of(context).pop();
                 },
               );
@@ -117,25 +172,5 @@ class _RobotsViewState extends State<RobotsView> {
         ),
       ),
     );
-  }
-
-  Future<void> fetchQueue() async {
-    try {
-      final queueList = await APIService.singleton.sendRequest('get_queue');
-      setState(() {
-        queue = List<String>.from(queueList);
-      });
-
-      final Task taskGetter =
-          await APIService.singleton.askCurrentTask('get_current_task');
-      setState(() {
-        currentTask.setName(taskGetter.taskName);
-        currentTask.setComplete(taskGetter.completionPercentage);
-      });
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error in fetchQueue: $e');
-      }
-    }
   }
 }
