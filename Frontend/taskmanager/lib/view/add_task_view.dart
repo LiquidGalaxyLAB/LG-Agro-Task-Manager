@@ -1,24 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:taskmanager/model/task_manager.dart';
+
+import '../model/robot.dart';
+import '../model/task.dart';
 
 class AddTaskView extends StatelessWidget {
-  const AddTaskView({super.key});
+  final TaskManager taskManager;
+  final Robot robot;
+  const AddTaskView({super.key, required this.taskManager, required this.robot});
 
-  Future<void> addItemToQueue(String item) async {
-    final url = Uri.parse('http://localhost:8000/add_item');
-    final response = await http.post(
-      url,
-      body: jsonEncode({'item': item}),
-      headers: <String, String>{'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      print('Item added to the queue: $item');
-    } else {
-      print('Failed to add item to the queue');
-    }
+  Future<void> addItemToQueue(Task task, Robot robot) async {
+    taskManager.addTaskToRobot(task, robot);
   }
 
   @override
@@ -44,14 +36,20 @@ class AddTaskView extends StatelessWidget {
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: () => addItemToQueue('Watering'),
+                  onPressed: (){
+                    Task task = Task('Watering', 0);
+                    addItemToQueue(task, robot);
+                  },
                   child: Text('Watering'),
                 ),
               ),
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: () => addItemToQueue("Planting"),
+                  onPressed: (){
+                    Task task = Task('Planting', 0);
+                    addItemToQueue(task, robot);
+                  },
                   child: Text("Planting"),
                 ),
               ),
@@ -64,14 +62,20 @@ class AddTaskView extends StatelessWidget {
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: () => addItemToQueue('Harvesting'),
+                  onPressed: (){
+                    Task task = Task('Harvesting', 0);
+                    addItemToQueue(task, robot);
+                  },
                   child: Text('Harvesting'),
                 ),
               ),
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: () => addItemToQueue("PesticideAdding"),
+                  onPressed: (){
+                    Task task = Task('PesticideAdding', 0);
+                    addItemToQueue(task, robot);
+                  },
                   child: Text("PesticideAdding"),
                 ),
               ),
@@ -81,7 +85,7 @@ class AddTaskView extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.home, color: Colors.blue),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, taskManager);
             },
           )
         ],

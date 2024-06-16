@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:taskmanager/model/crop.dart';
 import 'package:taskmanager/model/crop_db.dart';
 import 'package:taskmanager/model/task.dart';
+import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/pages/robot_page.dart';
-import 'package:taskmanager/services/api_service.dart';
 
 import '../model/robot.dart';
 import '../widgets/add_robot_widget.dart';
@@ -18,11 +20,11 @@ class RobotsView extends StatefulWidget {
 }
 
 class _RobotsViewState extends State<RobotsView> {
-  List<String> queue = [];
-  List<Robot> robots = [];
+  late List<Robot> robots;
   Task currentTask = Task("", 0.0);
   TextEditingController itemController = TextEditingController();
   final cropRobotDB = CropRobotDB();
+  late TaskManager taskManager;
 
   late StreamController<List<String>> queueController;
   late StreamController<List<Robot>> robotsController;
@@ -32,7 +34,7 @@ class _RobotsViewState extends State<RobotsView> {
     super.initState();
     queueController = StreamController<List<String>>();
     robotsController = StreamController<List<Robot>>();
-    fetchInitialData();
+    fetchRobots();
   }
 
   @override
@@ -42,23 +44,10 @@ class _RobotsViewState extends State<RobotsView> {
     super.dispose();
   }
 
-  void fetchInitialData() async {
-    try {
-      // Fetch initial data
-      await fetchQueue();
-      await fetchRobots();
-
-      // Set up periodic updates
-      const updateInterval = Duration(seconds: 4);
-      Timer.periodic(updateInterval, (_) async {
-        await fetchQueue();
-        await fetchRobots();
-      });
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error in fetchInitialData: $e');
-      }
-    }
+  Future<Void?> fetchRobots() async{
+    robots = await cropRobotDB.fetchAllRobots();
+    taskManager = TaskManager(robots: robots);
+    return null;
   }
 
   @override
@@ -114,8 +103,14 @@ class _RobotsViewState extends State<RobotsView> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/add_task');
+                    onPressed: () async {
+                      TaskManager tmTemp = taskManager;
+                      List<Robot> robots = await cropRobotDB.fetchAllRobots();
+                      Robot robot = robots[0];
+                      taskManager = (await Navigator.pushNamed(context, '/add_task', arguments: {
+                        'tmTemp': tmTemp,
+                        'robot': robot,
+                      }) as TaskManager?)!;
                     },
                     child: const Text('Afegeix tasques'),
                   ),
