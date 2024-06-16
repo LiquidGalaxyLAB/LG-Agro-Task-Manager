@@ -61,22 +61,6 @@ class _RobotsViewState extends State<RobotsView> {
     }
   }
 
-  Future<void> fetchRobots() async {
-    List<Robot> tempRobots = await cropRobotDB.fetchAllRobots();
-    robotsController.add(tempRobots);
-  }
-
-  Future<void> fetchQueue() async {
-    List<String> tempQueue = await APIService.singleton.sendRequest('get_queue');
-    queueController.add(tempQueue);
-
-    Task taskGetter = await APIService.singleton.askCurrentTask('get_current_task');
-    setState(() {
-      currentTask.setName(taskGetter.taskName);
-      currentTask.setComplete(taskGetter.completionPercentage);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

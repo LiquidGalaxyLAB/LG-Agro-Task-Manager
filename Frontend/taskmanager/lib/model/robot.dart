@@ -1,21 +1,34 @@
-import 'package:taskmanager/services/api_service.dart';
+import 'package:taskmanager/model/task.dart';
 
 class Robot{
   int robotNumber;
   String name;
   String serialNumber;
   String robotIP;
-  List<String> remainingTasks = [];
+  Task? currentTask;
+  List<Task> remainingTasks = [];
 
   Robot({
     required this.robotNumber,
     required this.name,
     required this.serialNumber,
-    required this.robotIP});
+    required this.robotIP}) {
+    _checkAndAssignTask();
+  }
 
-  Future<void> updateTasks() async {
-    final queueList = await APIService.singleton.sendRequest('get_queue');
-    remainingTasks = List<String>.from(queueList);
+  void taskSimulation(){
+    currentTask?.simulateCompletion();
+    currentTask = null;
+    _checkAndAssignTask();
+  }
+
+  void addTask(Task t){
+    remainingTasks.add(t);
+    _checkAndAssignTask();
+  }
+
+  void setCurrentTask(Task t){
+    currentTask = t;
   }
 
   factory Robot.fromSqfliteDatabase(Map<String, dynamic> map) => Robot(
@@ -25,4 +38,10 @@ class Robot{
     robotIP: map['robotIP'],
   );
 
+  void _checkAndAssignTask() {
+    if (currentTask == null && remainingTasks.isNotEmpty) {
+      currentTask = remainingTasks[0];
+      remainingTasks.removeAt(0);
+    }
+  }
 }

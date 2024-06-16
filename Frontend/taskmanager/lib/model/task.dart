@@ -4,16 +4,10 @@ class Task {
 
   Task(this.taskName, this.completionPercentage);
 
-  void changeTask(String newTask) {
-    taskName = newTask;
+  void simulateCompletion(){
     completionPercentage = 0;
-  }
-
-  void setName(String taskName) {
-    this.taskName = taskName;
-  }
-
-  void setComplete(double completion) {
-    completionPercentage = completion;
+    while(completionPercentage < 100){
+      completionPercentage += 2;
+    }
   }
 }
