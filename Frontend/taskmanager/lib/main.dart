@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:taskmanager/model/crop_db.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/pages/crop_page.dart';
 import 'package:taskmanager/services/database_service.dart';
 import 'package:taskmanager/view/add_task_view.dart';
 import 'package:taskmanager/view/connection_page_view.dart';
 import 'package:taskmanager/view/robots_view.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io' as io;
 
@@ -28,7 +26,6 @@ Future<void> main() async {
   // Initialize the database service
   await DataBaseService.getInstance();
 
-
   runApp(MaterialApp(
     home: const MainView(),
     routes: {
@@ -40,7 +37,7 @@ Future<void> main() async {
       },
       '/crop_page': (context) => const CropsPage(),
       '/robot_page': (context) => const RobotsView(),
-      '/settings_page' : (context) => const ConnectionPageView(),
+      '/settings_page': (context) => const ConnectionPageView(),
     },
   ));
 }
