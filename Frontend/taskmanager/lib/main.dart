@@ -4,6 +4,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/pages/crop_page.dart';
 import 'package:taskmanager/services/database_service.dart';
+import 'package:taskmanager/services/robots_service.dart';
 import 'package:taskmanager/view/add_task_view.dart';
 import 'package:taskmanager/view/connection_page_view.dart';
 import 'package:taskmanager/view/robots_view.dart';
@@ -13,19 +14,16 @@ import 'dart:io' as io;
 import 'model/robot.dart';
 import 'view/main_view.dart';
 
-Future<void> main() async {
-  // Ensuring that plugin services are initialized.
+Future<void> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize the sqflite ffi
   sqfliteFfiInit();
-
-  // Setting the database factory to FFI
   databaseFactory = databaseFactoryFfi;
-
-  // Initialize the database service
   await DataBaseService.getInstance();
+  await RobotsService.singleton.initialize();
+}
 
+Future<void> main() async {
+  await initializeApp();
   runApp(MaterialApp(
     home: const MainView(),
     routes: {

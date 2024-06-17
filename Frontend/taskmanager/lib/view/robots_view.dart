@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager/model/crop_db.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/pages/robot_page.dart';
+import 'package:taskmanager/services/robots_service.dart';
+import 'package:taskmanager/view_models/robots_view_model.dart';
 import 'package:taskmanager/widgets/add_robot_widget.dart';
 import 'dart:async';
 
@@ -19,13 +21,12 @@ class _RobotsViewState extends State<RobotsView> {
   late List<Robot> robots;
   Task currentTask = Task("", 0.0);
   TextEditingController itemController = TextEditingController();
-  final cropRobotDB = CropRobotDB();
-  late TaskManager taskManager;
   late Robot currentRobot;
   late StreamController<List<Task>> queueController;
   late StreamController<List<Robot>> robotsController;
   late StreamController<Task> _taskController;
   late StreamController<Robot> _currentRobotController;
+  RobotsViewModel viewModel = RobotsViewModel();
 
   @override
   void initState() {
@@ -43,12 +44,6 @@ class _RobotsViewState extends State<RobotsView> {
       _taskController.add(currentTask);
       _currentRobotController.add(currentRobot);
     });
-  }
-
-  Future<void> fetchRobots() async {
-    robots = await cropRobotDB.fetchAllRobots();
-    taskManager = TaskManager(robots: robots);
-    robotsController.add(robots);
   }
 
   void setCurrentRobot(Robot robot) {
@@ -144,8 +139,7 @@ class _RobotsViewState extends State<RobotsView> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      TaskManager tmTemp = taskManager;
-                      List<Robot> robots = await cropRobotDB.fetchAllRobots();
+                      List<Robot> robots = await viewModel.fetchRobots();
                       Robot robot = robots[0];
                       final updatedTaskManager = await Navigator.pushNamed(
                         context,
