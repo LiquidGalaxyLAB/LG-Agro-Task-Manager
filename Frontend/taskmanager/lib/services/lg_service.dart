@@ -23,7 +23,7 @@ class LGService {
         required this.password,
         required this.screensNum});
 
-  Future<bool?> connectToLG() async {
+  Future<bool> connectToLG() async {
     try {
       final socket = await SSHSocket.connect(ip, port,
           timeout: const Duration(seconds: 10));

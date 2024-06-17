@@ -18,17 +18,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
   final Color customDarkGrey = Color(0xFF333333);
 
   Future<void> _connectToLG() async {
-    bool? result = await lg.connectToLG();
-    setState(() {
-      connectionStatus = result!;
-    });
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-    _connectToLG();
   }
 
   final TextEditingController _ipController = TextEditingController();
@@ -57,9 +47,10 @@ class _ConnectionPageView extends State<ConnectionPageView> {
     } catch (e) {
       SharedPreferences.setMockInitialValues({});
     }
+    final port = _sshPortController.text.isEmpty? 0 : int.parse(_sshPortController.text);
     lg = LGService(
       ip: _ipController.text,
-      port: int.parse(_sshPortController.text),
+      port: port,
       username: _usernameController.text,
       password: _passwordController.text,
       screensNum: 5,
@@ -192,14 +183,12 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                 ),
                 onPressed: () async {
                   await _saveSettings();
-                  _loadSettings();
-                  bool? result = await lg.connectToLG();
-                  if (result == true) {
+                  await _loadSettings();
+                  bool result = await lg.connectToLG();
                     setState(() {
-                      connectionStatus = true;
+                      connectionStatus = result;
                     });
-                    print('Connected to LG successfully');
-                  }
+                    if(connectionStatus) print('Connected to LG successfully');
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
