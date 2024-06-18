@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/model/crop_db.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/pages/robot_page.dart';
-import 'package:taskmanager/services/robots_service.dart';
 import 'package:taskmanager/view_models/robots_view_model.dart';
 import 'package:taskmanager/widgets/add_robot_widget.dart';
 import 'dart:async';
@@ -18,15 +16,13 @@ class RobotsView extends StatefulWidget {
 }
 
 class _RobotsViewState extends State<RobotsView> {
-  late List<Robot> robots;
-  Task currentTask = Task("", 0.0);
   TextEditingController itemController = TextEditingController();
-  late Robot currentRobot;
   late StreamController<List<Task>> queueController;
   late StreamController<List<Robot>> robotsController;
   late StreamController<Task> _taskController;
   late StreamController<Robot> _currentRobotController;
   RobotsViewModel viewModel = RobotsViewModel();
+  late List<Robot> robots;
 
   @override
   void initState() {
@@ -36,22 +32,23 @@ class _RobotsViewState extends State<RobotsView> {
     _taskController = StreamController<Task>();
     _currentRobotController = StreamController<Robot>();
 
-    fetchRobots().then((_) {
-      setState(() {
-        currentRobot = (robots.isNotEmpty ? robots[0] : null)!;
-        currentTask = currentRobot.currentTask ?? Task("", 0.0);
-      });
-      _taskController.add(currentTask);
-      _currentRobotController.add(currentRobot);
-    });
+    _initializeViewModel();
   }
 
-  void setCurrentRobot(Robot robot) {
-    setState(() {
-      currentRobot = robot;
-    });
-    _currentRobotController.add(currentRobot);
+  Future<void> _initializeViewModel() async {
+    await viewModel.setCurrentRobotInit();
+    viewModel.setCurrentTask();
+
+    _taskController.add(viewModel.currentTask!);
+    _currentRobotController.add(viewModel.currentRobot);
+
+    robots = await viewModel.fetchRobots();
+    robotsController.add(robots);
+
+    List<Task> initialQueue = viewModel.currentRobot.remainingTasks ?? [];
+    queueController.add(initialQueue);
   }
+
 
   @override
   void dispose() {
@@ -139,9 +136,10 @@ class _RobotsViewState extends State<RobotsView> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      List<Robot> robots = await viewModel.fetchRobots();
+                      robots = await viewModel.fetchRobots();
                       Robot robot = robots[0];
-                      final updatedTaskManager = await Navigator.pushNamed(
+                      TaskManager tmTemp = viewModel.getTaskManager();
+                      await Navigator.pushNamed(
                         context,
                         '/add_task',
                         arguments: {
@@ -149,13 +147,7 @@ class _RobotsViewState extends State<RobotsView> {
                           'robot': robot,
                         },
                       ) as TaskManager?;
-
-                      if (updatedTaskManager != null) {
-                        setState(() {
-                          taskManager = updatedTaskManager;
-                        });
-                        fetchRobots();
-                      }
+                      robots = await viewModel.fetchRobots();
                     },
                     child: const Text('Afegeix tasques'),
                   ),
@@ -167,7 +159,7 @@ class _RobotsViewState extends State<RobotsView> {
                 stream: robotsController.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return RobotPage(robots: snapshot.data!, onRobotSelected: setCurrentRobot);
+                    return RobotPage(robots: snapshot.data!, onRobotSelected: viewModel.setCurrentRobot);
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
@@ -181,12 +173,8 @@ class _RobotsViewState extends State<RobotsView> {
             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
               return AddRobotWidget(
                 onSubmit: (robotName, robotIP, robotSN) async {
-                  await cropRobotDB.createRobot(
-                    robotName: robotName,
-                    robotIP: robotIP,
-                    serialCode: robotSN,
-                  );
-                  await fetchRobots(); // Actualitzar la llista de robots després d'afegir-ne un
+                  await viewModel.createRobot(robotName, robotSN, robotIP);
+                  robots = await viewModel.fetchRobots(); // Actualitzar la llista de robots després d'afegir-ne un
                   Navigator.of(context).pop();
                 },
               );

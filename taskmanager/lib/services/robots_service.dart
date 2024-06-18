@@ -13,8 +13,23 @@ class RobotsService{
     return await _cropRobotDB.fetchAllRobots();
   }
 
+  void setTaskManager(TaskManager tm){
+    taskManager = tm;
+    print(taskManager.robots[0].currentTask);
+    print(taskManager.robots[0].remainingTasks);
+
+  }
+
+  Future<void> createRobot(String robotName, String serialCode, String robotIP ) async {
+    _cropRobotDB.createRobot(robotName: robotName, serialCode: serialCode, robotIP: robotIP);
+  }
+
   Future<void> initialize() async {
     final List<Robot> robots = await fetchRobots();
     taskManager = TaskManager(robots: robots);
+  }
+
+  TaskManager getTaskManager(){
+    return taskManager;
   }
 }

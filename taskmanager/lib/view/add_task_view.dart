@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/model/task_manager.dart';
+import 'package:taskmanager/view_models/add_task_view_model.dart';
 
 import '../model/robot.dart';
 import '../model/task.dart';
@@ -7,11 +8,10 @@ import '../model/task.dart';
 class AddTaskView extends StatelessWidget {
   final TaskManager taskManager;
   final Robot robot;
-  const AddTaskView({super.key, required this.taskManager, required this.robot});
+  final AddTaskViewModel viewModel = AddTaskViewModel();
 
-  Future<void> addItemToQueue(Task task, Robot robot) async {
-    taskManager.addTaskToRobot(task, robot);
-  }
+  AddTaskView({super.key, required this.taskManager, required this.robot});
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class AddTaskView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: (){
                     Task task = Task('Watering', 0);
-                    addItemToQueue(task, robot);
+                    viewModel.addItemToQueue(task, robot);
                   },
                   child: Text('Watering'),
                 ),
@@ -48,7 +48,7 @@ class AddTaskView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: (){
                     Task task = Task('Planting', 0);
-                    addItemToQueue(task, robot);
+                    viewModel.addItemToQueue(task, robot);
                   },
                   child: Text("Planting"),
                 ),
@@ -64,7 +64,7 @@ class AddTaskView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: (){
                     Task task = Task('Harvesting', 0);
-                    addItemToQueue(task, robot);
+                    viewModel.addItemToQueue(task, robot);
                   },
                   child: Text('Harvesting'),
                 ),
@@ -74,7 +74,7 @@ class AddTaskView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: (){
                     Task task = Task('PesticideAdding', 0);
-                    addItemToQueue(task, robot);
+                    viewModel.addItemToQueue(task, robot);
                   },
                   child: Text("PesticideAdding"),
                 ),
