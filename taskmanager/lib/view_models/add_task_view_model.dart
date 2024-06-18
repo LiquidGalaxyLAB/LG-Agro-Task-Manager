@@ -10,6 +10,8 @@ class AddTaskViewModel{
 
   Future<void> addItemToQueue(Task task, Robot robot) async {
     taskManager.addTaskToRobot(task, robot);
+    Robot? r = taskManager.getRobot(robot.name);
+    print(r?.currentTask?.taskName);
     RobotsService.singleton.setTaskManager(taskManager);
   }
 }

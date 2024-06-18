@@ -15,7 +15,7 @@ class RobotsService{
 
   void setTaskManager(TaskManager tm){
     taskManager = tm;
-    print(taskManager.robots[0].currentTask);
+    print(taskManager.robots[0].currentTask?.taskName);
     print(taskManager.robots[0].remainingTasks);
 
   }

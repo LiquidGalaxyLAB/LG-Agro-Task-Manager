@@ -25,4 +25,11 @@ class TaskManager{
     robot.addTask(task);
   }
 
+  Robot? getRobot(String robotName){
+    for(int i = 0; i < robots.length; ++i){
+      if (robots[i].name == robotName) return robots[i];
+    }
+    return null;
+  }
+
 }
