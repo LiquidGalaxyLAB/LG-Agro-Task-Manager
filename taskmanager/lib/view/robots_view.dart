@@ -139,15 +139,16 @@ class _RobotsViewState extends State<RobotsView> {
                       robots = await viewModel.fetchRobots();
                       Robot robot = robots[0];
                       TaskManager tmTemp = viewModel.getTaskManager();
-                      await Navigator.pushNamed(
+                      Navigator.pushNamed(
                         context,
                         '/add_task',
                         arguments: {
                           'tmTemp': tmTemp,
                           'robot': robot,
                         },
-                      ) as TaskManager?;
+                      );
                       robots = await viewModel.fetchRobots();
+                      robotsController.add(robots);
                     },
                     child: const Text('Afegeix tasques'),
                   ),
@@ -159,7 +160,13 @@ class _RobotsViewState extends State<RobotsView> {
                 stream: robotsController.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return RobotPage(robots: snapshot.data!, onRobotSelected: viewModel.setCurrentRobot);
+                    return RobotPage(robots: snapshot.data!, onRobotSelected: (robot){
+                      viewModel.setCurrentRobot(robot);
+                      _currentRobotController.add(robot);
+                      viewModel.setCurrentTask();
+                      _taskController.add(viewModel.currentTask!);
+                      queueController.add(viewModel.currentRobot.remainingTasks ?? []);
+                    });
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
@@ -174,7 +181,8 @@ class _RobotsViewState extends State<RobotsView> {
               return AddRobotWidget(
                 onSubmit: (robotName, robotIP, robotSN) async {
                   await viewModel.createRobot(robotName, robotSN, robotIP);
-                  robots = await viewModel.fetchRobots(); // Actualitzar la llista de robots després d'afegir-ne un
+                  robots = await viewModel.fetchRobots();
+                  robotsController.add(robots);// Actualitzar la llista de robots després d'afegir-ne un
                   Navigator.of(context).pop();
                 },
               );
