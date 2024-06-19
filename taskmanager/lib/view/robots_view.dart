@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/pages/robot_page.dart';
 import 'package:taskmanager/view_models/robots_view_model.dart';
 import 'package:taskmanager/widgets/add_robot_widget.dart';
@@ -45,7 +44,7 @@ class _RobotsViewState extends State<RobotsView> {
     robots = await viewModel.fetchRobots();
     robotsController.add(robots);
 
-    List<Task> initialQueue = viewModel.currentRobot.remainingTasks ?? [];
+    List<Task> initialQueue = viewModel.currentRobot.remainingTasks;
     queueController.add(initialQueue);
   }
 
@@ -95,7 +94,7 @@ class _RobotsViewState extends State<RobotsView> {
                       if (snapshot.hasData) {
                         return Column(
                           children: [
-                            Text('Tasca actual: ${snapshot.data!.taskName == "" ? "Cap" : snapshot.data!.taskName}'),
+                            Text('Tasca actual: ${snapshot.data!.taskName.isEmpty ? "Cap" : snapshot.data!.taskName}'),
                             Padding(
                               padding: const EdgeInsets.only(top: 16.0),
                               child: CircularProgressIndicator(
@@ -149,7 +148,10 @@ class _RobotsViewState extends State<RobotsView> {
                       robots = await viewModel.fetchRobots();
                       robotsController.add(robots);
                       Task? currentTask = viewModel.fetchCurrentTask();
-                      _taskController.add(currentTask!);
+                      if(currentTask != null) _taskController.add(currentTask);
+                      queueController.add(viewModel.fetchRemainingTasks());
+
+                      await viewModel.simulateTask();
                     },
                     child: const Text('Afegeix tasques'),
                   ),
@@ -166,7 +168,7 @@ class _RobotsViewState extends State<RobotsView> {
                       _currentRobotController.add(robot);
                       viewModel.setCurrentTask();
                       _taskController.add(viewModel.currentTask!);
-                      queueController.add(viewModel.currentRobot.remainingTasks ?? []);
+                      queueController.add(viewModel.currentRobot.remainingTasks);
                     });
                   } else {
                     return const Center(child: CircularProgressIndicator());

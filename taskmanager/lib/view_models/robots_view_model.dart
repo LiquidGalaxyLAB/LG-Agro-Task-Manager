@@ -51,4 +51,13 @@ class RobotsViewModel{
     currentTask = currentRobot.currentTask;
     return currentTask;
   }
+
+  Future<void> simulateTask() async {
+    await currentRobot.taskSimulation();
+
+  }
+
+  List<Task> fetchRemainingTasks() {
+    return currentRobot.remainingTasks;
+  }
 }

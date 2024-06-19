@@ -20,8 +20,8 @@ class Robot{
     return Robot(robotNumber: 9999, name: 'empty', serialNumber: '9999', robotIP: '9999');
   }
 
-  void taskSimulation(){
-    currentTask?.simulateCompletion();
+  Future<void> taskSimulation() async {
+    await currentTask?.simulateCompletion();
     currentTask = null;
     _checkAndAssignTask();
   }
