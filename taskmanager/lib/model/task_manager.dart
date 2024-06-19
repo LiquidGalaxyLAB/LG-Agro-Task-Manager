@@ -21,8 +21,10 @@ class TaskManager{
     robots.remove(r);
   }
 
-  void addTaskToRobot(Task task, Robot robot){
-    robot.addTask(task);
+  void addTaskToRobot(Task task, String name){
+    for(int i = 0; i < robots.length; ++i){
+      if (robots[i].name == name) robots[i].addTask(task);
+    }
   }
 
   Robot? getRobot(String robotName){

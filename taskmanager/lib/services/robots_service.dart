@@ -1,3 +1,4 @@
+import 'package:taskmanager/model/task.dart';
 import 'package:taskmanager/model/task_manager.dart';
 
 import '../model/robot.dart';
@@ -15,9 +16,6 @@ class RobotsService{
 
   void setTaskManager(TaskManager tm){
     taskManager = tm;
-    print(taskManager.robots[0].currentTask?.taskName);
-    print(taskManager.robots[0].remainingTasks);
-
   }
 
   Future<void> createRobot(String robotName, String serialCode, String robotIP ) async {

@@ -22,7 +22,7 @@ class AddTaskView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text('Add task'),
@@ -40,7 +40,7 @@ class AddTaskView extends StatelessWidget {
                     Task task = Task('Watering', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
-                  child: Text('Watering'),
+                  child: const Text('Watering'),
                 ),
               ),
               Container(
@@ -50,7 +50,7 @@ class AddTaskView extends StatelessWidget {
                     Task task = Task('Planting', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
-                  child: Text("Planting"),
+                  child: const Text("Planting"),
                 ),
               ),
             ],
@@ -66,7 +66,7 @@ class AddTaskView extends StatelessWidget {
                     Task task = Task('Harvesting', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
-                  child: Text('Harvesting'),
+                  child: const Text('Harvesting'),
                 ),
               ),
               Container(
@@ -76,14 +76,14 @@ class AddTaskView extends StatelessWidget {
                     Task task = Task('PesticideAdding', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
-                  child: Text("PesticideAdding"),
+                  child: const Text("PesticideAdding"),
                 ),
               ),
             ],
           ),
           SizedBox(height: screenHeight / 7),
           IconButton(
-            icon: Icon(Icons.home, color: Colors.blue),
+            icon: const Icon(Icons.home, color: Colors.blue),
             onPressed: () {
               Navigator.pop(context, taskManager);
             },

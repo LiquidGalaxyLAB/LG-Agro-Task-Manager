@@ -138,17 +138,18 @@ class _RobotsViewState extends State<RobotsView> {
                     onPressed: () async {
                       robots = await viewModel.fetchRobots();
                       Robot robot = robots[0];
-                      TaskManager tmTemp = viewModel.getTaskManager();
                       Navigator.pushNamed(
                         context,
                         '/add_task',
                         arguments: {
-                          'tmTemp': tmTemp,
+                          'tmTemp': viewModel.getTaskManager(),
                           'robot': robot,
                         },
                       );
                       robots = await viewModel.fetchRobots();
                       robotsController.add(robots);
+                      Task? currentTask = viewModel.fetchCurrentTask();
+                      _taskController.add(currentTask!);
                     },
                     child: const Text('Afegeix tasques'),
                   ),
@@ -182,7 +183,7 @@ class _RobotsViewState extends State<RobotsView> {
                 onSubmit: (robotName, robotIP, robotSN) async {
                   await viewModel.createRobot(robotName, robotSN, robotIP);
                   robots = await viewModel.fetchRobots();
-                  robotsController.add(robots);// Actualitzar la llista de robots després d'afegir-ne un
+                  robotsController.add(robots);
                   Navigator.of(context).pop();
                 },
               );

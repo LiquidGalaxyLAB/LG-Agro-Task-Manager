@@ -45,4 +45,10 @@ class RobotsViewModel{
     }
   }
 
+  Task? fetchCurrentTask()  {
+    taskManager = RobotsService.singleton.getTaskManager();
+    currentRobot = taskManager.getRobot(currentRobot.name)!;
+    currentTask = currentRobot.currentTask;
+    return currentTask;
+  }
 }
