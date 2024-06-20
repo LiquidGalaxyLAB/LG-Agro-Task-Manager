@@ -38,9 +38,8 @@ class _RobotsViewState extends State<RobotsView> {
     await viewModel.setCurrentRobotInit();
     viewModel.setCurrentTask();
 
-    _taskController.add(viewModel.currentTask!);
+    if(viewModel.currentRobot.currentTask != null) _taskController.add(viewModel.currentRobot.currentTask!);
     _currentRobotController.add(viewModel.currentRobot);
-
     robots = await viewModel.fetchRobots();
     robotsController.add(robots);
 
@@ -76,7 +75,7 @@ class _RobotsViewState extends State<RobotsView> {
               stream: _currentRobotController.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Text(snapshot.data!.name, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+                  return Text(snapshot.data!.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
                 } else {
                   return const Text('Loading...'); // Optional: Show a loading indicator
                 }
@@ -145,6 +144,7 @@ class _RobotsViewState extends State<RobotsView> {
                           'robot': robot,
                         },
                       );
+                      viewModel.fetchTaskManager();
                       robots = await viewModel.fetchRobots();
                       robotsController.add(robots);
                       Task? currentTask = viewModel.fetchCurrentTask();
@@ -164,10 +164,11 @@ class _RobotsViewState extends State<RobotsView> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return RobotPage(robots: snapshot.data!, onRobotSelected: (robot){
+                      viewModel.fetchTaskManager();
                       viewModel.setCurrentRobot(robot);
                       _currentRobotController.add(robot);
                       viewModel.setCurrentTask();
-                      _taskController.add(viewModel.currentTask!);
+                      if(viewModel.currentRobot.currentTask != null) _taskController.add(viewModel.currentRobot.currentTask!);
                       queueController.add(viewModel.currentRobot.remainingTasks);
                     });
                   } else {

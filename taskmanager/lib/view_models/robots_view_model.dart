@@ -5,7 +5,6 @@ import '../model/task.dart';
 
 class RobotsViewModel{
   Robot currentRobot = Robot.empty();
-  Task? currentTask = Task("", 0);
   late List<Task>? remainingTasks;
   late TaskManager taskManager;
   late List<Robot> robots;
@@ -14,10 +13,22 @@ class RobotsViewModel{
     currentRobot = robot;
   }
 
+  void fetchTaskManager(){
+    taskManager = RobotsService.singleton.taskManager;
+  }
+
   void setCurrentTask(){
+    fetchTaskManager();
     if(currentRobot.currentTask != null){
-      currentTask = currentRobot.currentTask;
-      remainingTasks = currentRobot.remainingTasks;
+      remainingTasks = taskManager.getRobot(currentRobot.name)?.remainingTasks;
+      if(currentRobot.currentTask!.completionPercentage >= 100){
+        currentRobot.currentTask = remainingTasks?[0];
+        remainingTasks?.removeAt(0);
+        taskManager.getRobot(currentRobot.name)?.remainingTasks.removeAt(0);
+      }
+    }
+    else{
+      currentRobot.currentTask = taskManager.getRobot(currentRobot.name)?.currentTask;
     }
   }
 
@@ -43,13 +54,13 @@ class RobotsViewModel{
     if(robots.isNotEmpty){
       currentRobot = robots[0];
     }
+    print("setCurrentRobotInit: ${currentRobot.name}");
   }
 
   Task? fetchCurrentTask()  {
     taskManager = RobotsService.singleton.getTaskManager();
     currentRobot = taskManager.getRobot(currentRobot.name)!;
-    currentTask = currentRobot.currentTask;
-    return currentTask;
+    return currentRobot.currentTask;
   }
 
   Future<void> simulateTask() async {

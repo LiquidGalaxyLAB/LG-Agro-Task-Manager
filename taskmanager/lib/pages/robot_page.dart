@@ -23,7 +23,7 @@ class _RobotPageState extends State<RobotPage> {
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: GestureDetector(
             onTap: () {
-              widget.onRobotSelected(robot); // Cridar la funció per canviar el currentRobot a RobotsView
+              widget.onRobotSelected(robot);
             },
             child: Container(
               width: 120,
