@@ -25,6 +25,7 @@ class RobotsViewModel{
         currentRobot.currentTask = remainingTasks?[0];
         remainingTasks?.removeAt(0);
         taskManager.getRobot(currentRobot.name)?.remainingTasks.removeAt(0);
+        currentRobot.taskSimulation();
       }
     }
     else{

@@ -61,6 +61,8 @@ class _RobotsViewState extends State<RobotsView> {
 
       List<Task> remainingTasks = viewModel.fetchRemainingTasks();
       queueController.add(remainingTasks);
+
+      await viewModel.simulateTask();
     });
   }
 
@@ -168,9 +170,7 @@ class _RobotsViewState extends State<RobotsView> {
                       Task? currentTask = viewModel.fetchCurrentTask();
                       if(currentTask != null) _taskController.add(currentTask);
                       queueController.add(viewModel.fetchRemainingTasks());
-
-                      await viewModel.simulateTask();
-                    },
+                      },
                     child: const Text('Afegeix tasques'),
                   ),
                 ],
