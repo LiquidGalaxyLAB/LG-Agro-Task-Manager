@@ -26,10 +26,10 @@ class _RobotsViewState extends State<RobotsView> {
   @override
   void initState() {
     super.initState();
-    queueController = StreamController<List<Task>>();
-    robotsController = StreamController<List<Robot>>();
-    _taskController = StreamController<Task>();
-    _currentRobotController = StreamController<Robot>();
+    queueController = StreamController<List<Task>>.broadcast();
+    robotsController = StreamController<List<Robot>>.broadcast();
+    _taskController = StreamController<Task>.broadcast();
+    _currentRobotController = StreamController<Robot>.broadcast();
 
     _initializeViewModel();
   }
@@ -45,6 +45,23 @@ class _RobotsViewState extends State<RobotsView> {
 
     List<Task> initialQueue = viewModel.currentRobot.remainingTasks;
     queueController.add(initialQueue);
+    
+    _startPeriodicUpdates();
+  }
+  
+  void _startPeriodicUpdates(){
+    Stream.periodic(const Duration(seconds: 2)).listen((_) async {
+      viewModel.fetchTaskManager();
+
+      robots = await viewModel.fetchRobots();
+      robotsController.add(robots);
+
+      Task? currentTask = viewModel.fetchCurrentTask();
+      if(currentTask != null) _taskController.add(currentTask);
+
+      List<Task> remainingTasks = viewModel.fetchRemainingTasks();
+      queueController.add(remainingTasks);
+    });
   }
 
 
@@ -144,9 +161,10 @@ class _RobotsViewState extends State<RobotsView> {
                           'robot': robot,
                         },
                       );
-                      viewModel.fetchTaskManager();
                       robots = await viewModel.fetchRobots();
                       robotsController.add(robots);
+
+                      viewModel.fetchTaskManager();
                       Task? currentTask = viewModel.fetchCurrentTask();
                       if(currentTask != null) _taskController.add(currentTask);
                       queueController.add(viewModel.fetchRemainingTasks());
@@ -168,8 +186,12 @@ class _RobotsViewState extends State<RobotsView> {
                       viewModel.setCurrentRobot(robot);
                       _currentRobotController.add(robot);
                       viewModel.setCurrentTask();
-                      if(viewModel.currentRobot.currentTask != null) _taskController.add(viewModel.currentRobot.currentTask!);
-                      queueController.add(viewModel.currentRobot.remainingTasks);
+                      if(viewModel.currentRobot.currentTask != null) {
+                            _taskController
+                                .add(viewModel.currentRobot.currentTask!);
+                          }
+                          queueController
+                              .add(viewModel.currentRobot.remainingTasks);
                     });
                   } else {
                     return const Center(child: CircularProgressIndicator());
