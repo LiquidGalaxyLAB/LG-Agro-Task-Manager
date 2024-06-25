@@ -55,7 +55,6 @@ class RobotsViewModel{
     if(robots.isNotEmpty){
       currentRobot = robots[0];
     }
-    print("setCurrentRobotInit: ${currentRobot.name}");
   }
 
   Task? fetchCurrentTask()  {
@@ -66,7 +65,6 @@ class RobotsViewModel{
 
   Future<void> simulateTask() async {
     await currentRobot.taskSimulation();
-
   }
 
   List<Task> fetchRemainingTasks() {

@@ -65,6 +65,8 @@ class _RobotsViewState extends State<RobotsView> {
       List<Task> remainingTasks = viewModel.fetchRemainingTasks();
       queueController.add(remainingTasks);
 
+      //S'hauria de modificar quan i com simulo la tasca: massa rapidesa porta
+      //a que es recarregui malament i a més a més arriba un punt en que deixa de simular
       await viewModel.simulateTask();
     });
   }
