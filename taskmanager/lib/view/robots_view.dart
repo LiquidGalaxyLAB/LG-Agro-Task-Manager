@@ -22,6 +22,7 @@ class _RobotsViewState extends State<RobotsView> {
   late StreamController<Robot> _currentRobotController;
   RobotsViewModel viewModel = RobotsViewModel();
   late List<Robot> robots;
+  late StreamSubscription _periodicSubscription;
 
   @override
   void initState() {
@@ -50,7 +51,9 @@ class _RobotsViewState extends State<RobotsView> {
   }
   
   void _startPeriodicUpdates(){
-    Stream.periodic(const Duration(seconds: 2)).listen((_) async {
+    _periodicSubscription =  Stream.periodic(const Duration(seconds: 2)).listen((_) async {
+      if(queueController.isClosed || robotsController.isClosed ||
+          _taskController.isClosed || _currentRobotController.isClosed) return;
       viewModel.fetchTaskManager();
 
       robots = await viewModel.fetchRobots();
