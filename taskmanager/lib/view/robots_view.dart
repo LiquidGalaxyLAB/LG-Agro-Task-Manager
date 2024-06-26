@@ -24,6 +24,8 @@ class _RobotsViewState extends State<RobotsView> {
   late List<Robot> robots;
   late StreamSubscription _periodicSubscription;
 
+  final Color myGreen = const Color(0xFF3E9671);
+
   @override
   void initState() {
     super.initState();
@@ -39,20 +41,20 @@ class _RobotsViewState extends State<RobotsView> {
     await viewModel.setCurrentRobotInit();
     viewModel.setCurrentTask();
 
-    if(viewModel.currentRobot.currentTask != null) _taskController.add(viewModel.currentRobot.currentTask!);
+    if (viewModel.currentRobot.currentTask != null) _taskController.add(viewModel.currentRobot.currentTask!);
     _currentRobotController.add(viewModel.currentRobot);
     robots = await viewModel.fetchRobots();
     robotsController.add(robots);
 
     List<Task> initialQueue = viewModel.currentRobot.remainingTasks;
     queueController.add(initialQueue);
-    
+
     _startPeriodicUpdates();
   }
-  
-  void _startPeriodicUpdates(){
-    _periodicSubscription =  Stream.periodic(const Duration(seconds: 2)).listen((_) async {
-      if(queueController.isClosed || robotsController.isClosed ||
+
+  void _startPeriodicUpdates() {
+    _periodicSubscription = Stream.periodic(const Duration(seconds: 2)).listen((_) async {
+      if (queueController.isClosed || robotsController.isClosed ||
           _taskController.isClosed || _currentRobotController.isClosed) return;
       viewModel.fetchTaskManager();
 
@@ -60,17 +62,16 @@ class _RobotsViewState extends State<RobotsView> {
       robotsController.add(robots);
 
       Task? currentTask = viewModel.fetchCurrentTask();
-      if(currentTask != null) _taskController.add(currentTask);
+      if (currentTask != null) _taskController.add(currentTask);
 
       List<Task> remainingTasks = viewModel.fetchRemainingTasks();
       queueController.add(remainingTasks);
 
-      //S'hauria de modificar quan i com simulo la tasca: massa rapidesa porta
-      //a que es recarregui malament i a més a més arriba un punt en que deixa de simular
+      // S'hauria de modificar quan i com simulo la tasca: massa rapidesa porta
+      // a que es recarregui malament i a més a més arriba un punt en que deixa de simular
       await viewModel.simulateTask();
     });
   }
-
 
   @override
   void dispose() {
@@ -84,6 +85,14 @@ class _RobotsViewState extends State<RobotsView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        primaryColor: myGreen,
+        scaffoldBackgroundColor: Colors.grey[900],
+        colorScheme: ColorScheme.dark(
+          primary: myGreen,
+          secondary: myGreen,
+        ),
+      ),
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -99,7 +108,14 @@ class _RobotsViewState extends State<RobotsView> {
               stream: _currentRobotController.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Text(snapshot.data!.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+                  return Text(
+                    snapshot.data!.name,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: myGreen,
+                    ),
+                  );
                 } else {
                   return const Text('Loading...'); // Optional: Show a loading indicator
                 }
@@ -117,17 +133,23 @@ class _RobotsViewState extends State<RobotsView> {
                       if (snapshot.hasData) {
                         return Column(
                           children: [
-                            Text('Tasca actual: ${snapshot.data!.taskName.isEmpty ? "Cap" : snapshot.data!.taskName}'),
+                            Text(
+                              'Tasca actual: ${snapshot.data!.taskName.isEmpty ? "Cap" : snapshot.data!.taskName}',
+                              style: TextStyle(color: myGreen),
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(top: 16.0),
                               child: CircularProgressIndicator(
                                 value: snapshot.data!.completionPercentage / 100,
-                                valueColor: const AlwaysStoppedAnimation<Color>(Colors.teal),
+                                valueColor: AlwaysStoppedAnimation<Color>(myGreen),
                                 backgroundColor: Colors.grey,
                                 strokeWidth: 10.0,
                               ),
                             ),
-                            Text('${snapshot.data!.completionPercentage}% completat'),
+                            Text(
+                              '${snapshot.data!.completionPercentage}% completat',
+                              style: TextStyle(color: myGreen),
+                            ),
                           ],
                         );
                       } else {
@@ -146,7 +168,10 @@ class _RobotsViewState extends State<RobotsView> {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               return ListTile(
-                                title: Text(snapshot.data![index].taskName),
+                                title: Text(
+                                  snapshot.data![index].taskName,
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               );
                             },
                           );
@@ -173,10 +198,11 @@ class _RobotsViewState extends State<RobotsView> {
 
                       viewModel.fetchTaskManager();
                       Task? currentTask = viewModel.fetchCurrentTask();
-                      if(currentTask != null) _taskController.add(currentTask);
+                      if (currentTask != null) _taskController.add(currentTask);
                       queueController.add(viewModel.fetchRemainingTasks());
-                      },
+                    },
                     child: const Text('Afegeix tasques'),
+                    style: ElevatedButton.styleFrom(backgroundColor: myGreen),
                   ),
                 ],
               ),
@@ -186,18 +212,19 @@ class _RobotsViewState extends State<RobotsView> {
                 stream: robotsController.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return RobotPage(robots: snapshot.data!, onRobotSelected: (robot){
-                      viewModel.fetchTaskManager();
-                      viewModel.setCurrentRobot(robot);
-                      _currentRobotController.add(robot);
-                      viewModel.setCurrentTask();
-                      if(viewModel.currentRobot.currentTask != null) {
-                            _taskController
-                                .add(viewModel.currentRobot.currentTask!);
-                          }
-                          queueController
-                              .add(viewModel.currentRobot.remainingTasks);
-                    });
+                    return RobotPage(
+                      robots: snapshot.data!,
+                      onRobotSelected: (robot) {
+                        viewModel.fetchTaskManager();
+                        viewModel.setCurrentRobot(robot);
+                        _currentRobotController.add(robot);
+                        viewModel.setCurrentTask();
+                        if (viewModel.currentRobot.currentTask != null) {
+                          _taskController.add(viewModel.currentRobot.currentTask!);
+                        }
+                        queueController.add(viewModel.currentRobot.remainingTasks);
+                      },
+                    );
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
@@ -220,6 +247,7 @@ class _RobotsViewState extends State<RobotsView> {
             }));
           },
           child: const Icon(Icons.add),
+          backgroundColor: myGreen,
         ),
       ),
     );

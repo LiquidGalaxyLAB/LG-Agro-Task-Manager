@@ -12,6 +12,7 @@ class AddTaskView extends StatelessWidget {
 
   AddTaskView({super.key, required this.taskManager, required this.robot});
 
+  final Color myGreen = const Color(0xFF3E9671);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,9 @@ class AddTaskView extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text('Add task'),
+        backgroundColor: myGreen,
       ),
+      backgroundColor: Colors.grey[900],
       body: Column(
         children: [
           SizedBox(height: oneFourthHeight),
@@ -36,20 +39,22 @@ class AddTaskView extends StatelessWidget {
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: (){
+                  onPressed: () {
                     Task task = Task('Watering', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
+                  style: ElevatedButton.styleFrom(backgroundColor: myGreen),
                   child: const Text('Watering'),
                 ),
               ),
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: (){
+                  onPressed: () {
                     Task task = Task('Planting', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
+                  style: ElevatedButton.styleFrom(backgroundColor: myGreen),
                   child: const Text("Planting"),
                 ),
               ),
@@ -62,20 +67,22 @@ class AddTaskView extends StatelessWidget {
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: (){
+                  onPressed: () {
                     Task task = Task('Harvesting', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
+                  style: ElevatedButton.styleFrom(backgroundColor: myGreen),
                   child: const Text('Harvesting'),
                 ),
               ),
               Container(
                 width: screenWidth / 5,
                 child: ElevatedButton(
-                  onPressed: (){
+                  onPressed: () {
                     Task task = Task('PesticideAdding', 0);
                     viewModel.addItemToQueue(task, robot);
                   },
+                  style: ElevatedButton.styleFrom(backgroundColor: myGreen),
                   child: const Text("PesticideAdding"),
                 ),
               ),
@@ -87,7 +94,7 @@ class AddTaskView extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context, taskManager);
             },
-          )
+          ),
         ],
       ),
     );
