@@ -3,6 +3,7 @@ import 'package:taskmanager/model/crop_db.dart';
 import 'package:taskmanager/services/database_service.dart';
 
 import '../model/crop.dart';
+import '../view/crop_detail_view.dart';
 import '../widgets/create_crop_widget.dart';
 
 class CropsPage extends StatefulWidget {
@@ -33,18 +34,13 @@ class _CropsPageState extends State<CropsPage> {
     });
   }
 
-  bool hasValidFormat(String input) {
-    RegExp regex = RegExp(r'^\d+-\d+$');
-    return regex.hasMatch(input);
-  }
-
   @override
   Widget build(BuildContext context) {
     const Color customGreen = Color(0xFF3E9671);
     const Color customDarkGrey = Color(0xFF333333);
 
     return Scaffold(
-      backgroundColor: customDarkGrey, // Define el color de fondo de la pantalla
+      backgroundColor: customDarkGrey,
       appBar: AppBar(
         title: const Text('Current Crops'),
         backgroundColor: customGreen,
@@ -69,8 +65,7 @@ class _CropsPageState extends State<CropsPage> {
                 ),
               )
                   : ListView.separated(
-                separatorBuilder: (context, index) =>
-                const SizedBox(height: 12),
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
                 itemCount: crops.length,
                 itemBuilder: (context, index) {
                   final crop = crops[index];
@@ -89,42 +84,20 @@ class _CropsPageState extends State<CropsPage> {
                           'Planting Date: ${crop.plantationDates}',
                           style: const TextStyle(
                             color: customGreen,
-                          ),),
-                        Text('Transplanting Date: ${crop.transplantingDates}',
-                          style: const TextStyle(
-                            color: customGreen,
-                          ),),
-                        Text('Harvesting Date: ${crop.harvestingDates}',
-                          style: const TextStyle(
-                            color: customGreen,
-                          ),),
-                        const SizedBox(height: 10),
-                        Container(
-                          height: 50,
-                          child: GridView.builder(
-                            gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 24,
-                            ),
-                            itemBuilder:
-                                (BuildContext context, int index) {
-                              final isSelected = _isSelected(index, crop.plantationDates);
-
-                              return Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  color: isSelected
-                                      ? customGreen
-                                      : Colors.white,
-                                ),
-                                child: Center(
-                                  child: Text((index + 1).toString()),
-                                ),
-                              );
-                            },
-                            itemCount: 24,
                           ),
-                        )
+                        ),
+                        Text(
+                          'Transplanting Date: ${crop.transplantingDates}',
+                          style: const TextStyle(
+                            color: customGreen,
+                          ),
+                        ),
+                        Text(
+                          'Harvesting Date: ${crop.harvestingDates}',
+                          style: const TextStyle(
+                            color: customGreen,
+                          ),
+                        ),
                       ],
                     ),
                     trailing: IconButton(
@@ -135,22 +108,16 @@ class _CropsPageState extends State<CropsPage> {
                       icon: const Icon(Icons.delete, color: Colors.red),
                     ),
                     onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => CreateCropWidget(
-                              crop: crop,
-                              onSubmit: (cropName, plantingDate,
-                                  harvestingDate, transplantingDate) async {
-                                await cropRobotDB.updateCrop(
-                                  cropName: cropName,
-                                  plantingDate: plantingDate,
-                                  harvestingDate: harvestingDate,
-                                  transplantingDate: transplantingDate,
-                                );
-                                fetchCrops();
-                                if (!mounted) return;
-                                Navigator.of(context).pop();
-                              }));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CropDetailView(
+                            crop: crop,
+                            onUpdate: fetchCrops,
+                            cropRobotDB: cropRobotDB,
+                          ),
+                        ),
+                      );
                     },
                   );
                 },
@@ -167,35 +134,23 @@ class _CropsPageState extends State<CropsPage> {
         backgroundColor: customGreen,
         onPressed: () {
           showDialog(
-              context: context,
-              builder: (_) => CreateCropWidget(
-                onSubmit: (cropName, plantingDate, harvestingDate,
-                    transplantingDate) async {
-                  await cropRobotDB.createCrop(
-                      cropName: cropName,
-                      plantingDate: plantingDate,
-                      harvestingDate: harvestingDate,
-                      transplantingDate: transplantingDate);
-                  if (!mounted) return;
-                  fetchCrops();
-                  Navigator.of(context).pop();
-                },
-              ));
+            context: context,
+            builder: (_) => CreateCropWidget(
+              onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
+                await cropRobotDB.createCrop(
+                  cropName: cropName,
+                  plantingDate: plantingDate,
+                  harvestingDate: harvestingDate,
+                  transplantingDate: transplantingDate,
+                );
+                if (!mounted) return;
+                fetchCrops();
+                Navigator.of(context).pop();
+              },
+            ),
+          );
         },
       ),
     );
-  }
-
-  bool _isSelected(int index, String plantingDates) {
-    if (!hasValidFormat(plantingDates)) {
-      final plantationDate = int.tryParse(plantingDates);
-      return plantationDate == index + 1;
-    }
-
-    final plantingValues = plantingDates.split('-');
-    final start = int.tryParse(plantingValues[0]) ?? 0;
-    final end = int.tryParse(plantingValues[1]) ?? 0;
-
-    return index + 1 >= start && index + 1 <= end;
   }
 }
