@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/model/crop_db.dart';
+import 'package:taskmanager/services/robots_service.dart';
 
 import '../model/robot.dart';
 
@@ -22,7 +22,6 @@ class _AddRobotWidgetState extends State<AddRobotWidget> {
   final robotNameController = TextEditingController();
   final robotIPController = TextEditingController();
   final robotSNController = TextEditingController();
-  final cropRobotDB = CropRobotDB();
 
   @override
   void initState() {
@@ -93,7 +92,7 @@ class _AddRobotWidgetState extends State<AddRobotWidget> {
             if (formKey.currentState!.validate()) {
               widget.onSubmit(robotName, robotIP, robotSN);
             }
-            cropRobotDB.fetchAllRobots();
+            RobotsService.singleton.fetchRobots();
           },
           child: const Text('OK'),
         )

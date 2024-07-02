@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/model/crop_db.dart';
 import 'package:taskmanager/view_models/crop_detail_view_model.dart';
 
 import '../model/crop.dart';
@@ -67,7 +66,9 @@ class CropDetailView extends StatelessWidget {
                     crop: crop,
                     onSubmit: (cropName, plantingDate, harvestingDate,
                         transplantingDate) async {
+                      final int cropID = await viewModel.searchByCropName(cropName);
                       await viewModel.updateCrop(
+                        cropID,
                         cropName,
                         plantingDate,
                         harvestingDate,

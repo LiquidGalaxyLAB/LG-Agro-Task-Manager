@@ -16,12 +16,7 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
-    _initializeDatabase();
-  }
-
-  Future<void> _initializeDatabase() async {
-    await DataBaseService.getInstance();
-    viewModel.fetchCrops();
+    viewModel.initializeDatabase();
   }
 
   @override

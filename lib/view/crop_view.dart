@@ -1,37 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/model/crop_db.dart';
 import 'package:taskmanager/services/database_service.dart';
+import 'package:taskmanager/view_models/crop_view_model.dart';
 
 import '../model/crop.dart';
-import '../view/crop_detail_view.dart';
+import 'crop_detail_view.dart';
 import '../widgets/create_crop_widget.dart';
 
-class CropsPage extends StatefulWidget {
-  const CropsPage({Key? key}) : super(key: key);
+class CropView extends StatefulWidget {
+  const CropView({super.key});
 
   @override
-  State<CropsPage> createState() => _CropsPageState();
+  State<CropView> createState() => _CropViewState();
 }
 
-class _CropsPageState extends State<CropsPage> {
-  Future<List<Crop>>? futureCrops;
-  final cropRobotDB = CropRobotDB();
+class _CropViewState extends State<CropView> {
+  final CropViewModel viewModel = CropViewModel();
 
   @override
   void initState() {
     super.initState();
-    _initializeDatabase();
-  }
-
-  Future<void> _initializeDatabase() async {
-    await DataBaseService.getInstance();
-    fetchCrops();
-  }
-
-  void fetchCrops() {
-    setState(() {
-      futureCrops = cropRobotDB.fetchAllCrops();
-    });
+    viewModel.initializeDatabase();
   }
 
   @override
@@ -46,7 +34,7 @@ class _CropsPageState extends State<CropsPage> {
         backgroundColor: customGreen,
       ),
       body: FutureBuilder<List<Crop>>(
-        future: futureCrops,
+        future: viewModel.futureCrops,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -102,8 +90,8 @@ class _CropsPageState extends State<CropsPage> {
                     ),
                     trailing: IconButton(
                       onPressed: () async {
-                        await cropRobotDB.deleteCrop(crop.cropName);
-                        fetchCrops();
+                        //await cropRobotDB.deleteCrop(crop.cropName);
+                        viewModel.fetchCrops();
                       },
                       icon: const Icon(Icons.delete, color: Colors.red),
                     ),
@@ -113,7 +101,7 @@ class _CropsPageState extends State<CropsPage> {
                         MaterialPageRoute(
                           builder: (context) => CropDetailView(
                             crop: crop,
-                            onUpdate: fetchCrops,
+                            onUpdate: viewModel.fetchCrops,
                           ),
                         ),
                       );
@@ -129,26 +117,22 @@ class _CropsPageState extends State<CropsPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         backgroundColor: customGreen,
         onPressed: () {
           showDialog(
             context: context,
             builder: (_) => CreateCropWidget(
               onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
-                await cropRobotDB.createCrop(
-                  cropName: cropName,
-                  plantingDate: plantingDate,
-                  harvestingDate: harvestingDate,
-                  transplantingDate: transplantingDate,
-                );
+                await viewModel.createCrop(cropName, plantingDate,
+                  harvestingDate, transplantingDate);
                 if (!mounted) return;
-                fetchCrops();
+                viewModel.fetchCrops();
                 Navigator.of(context).pop();
               },
             ),
           );
         },
+        child: const Icon(Icons.add),
       ),
     );
   }

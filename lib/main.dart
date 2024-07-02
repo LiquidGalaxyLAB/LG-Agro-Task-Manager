@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/model/task_manager.dart';
-import 'package:taskmanager/pages/crop_page.dart';
+import 'package:taskmanager/view/crop_view.dart';
 import 'package:taskmanager/services/database_service.dart';
 import 'package:taskmanager/services/robots_service.dart';
 import 'package:taskmanager/view/add_task_view.dart';
@@ -29,7 +29,7 @@ Future<void> main() async {
         final robot = args['robot'] as Robot;
         return AddTaskView(taskManager: tmTemp, robot: robot);
       },
-      '/crop_page': (context) => const CropsPage(),
+      '/crop_page': (context) => const CropView(),
       '/robot_page': (context) => const RobotsView(),
       '/settings_page': (context) => const ConnectionPageView(),
     },

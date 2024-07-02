@@ -43,7 +43,21 @@ const CropSchema = CollectionSchema(
   deserialize: _cropDeserialize,
   deserializeProp: _cropDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'cropName': IndexSchema(
+      id: -4185822746128558756,
+      name: r'cropName',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'cropName',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _cropGetId,
@@ -125,6 +139,60 @@ void _cropAttach(IsarCollection<dynamic> col, Id id, Crop object) {
   object.id = id;
 }
 
+extension CropByIndex on IsarCollection<Crop> {
+  Future<Crop?> getByCropName(String cropName) {
+    return getByIndex(r'cropName', [cropName]);
+  }
+
+  Crop? getByCropNameSync(String cropName) {
+    return getByIndexSync(r'cropName', [cropName]);
+  }
+
+  Future<bool> deleteByCropName(String cropName) {
+    return deleteByIndex(r'cropName', [cropName]);
+  }
+
+  bool deleteByCropNameSync(String cropName) {
+    return deleteByIndexSync(r'cropName', [cropName]);
+  }
+
+  Future<List<Crop?>> getAllByCropName(List<String> cropNameValues) {
+    final values = cropNameValues.map((e) => [e]).toList();
+    return getAllByIndex(r'cropName', values);
+  }
+
+  List<Crop?> getAllByCropNameSync(List<String> cropNameValues) {
+    final values = cropNameValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'cropName', values);
+  }
+
+  Future<int> deleteAllByCropName(List<String> cropNameValues) {
+    final values = cropNameValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'cropName', values);
+  }
+
+  int deleteAllByCropNameSync(List<String> cropNameValues) {
+    final values = cropNameValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'cropName', values);
+  }
+
+  Future<Id> putByCropName(Crop object) {
+    return putByIndex(r'cropName', object);
+  }
+
+  Id putByCropNameSync(Crop object, {bool saveLinks = true}) {
+    return putByIndexSync(r'cropName', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByCropName(List<Crop> objects) {
+    return putAllByIndex(r'cropName', objects);
+  }
+
+  List<Id> putAllByCropNameSync(List<Crop> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'cropName', objects, saveLinks: saveLinks);
+  }
+}
+
 extension CropQueryWhereSort on QueryBuilder<Crop, Crop, QWhere> {
   QueryBuilder<Crop, Crop, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
@@ -196,6 +264,50 @@ extension CropQueryWhere on QueryBuilder<Crop, Crop, QWhereClause> {
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<Crop, Crop, QAfterWhereClause> cropNameEqualTo(String cropName) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'cropName',
+        value: [cropName],
+      ));
+    });
+  }
+
+  QueryBuilder<Crop, Crop, QAfterWhereClause> cropNameNotEqualTo(
+      String cropName) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'cropName',
+              lower: [],
+              upper: [cropName],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'cropName',
+              lower: [cropName],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'cropName',
+              lower: [cropName],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'cropName',
+              lower: [],
+              upper: [cropName],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }

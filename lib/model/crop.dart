@@ -4,7 +4,9 @@ part 'crop.g.dart';
 
 @collection
 class Crop {
-  Id id = Isar.autoIncrement; // you can also use id = null to auto increment
+  Id id = Isar.autoIncrement;
+
+  @Index(unique: true)
   String cropName;
   String plantationDates;
   String transplantingDates;
