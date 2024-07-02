@@ -59,8 +59,14 @@ class RobotsViewModel{
 
   Task? fetchCurrentTask()  {
     taskManager = RobotsService.singleton.getTaskManager();
-    currentRobot = taskManager.getRobot(currentRobot.name)!;
-    return currentRobot.currentTask;
+    Robot? currentRobot2 = taskManager.getRobot(currentRobot.name);
+    if(currentRobot2 != null && currentRobot2.currentTask != null) {
+      currentRobot = currentRobot2;
+      return currentRobot.currentTask;
+    }
+    else {
+      return null;
+    }
   }
 
   Future<void> simulateTask() async {

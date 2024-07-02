@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/services/database_service.dart';
 import 'package:taskmanager/view_models/crop_view_model.dart';
-
 import '../model/crop.dart';
 import 'crop_detail_view.dart';
 import '../widgets/create_crop_widget.dart';
@@ -19,7 +17,14 @@ class _CropViewState extends State<CropView> {
   @override
   void initState() {
     super.initState();
-    viewModel.initializeDatabase();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    await viewModel.initializeDatabase();
+    setState(() {
+      viewModel.fetchCrops();
+    });
   }
 
   @override
@@ -34,86 +39,89 @@ class _CropViewState extends State<CropView> {
         backgroundColor: customGreen,
       ),
       body: FutureBuilder<List<Crop>>(
-        future: viewModel.futureCrops,
+        future: viewModel.getFutureCrops(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else {
-            if (snapshot.hasData) {
-              final crops = snapshot.data!;
-              return crops.isEmpty
-                  ? const Center(
-                child: Text(
-                  'No crops...',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28,
-                    color: Colors.white,
-                  ),
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            final crops = snapshot.data!;
+            return crops.isEmpty
+                ? const Center(
+              child: Text(
+                'No crops...',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                  color: Colors.white,
                 ),
-              )
-                  : ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(height: 12),
-                itemCount: crops.length,
-                itemBuilder: (context, index) {
-                  final crop = crops[index];
-                  return ListTile(
-                    title: Text(
-                      crop.cropName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: customGreen,
+              ),
+            )
+                : ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(height: 12),
+              itemCount: crops.length,
+              itemBuilder: (context, index) {
+                final crop = crops[index];
+                return ListTile(
+                  title: Text(
+                    crop.cropName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: customGreen,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Planting Date: ${crop.plantationDates}',
+                        style: const TextStyle(
+                          color: customGreen,
+                        ),
                       ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Planting Date: ${crop.plantationDates}',
-                          style: const TextStyle(
-                            color: customGreen,
-                          ),
+                      Text(
+                        'Transplanting Date: ${crop.transplantingDates}',
+                        style: const TextStyle(
+                          color: customGreen,
                         ),
-                        Text(
-                          'Transplanting Date: ${crop.transplantingDates}',
-                          style: const TextStyle(
-                            color: customGreen,
-                          ),
+                      ),
+                      Text(
+                        'Harvesting Date: ${crop.harvestingDates}',
+                        style: const TextStyle(
+                          color: customGreen,
                         ),
-                        Text(
-                          'Harvesting Date: ${crop.harvestingDates}',
-                          style: const TextStyle(
-                            color: customGreen,
-                          ),
-                        ),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      onPressed: () async {
-                        //await cropRobotDB.deleteCrop(crop.cropName);
-                        viewModel.fetchCrops();
-                      },
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CropDetailView(
-                            crop: crop,
-                            onUpdate: viewModel.fetchCrops,
-                          ),
-                        ),
-                      );
+                      ),
+                    ],
+                  ),
+                  trailing: IconButton(
+                    onPressed: () async {
+                      // await cropRobotDB.deleteCrop(crop.cropName);
+                      await viewModel.fetchCrops();
+                      setState(() {}); // afegir setState per actualitzar la UI
                     },
-                  );
-                },
-              );
-            }
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CropDetailView(
+                          crop: crop,
+                          onUpdate: () async {
+                            await viewModel.fetchCrops();
+                            setState(() {}); // afegir setState per actualitzar la UI
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          } else {
+            return const Center(child: Text('No crops available'));
           }
-          return Center(
-            child: Text('Error: ${snapshot.error}'),
-          );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -123,10 +131,9 @@ class _CropViewState extends State<CropView> {
             context: context,
             builder: (_) => CreateCropWidget(
               onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
-                await viewModel.createCrop(cropName, plantingDate,
-                  harvestingDate, transplantingDate);
-                if (!mounted) return;
-                viewModel.fetchCrops();
+                await viewModel.createCrop(cropName, plantingDate, harvestingDate, transplantingDate);
+                await viewModel.fetchCrops();
+                setState(() {}); // afegir setState per actualitzar la UI
                 Navigator.of(context).pop();
               },
             ),
