@@ -1,4 +1,10 @@
+import 'package:isar/isar.dart';
+
+part 'crop.g.dart';
+
+@collection
 class Crop {
+  Id id = Isar.autoIncrement; // you can also use id = null to auto increment
   String cropName;
   String plantationDates;
   String transplantingDates;
@@ -28,13 +34,4 @@ class Crop {
     //0, 0 és el que rebrem si no tenim valor a transplantingDates, per representar inexistència
     return (0, 0);
   }
-
-  factory Crop.fromSqfliteDatabase(Map<String, dynamic> map) => Crop(
-        cropName: map['cropName'] ?? '',
-        plantationDates: map['plantingFortnight'] ?? '',
-        transplantingDates: map['transplantingFortnight'] != ''
-            ? map['transplantingFortnight']
-            : '0-0',
-        harvestingDates: map['harvestingFortnight'],
-      );
 }

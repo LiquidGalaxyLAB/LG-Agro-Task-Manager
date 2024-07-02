@@ -114,7 +114,6 @@ class _CropsPageState extends State<CropsPage> {
                           builder: (context) => CropDetailView(
                             crop: crop,
                             onUpdate: fetchCrops,
-                            cropRobotDB: cropRobotDB,
                           ),
                         ),
                       );

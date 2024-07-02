@@ -1,16 +1,19 @@
+import 'package:isar/isar.dart';
 import 'package:taskmanager/model/task_manager.dart';
+import 'package:taskmanager/services/database_service.dart';
 
 import '../model/robot.dart';
-import '../model/crop_db.dart';
 
-class RobotsService{
+class RobotsService {
 
-  final CropRobotDB _cropRobotDB = CropRobotDB();
   late TaskManager taskManager;
   static RobotsService singleton = RobotsService();
 
+  Future<Isar> _getDataBase() async => DataBaseService.singleton.getDatabase();
+
   Future<List<Robot>> fetchRobots() async {
-    return await _cropRobotDB.fetchAllRobots();
+    final isar = await _getDataBase();
+    return isar.robots.where().findAll();
   }
 
   void setTaskManager(TaskManager tm){
@@ -18,7 +21,12 @@ class RobotsService{
   }
 
   Future<void> createRobot(String robotName, String serialCode, String robotIP ) async {
-    _cropRobotDB.createRobot(robotName: robotName, serialCode: serialCode, robotIP: robotIP);
+    final isar = await _getDataBase();
+    return await isar.writeTxn(() async {
+      await isar.robots.put(Robot(name: robotName,
+          serialNumber: serialCode,
+          robotIP: robotIP)); // insert & update
+    });
   }
 
   Future<void> initialize() async {

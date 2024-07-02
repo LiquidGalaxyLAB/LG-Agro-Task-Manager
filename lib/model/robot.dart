@@ -1,15 +1,20 @@
 import 'package:taskmanager/model/task.dart';
+import 'package:isar/isar.dart';
 
-class Robot{
-  int robotNumber;
+part 'robot.g.dart';
+
+@collection
+class Robot {
+  Id id = Isar.autoIncrement; // you can also use id = null to auto increment
   String name;
   String serialNumber;
   String robotIP;
+  @ignore
   Task? currentTask;
+  @ignore
   List<Task> remainingTasks = [];
 
   Robot({
-    required this.robotNumber,
     required this.name,
     required this.serialNumber,
     required this.robotIP}) {
@@ -17,7 +22,7 @@ class Robot{
   }
 
   factory Robot.empty(){
-    return Robot(robotNumber: 9999, name: 'empty', serialNumber: '9999', robotIP: '9999');
+    return Robot(name: 'empty', serialNumber: '9999', robotIP: '9999');
   }
 
   Future<void> taskSimulation() async {
@@ -34,13 +39,6 @@ class Robot{
   void setCurrentTask(Task t){
     currentTask = t;
   }
-
-  factory Robot.fromSqfliteDatabase(Map<String, dynamic> map) => Robot(
-    robotNumber: map['robotNumber'],
-    name: map['robotName'],
-    serialNumber: map['serialCode'],
-    robotIP: map['robotIP'],
-  );
 
   void _checkAndAssignTask() {
     if (currentTask == null && remainingTasks.isNotEmpty) {

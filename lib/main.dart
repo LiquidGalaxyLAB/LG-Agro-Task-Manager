@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/pages/crop_page.dart';
 import 'package:taskmanager/services/database_service.dart';
@@ -16,9 +14,7 @@ import 'view/main_view.dart';
 
 Future<void> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
-  await DataBaseService.getInstance();
+  await DataBaseService.singleton.initializeDatabase();
   await RobotsService.singleton.initialize();
 }
 

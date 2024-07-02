@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/model/crop_db.dart';
+import 'package:taskmanager/view_models/crop_detail_view_model.dart';
+
 import '../model/crop.dart';
 import '../widgets/create_crop_widget.dart';
-import '../services/database_service.dart';
 
 class CropDetailView extends StatelessWidget {
   final Crop crop;
   final Function onUpdate;
-  final CropRobotDB cropRobotDB;
+  final CropDetailViewModel viewModel = CropDetailViewModel();
 
-  const CropDetailView({Key? key, required this.crop, required this.onUpdate, required this.cropRobotDB}) : super(key: key);
+  CropDetailView({Key? key, required this.crop, required this.onUpdate})
+      : super(key: key);
 
   bool hasValidFormat(String input) {
     RegExp regex = RegExp(r'^\d+-\d+$');
@@ -45,13 +47,16 @@ class CropDetailView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Planting Date: ${crop.plantationDates}', style: const TextStyle(color: customGreen)),
+            Text('Planting Date: ${crop.plantationDates}',
+                style: const TextStyle(color: customGreen)),
             _buildDateGrid(crop.plantationDates, customGreen),
             const SizedBox(height: 20),
-            Text('Transplanting Date: ${crop.transplantingDates}', style: const TextStyle(color: customGreen)),
+            Text('Transplanting Date: ${crop.transplantingDates}',
+                style: const TextStyle(color: customGreen)),
             _buildDateGrid(crop.transplantingDates, customGreen),
             const SizedBox(height: 20),
-            Text('Harvesting Date: ${crop.harvestingDates}', style: const TextStyle(color: customGreen)),
+            Text('Harvesting Date: ${crop.harvestingDates}',
+                style: const TextStyle(color: customGreen)),
             _buildDateGrid(crop.harvestingDates, customGreen),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -60,12 +65,13 @@ class CropDetailView extends StatelessWidget {
                   context: context,
                   builder: (context) => CreateCropWidget(
                     crop: crop,
-                    onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
-                      await CropRobotDB().updateCrop(
-                        cropName: cropName,
-                        plantingDate: plantingDate,
-                        harvestingDate: harvestingDate,
-                        transplantingDate: transplantingDate,
+                    onSubmit: (cropName, plantingDate, harvestingDate,
+                        transplantingDate) async {
+                      await viewModel.updateCrop(
+                        cropName,
+                        plantingDate,
+                        harvestingDate,
+                        transplantingDate,
                       );
                       onUpdate();
                       Navigator.of(context).pop();
