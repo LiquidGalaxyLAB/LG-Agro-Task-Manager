@@ -7,13 +7,13 @@ import 'package:path/path.dart' as p;
 import '../model/crop_db.dart';
 
 class DataBaseService {
-  static DataBaseService? _singleton;
+  static DataBaseService? singleton;
   final Database _database;
 
   DataBaseService._internal(this._database);
 
   static Future<DataBaseService> getInstance() async {
-    if (_singleton == null) {
+    if (singleton == null) {
       final io
           .Directory appDocumentsDir = await getApplicationDocumentsDirectory();
       String dbPath = p.join(appDocumentsDir.path, "databases", "crop.db");
@@ -26,9 +26,9 @@ class DataBaseService {
           },
         ),
       );
-      _singleton = DataBaseService._internal(db);
+      singleton = DataBaseService._internal(db);
     }
-    return _singleton!;
+    return singleton!;
   }
 
   Future<Database> get database async {

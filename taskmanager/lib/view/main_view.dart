@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/services/database_service.dart';
+
+import '../view_models/main_view_model.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -8,53 +11,65 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
+  final MainViewModel viewModel = MainViewModel();
+
   @override
   void initState() {
     super.initState();
+    _initializeDatabase();
   }
+
+  Future<void> _initializeDatabase() async {
+    await DataBaseService.getInstance();
+    viewModel.fetchCrops();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    Color myGreen = Color(0xFF3E9671);
+    Color myGreen = const Color(0xFF3E9671);
 
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey[900], // Canvia el color de fons a gris fosc
+        backgroundColor: Colors.grey[900],
         appBar: AppBar(
-          backgroundColor: Colors.grey[900], // Canvia el color de la barra d'aplicacions a gris fosc
+          backgroundColor: Colors.grey[900],
           title: const Text('Agro Task Manager', style: TextStyle(color: Colors.white)),
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.power_settings_new, color: Colors.red),
+              icon: const Icon(Icons.power_settings_new, color: Colors.red),
               onPressed: () {
-                // Defineix l'acció del botó d'apagar aquí
               },
             ),
           ],
         ),
-        body: Center(
+        body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Container(
                   width: 250,
                   height: 250,
                   color: Colors.grey[900],
                   child: Center(
-                      child: Image.asset('resources/logo.png')),
+                    child: Image.asset('resources/logo.png'),
+                  ),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 20),
               Container(
                 width: 200,
                 height: 100,
                 color: myGreen,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black, backgroundColor: myGreen, // Canvia el color del text
+                    foregroundColor: Colors.black,
+                    backgroundColor: myGreen,
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/robot_page');
@@ -62,40 +77,71 @@ class _MainViewState extends State<MainView> {
                   child: const Text("Robots' tasks"),
                 ),
               ),
-              SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 200,
-                    height: 100,
-                    color: myGreen,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black, backgroundColor: myGreen, // Canvia el color del text
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/crop_page');
-                      },
-                      child: const Text('Crops & Calendar'),
-                    ),
+              const SizedBox(height: 20),
+              Container(
+                width: 200,
+                height: 100,
+                color: myGreen,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: myGreen,
                   ),
-                  SizedBox(width: 50),
-                  Container(
-                    width: 200,
-                    height: 100,
-                    color: myGreen,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black, backgroundColor: myGreen, // Canvia el color del text
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/settings_page');
-                      },
-                      child: const Text('Settings'),
-                    ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/crop_page');
+                  },
+                  child: const Text('Crops & Calendar'),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                width: 200,
+                height: 100,
+                color: myGreen,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: myGreen,
                   ),
-                ],
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/settings_page');
+                  },
+                  child: const Text('Settings'),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                width: 300,
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(color: Colors.white),
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: viewModel.cropsInCurrentFortnight.length,
+                  itemBuilder: (context, index) {
+                    final crop = viewModel.cropsInCurrentFortnight[index];
+                    return Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.white, width: 0.5),
+                        ),
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          crop.cropName,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        subtitle: Text(
+                          viewModel.getTaskText(crop),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

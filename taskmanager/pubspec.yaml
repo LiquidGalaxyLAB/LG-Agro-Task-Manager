@@ -33,6 +33,7 @@ dependencies:
   sqflite: ^2.0.0+3
   path_provider: ^2.1.2
   sqflite_common_ffi: ^2.0.0
+  intl: ^0.18.0
 
 
 
