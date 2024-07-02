@@ -24,10 +24,14 @@ class _MainViewState extends State<MainView> {
     viewModel.fetchCrops();
   }
 
-
   @override
   Widget build(BuildContext context) {
     Color myGreen = const Color(0xFF3E9671);
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double buttonSize = screenWidth * 0.15;
 
     return MaterialApp(
       home: Scaffold(
@@ -40,6 +44,7 @@ class _MainViewState extends State<MainView> {
             IconButton(
               icon: const Icon(Icons.power_settings_new, color: Colors.red),
               onPressed: () {
+                // Add your logout logic here
               },
             ),
           ],
@@ -50,68 +55,65 @@ class _MainViewState extends State<MainView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  color: Colors.grey[900],
-                  child: Center(
-                    child: Image.asset('resources/logo.png'),
-                  ),
-                ),
+              Center(
+                child: Image.asset('resources/logo.png', width: buttonSize, height: buttonSize),
               ),
               const SizedBox(height: 20),
-              Container(
-                width: 200,
-                height: 100,
-                color: myGreen,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: myGreen,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: buttonSize,
+                    height: buttonSize,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: myGreen,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/crop_page');
+                      },
+                      child: const Text('Crops & Calendar'),
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/robot_page');
-                  },
-                  child: const Text("Robots' tasks"),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                width: 200,
-                height: 100,
-                color: myGreen,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: myGreen,
+                  SizedBox(
+                    width: buttonSize,
+                    height: buttonSize,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: myGreen,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/robot_page');
+                      },
+                      child: const Text("Robots' tasks"),
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/crop_page');
-                  },
-                  child: const Text('Crops & Calendar'),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                width: 200,
-                height: 100,
-                color: myGreen,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: myGreen,
+                  SizedBox(
+                    width: buttonSize,
+                    height: buttonSize,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: myGreen,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/settings_page');
+                      },
+                      child: const Text('Settings'),
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/settings_page');
-                  },
-                  child: const Text('Settings'),
-                ),
+                ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 150),
+              const Text(
+                'Plants in season:',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              const SizedBox(height: 10),
               Container(
-                width: 300,
+                width: screenWidth * 0.8,
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 decoration: BoxDecoration(
                   color: Colors.grey[800],
