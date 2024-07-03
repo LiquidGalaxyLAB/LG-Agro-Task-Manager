@@ -96,9 +96,9 @@ class _CropViewState extends State<CropView> {
                   ),
                   trailing: IconButton(
                     onPressed: () async {
-                      // await cropRobotDB.deleteCrop(crop.cropName);
+                      await viewModel.deleteCrops(crop.cropName);
                       await viewModel.fetchCrops();
-                      setState(() {}); // afegir setState per actualitzar la UI
+                      setState(() {});
                     },
                     icon: const Icon(Icons.delete, color: Colors.red),
                   ),
@@ -133,7 +133,7 @@ class _CropViewState extends State<CropView> {
               onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
                 await viewModel.createCrop(cropName, plantingDate, harvestingDate, transplantingDate);
                 await viewModel.fetchCrops();
-                setState(() {}); // afegir setState per actualitzar la UI
+                setState(() {});
                 Navigator.of(context).pop();
               },
             ),

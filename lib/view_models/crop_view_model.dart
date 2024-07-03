@@ -33,4 +33,22 @@ class CropViewModel {
   Future<List<Crop>>? getFutureCrops() {
     return futureCrops;
   }
+
+  Future<int> searchByCropName(String cropName) async {
+    final isar = await _getDataBase();
+    final crop = await isar.crops.filter().cropNameEqualTo(cropName).findFirst();
+    if(crop == null) return -1;
+    else {
+      return crop.id;
+    }
+  }
+
+  Future<void> deleteCrops(String cropName) async {
+    int id = await searchByCropName(cropName);
+    if(id != -1) {
+      await isar.writeTxn(() async{
+        await isar.crops.delete(id);
+      });
+    }
+  }
 }

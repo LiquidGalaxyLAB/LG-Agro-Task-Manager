@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.taskmanager"
+    namespace "com.davit.taskmanager"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -37,7 +37,7 @@ android {
             keyAlias 'lgATMkey24'
             keyPassword 'pawong'
             storeFile file('../../lgATM.jks')
-            storePassword 'storePawong'
+            storePassword 'pawong'
         }
     }
 
@@ -51,7 +51,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.taskmanager"
+        applicationId "com.davit.taskmanager"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
