@@ -22,10 +22,6 @@ class MainViewModel{
     fetchCrops();
   }
 
-  void addCrop(Crop c){
-    cropsInCurrentFortnight.add(c);
-  }
-
   int _getCurrentFortnight() {
     DateTime now = DateTime.now();
     int dayOfYear = int.parse(DateFormat("D").format(now));
