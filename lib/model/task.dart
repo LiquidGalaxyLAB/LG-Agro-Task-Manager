@@ -9,7 +9,7 @@ class Task {
     completionPercentage = 0;
     while(completionPercentage < 100){
       await Future.delayed(const Duration(seconds: 2));
-      completionPercentage += 20;
+      completionPercentage += 2;
     }
   }
 }

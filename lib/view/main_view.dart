@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/services/database_service.dart';
-
+import 'package:flutter/services.dart';
 import '../view_models/main_view_model.dart';
 
 class MainView extends StatefulWidget {
@@ -17,6 +17,7 @@ class _MainViewState extends State<MainView> {
   void initState() {
     super.initState();
     viewModel.initializeDatabase();
+    setState(() {});
   }
 
   @override
@@ -26,7 +27,8 @@ class _MainViewState extends State<MainView> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    double buttonSize = screenWidth * 0.15;
+    double buttonSize = screenWidth * 0.12;
+    double logoSize = screenWidth * 0.2;
 
     return MaterialApp(
       home: Scaffold(
@@ -39,7 +41,7 @@ class _MainViewState extends State<MainView> {
             IconButton(
               icon: const Icon(Icons.power_settings_new, color: Colors.red),
               onPressed: () {
-                // Add your logout logic here
+                SystemNavigator.pop();
               },
             ),
           ],
@@ -49,11 +51,11 @@ class _MainViewState extends State<MainView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              SizedBox(height: screenHeight * 0.05),
               Center(
-                child: Image.asset('resources/logo.png', width: buttonSize, height: buttonSize),
+                child: Image.asset('resources/logo.png', width: logoSize, height: buttonSize),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: screenHeight * 0.05),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -101,7 +103,7 @@ class _MainViewState extends State<MainView> {
                   ),
                 ],
               ),
-              const SizedBox(height: 150),
+              SizedBox(height: screenHeight * 0.1),
               const Text(
                 'Plants in season:',
                 style: TextStyle(color: Colors.white, fontSize: 16),
@@ -109,6 +111,7 @@ class _MainViewState extends State<MainView> {
               const SizedBox(height: 10),
               Container(
                 width: screenWidth * 0.8,
+                height: screenHeight * 0.3,
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 decoration: BoxDecoration(
                   color: Colors.grey[800],

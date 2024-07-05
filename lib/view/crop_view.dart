@@ -110,7 +110,7 @@ class _CropViewState extends State<CropView> {
                           crop: crop,
                           onUpdate: () async {
                             await viewModel.fetchCrops();
-                            setState(() {}); // afegir setState per actualitzar la UI
+                            setState(() {});
                           },
                         ),
                       ),

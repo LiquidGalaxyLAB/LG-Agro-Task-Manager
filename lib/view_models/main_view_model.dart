@@ -1,10 +1,9 @@
 import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
-
 import '../model/crop.dart';
 import '../services/database_service.dart';
 
-class MainViewModel{
+class MainViewModel {
   int currentFortnight = 0;
   List<Crop> cropsInCurrentFortnight = [];
   late Isar isar;
@@ -30,8 +29,15 @@ class MainViewModel{
 
   bool _isInCurrentFortnight(String dateRange) {
     List<String> dates = dateRange.split('-');
-    int start = int.parse(dates[0]);
-    int end = int.parse(dates[1]);
+    if (dates.length != 2) return false;
+    print("Daterange = " + dateRange);
+
+    int? start = int.tryParse(dates[0]);
+    int? end = int.tryParse(dates[1]);
+
+    print("Start = ${start} End = ${end}" );
+
+    if (start == null || end == null) return false;
     return start <= currentFortnight && currentFortnight <= end;
   }
 

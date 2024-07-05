@@ -103,7 +103,7 @@ class _RobotsViewState extends State<RobotsView> {
         ),
         body: Column(
           children: [
-            const SizedBox(height: 20), // Add some spacing
+            const SizedBox(height: 20),
             StreamBuilder<Robot>(
               stream: _currentRobotController.stream,
               builder: (context, snapshot) {
@@ -117,13 +117,13 @@ class _RobotsViewState extends State<RobotsView> {
                     ),
                   );
                 } else {
-                  return const Text('Loading...'); // Optional: Show a loading indicator
+                  return const Text('Loading...');
                 }
               },
             ),
-            const SizedBox(height: 20), // Add some spacing
+            const SizedBox(height: 20),
             SizedBox(
-              width: MediaQuery.of(context).size.width, // Full width
+              width: MediaQuery.of(context).size.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -134,7 +134,7 @@ class _RobotsViewState extends State<RobotsView> {
                         return Column(
                           children: [
                             Text(
-                              'Tasca actual: ${snapshot.data!.taskName.isEmpty ? "Cap" : snapshot.data!.taskName}',
+                              'Current Task: ${snapshot.data!.taskName.isEmpty ? "Cap" : snapshot.data!.taskName}',
                               style: TextStyle(color: myGreen),
                             ),
                             Padding(
@@ -200,9 +200,13 @@ class _RobotsViewState extends State<RobotsView> {
                       Task? currentTask = viewModel.fetchCurrentTask();
                       if (currentTask != null) _taskController.add(currentTask);
                       queueController.add(viewModel.fetchRemainingTasks());
-                    },
-                    child: const Text('Afegeix tasques'),
-                    style: ElevatedButton.styleFrom(backgroundColor: myGreen),
+                    },style: ElevatedButton.styleFrom(backgroundColor: myGreen),
+                    child: const Text(
+                        'Add tasks',
+                        style: TextStyle(
+                            color: Colors.black),
+                        )
+
                   ),
                 ],
               ),
