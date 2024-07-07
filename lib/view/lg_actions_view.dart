@@ -64,32 +64,14 @@ class _LGActionsViewState extends State<LGActionsView> {
                       await lg.connectToLG();
                       await lg.cleanKML();
                       await lg.cleanSlaves();
-
-                      SSHSession? sshSession =
-                      await lg.flyToOrbit(41.607970, 2.287730, 2000, 45, 0);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,
                       fixedSize: const Size(200, 50),
                     ),
-                    child: const Text('Travel to Granollers', style: TextStyle(color: Colors.white)),
+                    child: const Text('Clear info', style: TextStyle(color: Colors.white)),
                   ),
                 ],
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ConnectionPageView(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: myGreen,
-                  fixedSize: const Size(200, 50),
-                ),
-                child: const Text('Manage connection', style: TextStyle(color: Colors.white)),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -97,13 +79,13 @@ class _LGActionsViewState extends State<LGActionsView> {
                   ElevatedButton(
                     onPressed: () async {
                       await lg.connectToLG();
-                      await lg.orbitAtMyCity();
+                      await lg.startOrbit();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,
                       fixedSize: const Size(200, 50),
                     ),
-                    child: const Text('Orbit around home city', style: TextStyle(color: Colors.white)),
+                    child: const Text('Orbit around position', style: TextStyle(color: Colors.white)),
                   ),
                   ElevatedButton(
                     onPressed: () async {

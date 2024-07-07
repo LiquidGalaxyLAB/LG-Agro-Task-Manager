@@ -30,13 +30,10 @@ class MainViewModel {
   bool _isInCurrentFortnight(String dateRange) {
     List<String> dates = dateRange.split('-');
     if (dates.length != 2) return false;
-    print("Daterange = " + dateRange);
 
     int? start = int.tryParse(dates[0]);
     int? end = int.tryParse(dates[1]);
-
-    print("Start = ${start} End = ${end}" );
-
+    
     if (start == null || end == null) return false;
     return start <= currentFortnight && currentFortnight <= end;
   }

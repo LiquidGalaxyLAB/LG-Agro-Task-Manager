@@ -230,7 +230,6 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.cast, color: Colors.white),
                         SizedBox(width: 20),
                         Text(
                           'TAKE LG ACTIONS',
