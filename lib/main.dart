@@ -5,6 +5,7 @@ import 'package:taskmanager/services/database_service.dart';
 import 'package:taskmanager/services/robots_service.dart';
 import 'package:taskmanager/view/add_task_view.dart';
 import 'package:taskmanager/view/connection_page_view.dart';
+import 'package:taskmanager/view/lg_actions_view.dart';
 import 'package:taskmanager/view/robots_view.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io' as io;
@@ -32,6 +33,7 @@ Future<void> main() async {
       '/crop_page': (context) => const CropView(),
       '/robot_page': (context) => const RobotsView(),
       '/settings_page': (context) => const ConnectionPageView(),
+      '/lg_actions': (context) => const LGActionsView(),
     },
   ));
 }

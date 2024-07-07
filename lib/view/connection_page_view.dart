@@ -142,7 +142,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                   labelText: 'LG Password',
                   labelStyle: TextStyle(color: customGreen),
                   hintText: 'Enter LG password',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: customGreen),
                   ),
@@ -176,7 +176,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(customGreen),
                   shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
+                    const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(50)),
                     ),
                   ),
@@ -200,6 +200,40 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                         SizedBox(width: 20),
                         Text(
                           'CONNECT TO LG',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(customGreen),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/lg_actions');
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.cast, color: Colors.white),
+                        SizedBox(width: 20),
+                        Text(
+                          'TAKE LG ACTIONS',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

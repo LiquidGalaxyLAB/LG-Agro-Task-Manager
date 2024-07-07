@@ -59,6 +59,7 @@ class LGService {
       print("An error has occured");
       return null;
     }
+    return null;
   }
 
   Future<SSHSession?> goToGranollers() async {
@@ -178,10 +179,11 @@ class LGService {
 
   Future<void> setLogos() async {
     int infoSlave;
-    if (screensNum == 1)
+    if (screensNum == 1) {
       infoSlave = 1;
-    else
+    } else {
       infoSlave = (screensNum / 2).floor() + 1;
+    }
     try {
       String command =
       """chmod 777 /var/www/html/kml/slave_$infoSlave.kml; echo '<?xml version="1.0" encoding="UTF-8"?>

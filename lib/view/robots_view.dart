@@ -8,7 +8,7 @@ import '../model/robot.dart';
 import '../model/task.dart';
 
 class RobotsView extends StatefulWidget {
-  const RobotsView({Key? key}) : super(key: key);
+  const RobotsView({super.key});
 
   @override
   State<RobotsView> createState() => _RobotsViewState();
@@ -206,7 +206,6 @@ class _RobotsViewState extends State<RobotsView> {
                         style: TextStyle(
                             color: Colors.black),
                         )
-
                   ),
                 ],
               ),
