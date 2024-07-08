@@ -11,12 +11,6 @@ class LGActionsView extends StatefulWidget {
 }
 
 class _LGActionsViewState extends State<LGActionsView> {
-  LGService lg = LGService(
-      ip: '192.168.10.217',
-      port: 22,
-      username: 'lg',
-      password: 'lg',
-      screensNum: 5);
 
   @override
   void initState() {
@@ -50,8 +44,8 @@ class _LGActionsViewState extends State<LGActionsView> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () async {
-                      await lg.connectToLG();
-                      await lg.relaunch();
+                      await LGService.instance.connectToLG();
+                      await LGService.instance.relaunch();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,
@@ -61,9 +55,9 @@ class _LGActionsViewState extends State<LGActionsView> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      await lg.connectToLG();
-                      await lg.cleanKML();
-                      await lg.cleanSlaves();
+                      await LGService.instance.connectToLG();
+                      await LGService.instance.cleanKML();
+                      await LGService.instance.cleanSlaves();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,
@@ -78,8 +72,8 @@ class _LGActionsViewState extends State<LGActionsView> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () async {
-                      await lg.connectToLG();
-                      await lg.startOrbit();
+                      await LGService.instance.connectToLG();
+                      await LGService.instance.startOrbit();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,
@@ -89,10 +83,10 @@ class _LGActionsViewState extends State<LGActionsView> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      await lg.connectToLG();
-                      await lg.cleanKML();
-                      await lg.cleanSlaves();
-                      await lg.setLogos();
+                      await LGService.instance.connectToLG();
+                      await LGService.instance.cleanKML();
+                      await LGService.instance.cleanSlaves();
+                      await LGService.instance.setLogos();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,

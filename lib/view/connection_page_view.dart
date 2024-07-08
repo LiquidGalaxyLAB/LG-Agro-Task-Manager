@@ -12,16 +12,20 @@ class ConnectionPageView extends StatefulWidget {
 
 class _ConnectionPageView extends State<ConnectionPageView> {
   bool connectionStatus = false;
-  late LGService lg;
 
   final Color customGreen = const Color(0xFF3E9671);
   final Color customDarkGrey = const Color(0xFF333333);
-
 
   final TextEditingController _ipController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _sshPortController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
 
   @override
   void dispose() {
@@ -44,8 +48,8 @@ class _ConnectionPageView extends State<ConnectionPageView> {
     } catch (e) {
       SharedPreferences.setMockInitialValues({});
     }
-    final port = _sshPortController.text.isEmpty? 0 : int.parse(_sshPortController.text);
-    lg = LGService(
+    final port = _sshPortController.text.isEmpty ? 0 : int.parse(_sshPortController.text);
+    LGService.initialize(
       ip: _ipController.text,
       port: port,
       username: _usernameController.text,
@@ -181,11 +185,11 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                 onPressed: () async {
                   await _saveSettings();
                   await _loadSettings();
-                  bool result = await lg.connectToLG();
-                    setState(() {
-                      connectionStatus = result;
-                    });
-                    if(connectionStatus) print('Connected to LG successfully');
+                  bool result = await LGService.instance.connectToLG();
+                  setState(() {
+                    connectionStatus = result;
+                  });
+                  if (connectionStatus) print('Connected to LG successfully');
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

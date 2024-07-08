@@ -16,12 +16,28 @@ class LGService {
   late int screensNum;
   bool connected = false;
 
-  LGService(
-      {required this.ip,
-        required this.port,
-        required this.username,
-        required this.password,
-        required this.screensNum});
+  static final LGService _instance = LGService._internal();
+
+  LGService();
+  LGService._internal();
+
+  static LGService initialize({
+    required String ip,
+    required int port,
+    required String username,
+    required String password,
+    required int screensNum,
+  }) {
+    _instance.ip = ip;
+    _instance.port = port;
+    _instance.username = username;
+    _instance.password = password;
+    _instance.screensNum = screensNum;
+    return _instance;
+  }
+
+  static LGService get instance => _instance;
+
 
   Future<bool> connectToLG() async {
     try {
