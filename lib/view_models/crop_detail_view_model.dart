@@ -15,6 +15,18 @@ class CropDetailViewModel {
     }
   }
 
+  int _getCurrentFortnight() {
+    final now = DateTime.now();
+    final startOfYear = DateTime(now.year, 1, 1);
+    final daysPassed = now.difference(startOfYear).inDays;
+
+    return (daysPassed ~/ 15) + 1;
+  }
+
+  bool isInCurrentFortnight(int index) {
+    return index + 1 == _getCurrentFortnight();
+  }
+
   Future<void> updateCrop(int id, String cropName, String plantingDate,
       String harvestingDate, String transplantingDate) async {
     final isar = await _getDatabase();

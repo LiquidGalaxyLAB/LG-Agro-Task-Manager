@@ -227,6 +227,7 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
             if (formKey.currentState!.validate()) {
               widget.onSubmit(
                   cropName, plantingDate, harvestingDate, transplantingDate);
+              setState(() {});
             }
           },
           child: const Text('OK'),

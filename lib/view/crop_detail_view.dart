@@ -9,8 +9,7 @@ class CropDetailView extends StatelessWidget {
   final Function onUpdate;
   final CropDetailViewModel viewModel = CropDetailViewModel();
 
-  CropDetailView({Key? key, required this.crop, required this.onUpdate})
-      : super(key: key);
+  CropDetailView({super.key, required this.crop, required this.onUpdate});
 
   bool hasValidFormat(String input) {
     RegExp regex = RegExp(r'^\d+-\d+$');
@@ -34,6 +33,7 @@ class CropDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     const Color customGreen = Color(0xFF3E9671);
     const Color customDarkGrey = Color(0xFF333333);
+    const Color overlapColor = Colors.orange;
 
     return Scaffold(
       appBar: AppBar(
@@ -41,78 +41,150 @@ class CropDetailView extends StatelessWidget {
         backgroundColor: customGreen,
       ),
       backgroundColor: customDarkGrey,
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Planting Date: ${crop.plantationDates}',
-                style: const TextStyle(color: customGreen)),
-            _buildDateGrid(crop.plantationDates, customGreen),
+            _buildSectionHeader('Planting Date:', crop.plantationDates, customGreen, overlapColor),
             const SizedBox(height: 20),
-            Text('Transplanting Date: ${crop.transplantingDates}',
-                style: const TextStyle(color: customGreen)),
-            _buildDateGrid(crop.transplantingDates, customGreen),
+            _buildSectionHeader('Transplanting Date:', crop.transplantingDates, customGreen, overlapColor),
             const SizedBox(height: 20),
-            Text('Harvesting Date: ${crop.harvestingDates}',
-                style: const TextStyle(color: customGreen)),
-            _buildDateGrid(crop.harvestingDates, customGreen),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => CreateCropWidget(
-                    crop: crop,
-                    onSubmit: (cropName, plantingDate, harvestingDate,
-                        transplantingDate) async {
-                      final int cropID = await viewModel.searchByCropName(cropName);
-                      await viewModel.updateCrop(
-                        cropID,
-                        cropName,
-                        plantingDate,
-                        harvestingDate,
-                        transplantingDate,
-                      );
-                      onUpdate();
-                      Navigator.of(context).pop();
-                    },
+            _buildSectionHeader('Harvesting Date:', crop.harvestingDates, customGreen, overlapColor),
+            const SizedBox(height: 30),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => CreateCropWidget(
+                      crop: crop,
+                      onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
+                        final int cropID = await viewModel.searchByCropName(cropName);
+                        await viewModel.updateCrop(cropID, cropName, plantingDate, harvestingDate, transplantingDate);
+                        onUpdate();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                  backgroundColor: customGreen,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: customGreen,
+                ),
+                child: const Text('Edit Crop', style: TextStyle(fontSize: 18)),
               ),
-              child: const Text('Edit Crop'),
             ),
+            const SizedBox(height: 30),
+            _buildLegend(customGreen, overlapColor, customDarkGrey),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDateGrid(String dates, Color customGreen) {
+  Widget _buildSectionHeader(String title, String dates, Color customGreen, Color overlapColor) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: customGreen,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        _buildDateGrid(dates, customGreen, overlapColor),
+      ],
+    );
+  }
+
+  Widget _buildDateGrid(String dates, Color customGreen, Color overlapColor) {
     return Container(
       height: 50,
+      margin: const EdgeInsets.only(top: 8),
+      decoration: BoxDecoration(
+        color: const Color(0xFF4F4F4F),
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: customGreen, width: 1.5),
+      ),
       child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 24,
         ),
         itemBuilder: (BuildContext context, int index) {
           final isSelected = _isSelected(index, dates);
+          final isInCurrentFortnight = viewModel.isInCurrentFortnight(index);
+          final isOverlap = isSelected && isInCurrentFortnight;
 
           return Container(
+            margin: const EdgeInsets.all(1),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              color: isSelected ? customGreen : Colors.white,
+              borderRadius: BorderRadius.circular(4.0),
+              color: isOverlap ? overlapColor : (isSelected ? customGreen : (isInCurrentFortnight ? const Color(0xFF4F4F4F).withOpacity(0.5) : Colors.white)),
             ),
             child: Center(
-              child: Text((index + 1).toString()),
+              child: Text(
+                (index + 1).toString(),
+                style: TextStyle(
+                  color: isOverlap ? Colors.black : (isSelected || isInCurrentFortnight ? Colors.white : customGreen),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           );
         },
         itemCount: 24,
       ),
+    );
+  }
+
+  Widget _buildLegend(Color customGreen, Color overlapColor, Color customDarkGrey) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Legend:',
+          style: TextStyle(
+            color: customGreen,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            _buildLegendItem(customGreen, 'Selected Dates'),
+            const SizedBox(width: 20),
+            _buildLegendItem(const Color(0xFF4F4F4F).withOpacity(0.5), 'Current Fortnight'),
+            const SizedBox(width: 20),
+            _buildLegendItem(overlapColor, 'Overlap'),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLegendItem(Color color, String text) {
+    return Row(
+      children: [
+        Container(
+          width: 20,
+          height: 20,
+          color: color,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          text,
+          style: const TextStyle(color: Colors.white),
+        ),
+      ],
     );
   }
 }
