@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/services/database_service.dart';
 import 'package:flutter/services.dart';
+
 import '../view_models/main_view_model.dart';
 
 class MainView extends StatefulWidget {
@@ -14,13 +14,6 @@ class _MainViewState extends State<MainView> {
   final MainViewModel viewModel = MainViewModel();
 
   @override
-  void initState() {
-    super.initState();
-    viewModel.initializeDatabase();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
     Color myGreen = const Color(0xFF3E9671);
 
@@ -30,50 +23,49 @@ class _MainViewState extends State<MainView> {
     double buttonSize = screenWidth * 0.12;
     double logoSize = screenWidth * 0.2;
 
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.grey[900],
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: screenHeight * 0.05),
-                  Center(
-                    child: Image.asset(
-                      'resources/images/logo.png',
-                      width: logoSize,
-                      height: buttonSize,
-                    ),
+    return Scaffold(
+      backgroundColor: Colors.grey[900],
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: screenHeight * 0.05),
+                Center(
+                  child: Image.asset(
+                    'resources/images/logo.png',
+                    width: logoSize,
+                    height: buttonSize,
                   ),
-                  SizedBox(height: screenHeight * 0.03),
-                  _buildCategoryRow(screenWidth, screenHeight, context),
-                  SizedBox(height: screenHeight * 0.05),
-                  _buildSectionHeader('Plants in season:', myGreen),
-                  const SizedBox(height: 10),
-                  _buildPlantsInSeasonList(screenWidth, screenHeight, myGreen),
-                ],
-              ),
+                ),
+                SizedBox(height: screenHeight * 0.03),
+                _buildCategoryRow(screenWidth, screenHeight, context),
+                SizedBox(height: screenHeight * 0.05),
+                _buildSectionHeader('Plants in season:', myGreen),
+                const SizedBox(height: 10),
+                _buildPlantsInSeasonList(screenWidth, screenHeight, myGreen),
+              ],
             ),
-            Positioned(
-              top: 40,
-              right: 20,
-              child: IconButton(
-                icon: const Icon(Icons.power_settings_new, color: Colors.red),
-                onPressed: () {
-                  SystemNavigator.pop();
-                },
-              ),
+          ),
+          Positioned(
+            top: 40,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.power_settings_new, color: Colors.red),
+              onPressed: () {
+                SystemNavigator.pop();
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildCategoryRow(double screenWidth, double screenHeight, BuildContext context) {
+  Widget _buildCategoryRow(
+      double screenWidth, double screenHeight, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -106,13 +98,13 @@ class _MainViewState extends State<MainView> {
   }
 
   Widget _buildCategoryItem(
-      BuildContext context,
-      String route,
-      String title,
-      String imagePath,
-      double screenWidth,
-      double screenHeight,
-      ) {
+    BuildContext context,
+    String route,
+    String title,
+    String imagePath,
+    double screenWidth,
+    double screenHeight,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, route);
@@ -164,7 +156,8 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  Widget _buildPlantsInSeasonList(double screenWidth, double screenHeight, Color myGreen) {
+  Widget _buildPlantsInSeasonList(
+      double screenWidth, double screenHeight, Color myGreen) {
     return Container(
       width: screenWidth * 0.8,
       height: screenHeight * 0.3,
@@ -176,9 +169,9 @@ class _MainViewState extends State<MainView> {
       ),
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: viewModel.cropsInCurrentFortnight.length,
+        itemCount: viewModel.getCropsInCurrentFortnight().length,
         itemBuilder: (context, index) {
-          final crop = viewModel.cropsInCurrentFortnight[index];
+          final crop = viewModel.getCropsInCurrentFortnight()[index];
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 4.0),
             decoration: BoxDecoration(

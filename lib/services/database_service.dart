@@ -18,7 +18,7 @@ class DataBaseService {
     );
   }
 
-  Future<Isar> getDatabase() async {
+  Isar getDatabase() {
     return _database;
   }
 }

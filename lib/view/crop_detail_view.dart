@@ -4,30 +4,18 @@ import 'package:taskmanager/view_models/crop_detail_view_model.dart';
 import '../model/crop.dart';
 import '../widgets/create_crop_widget.dart';
 
-class CropDetailView extends StatelessWidget {
+class CropDetailView extends StatefulWidget {
   final Crop crop;
   final Function onUpdate;
+
+  const CropDetailView({super.key, required this.crop, required this.onUpdate});
+
+  @override
+  State<CropDetailView> createState() => _CropDetailViewState();
+}
+
+class _CropDetailViewState extends State<CropDetailView> {
   final CropDetailViewModel viewModel = CropDetailViewModel();
-
-  CropDetailView({super.key, required this.crop, required this.onUpdate});
-
-  bool hasValidFormat(String input) {
-    RegExp regex = RegExp(r'^\d+-\d+$');
-    return regex.hasMatch(input);
-  }
-
-  bool _isSelected(int index, String dates) {
-    if (!hasValidFormat(dates)) {
-      final date = int.tryParse(dates);
-      return date == index + 1;
-    }
-
-    final dateValues = dates.split('-');
-    final start = int.tryParse(dateValues[0]) ?? 0;
-    final end = int.tryParse(dateValues[1]) ?? 0;
-
-    return index + 1 >= start && index + 1 <= end;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +25,7 @@ class CropDetailView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(crop.cropName),
+        title: Text(widget.crop.cropName),
         backgroundColor: customGreen,
       ),
       backgroundColor: customDarkGrey,
@@ -46,11 +34,23 @@ class CropDetailView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionHeader('Planting Date:', crop.plantationDates, customGreen, overlapColor),
+            _buildSectionHeader(
+                'Planting Date:',
+                viewModel.getCropPlantationDate(widget.crop),
+                customGreen,
+                overlapColor),
             const SizedBox(height: 20),
-            _buildSectionHeader('Transplanting Date:', crop.transplantingDates, customGreen, overlapColor),
+            _buildSectionHeader(
+                'Transplanting Date:',
+                viewModel.getCropTransplantingDate(widget.crop),
+                customGreen,
+                overlapColor),
             const SizedBox(height: 20),
-            _buildSectionHeader('Harvesting Date:', crop.harvestingDates, customGreen, overlapColor),
+            _buildSectionHeader(
+                'Harvesting Date:',
+                viewModel.getCropHarvestingDate(widget.crop),
+                customGreen,
+                overlapColor),
             const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
@@ -58,18 +58,22 @@ class CropDetailView extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => CreateCropWidget(
-                      crop: crop,
-                      onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
-                        final int cropID = await viewModel.searchByCropName(cropName);
-                        await viewModel.updateCrop(cropID, cropName, plantingDate, harvestingDate, transplantingDate);
-                        onUpdate();
-                        Navigator.of(context).pop();
+                      crop: widget.crop,
+                      onSubmit: (cropName, plantingDate, harvestingDate,
+                          transplantingDate) async {
+                        final int cropID = viewModel.searchCropID(cropName);
+                        await viewModel.updateCrop(cropID, cropName,
+                            plantingDate, harvestingDate, transplantingDate);
+                        setState(() {});
+                        widget.onUpdate();
+                        if (context.mounted) Navigator.of(context).pop();
                       },
                     ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 12.0),
                   backgroundColor: customGreen,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -86,7 +90,8 @@ class CropDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title, String dates, Color customGreen, Color overlapColor) {
+  Widget _buildSectionHeader(
+      String title, String dates, Color customGreen, Color overlapColor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -119,7 +124,7 @@ class CropDetailView extends StatelessWidget {
           crossAxisCount: 24,
         ),
         itemBuilder: (BuildContext context, int index) {
-          final isSelected = _isSelected(index, dates);
+          final isSelected = viewModel.isSelected(index, dates);
           final isInCurrentFortnight = viewModel.isInCurrentFortnight(index);
           final isOverlap = isSelected && isInCurrentFortnight;
 
@@ -127,13 +132,23 @@ class CropDetailView extends StatelessWidget {
             margin: const EdgeInsets.all(1),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0),
-              color: isOverlap ? overlapColor : (isSelected ? customGreen : (isInCurrentFortnight ? const Color(0xFF4F4F4F).withOpacity(0.5) : Colors.white)),
+              color: isOverlap
+                  ? overlapColor
+                  : (isSelected
+                      ? customGreen
+                      : (isInCurrentFortnight
+                          ? const Color(0xFF4F4F4F).withOpacity(0.5)
+                          : Colors.white)),
             ),
             child: Center(
               child: Text(
                 (index + 1).toString(),
                 style: TextStyle(
-                  color: isOverlap ? Colors.black : (isSelected || isInCurrentFortnight ? Colors.white : customGreen),
+                  color: isOverlap
+                      ? Colors.black
+                      : (isSelected || isInCurrentFortnight
+                          ? Colors.white
+                          : customGreen),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -145,7 +160,8 @@ class CropDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildLegend(Color customGreen, Color overlapColor, Color customDarkGrey) {
+  Widget _buildLegend(
+      Color customGreen, Color overlapColor, Color customDarkGrey) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -162,7 +178,8 @@ class CropDetailView extends StatelessWidget {
           children: [
             _buildLegendItem(customGreen, 'Selected Dates'),
             const SizedBox(width: 20),
-            _buildLegendItem(const Color(0xFF4F4F4F).withOpacity(0.5), 'Current Fortnight'),
+            _buildLegendItem(
+                const Color(0xFF4F4F4F).withOpacity(0.5), 'Current Fortnight'),
             const SizedBox(width: 20),
             _buildLegendItem(overlapColor, 'Overlap'),
           ],

@@ -1,24 +1,15 @@
 import 'package:intl/intl.dart';
-import 'package:isar/isar.dart';
+import 'package:taskmanager/services/crop_service.dart';
+
 import '../model/crop.dart';
-import '../services/database_service.dart';
 
 class MainViewModel {
   int currentFortnight = 0;
-  List<Crop> cropsInCurrentFortnight = [];
-  late Isar isar;
 
-  Future<Isar> _getDataBase() async => DataBaseService.singleton.getDatabase();
-
-  void fetchCrops() async {
-    isar = await _getDataBase();
-    List<Crop> crops = await isar.crops.where().findAll();
+  List<Crop> getCropsInCurrentFortnight() {
+    List<Crop> crops = CropService.singleton.getCrops();
     currentFortnight = _getCurrentFortnight();
-    cropsInCurrentFortnight = _filterCropsInCurrentFortnight(crops);
-  }
-
-  Future<void> initializeDatabase() async {
-    fetchCrops();
+    return _filterCropsInCurrentFortnight(crops);
   }
 
   int _getCurrentFortnight() {

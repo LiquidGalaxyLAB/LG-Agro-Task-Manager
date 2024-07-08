@@ -1,20 +1,8 @@
-import 'package:isar/isar.dart';
-import 'package:taskmanager/services/database_service.dart';
+import 'package:taskmanager/services/crop_service.dart';
+
 import '../model/crop.dart';
 
 class CropDetailViewModel {
-
-  Future<Isar> _getDatabase() async => await DataBaseService.singleton.getDatabase();
-
-  Future<int> searchByCropName(String cropName) async {
-    final isar = await _getDatabase();
-    final crop = await isar.crops.filter().cropNameEqualTo(cropName).findFirst();
-    if(crop == null) return -1;
-    else {
-      return crop.id;
-    }
-  }
-
   int _getCurrentFortnight() {
     final now = DateTime.now();
     final startOfYear = DateTime(now.year, 1, 1);
@@ -23,22 +11,37 @@ class CropDetailViewModel {
     return (daysPassed ~/ 15) + 1;
   }
 
+  bool isSelected(int index, String dates) {
+    final dateValues = dates.split('-');
+    final start = int.tryParse(dateValues[0]) ?? 0;
+    final end = int.tryParse(dateValues[1]) ?? 0;
+
+    return index + 1 >= start && index + 1 <= end;
+  }
+
   bool isInCurrentFortnight(int index) {
     return index + 1 == _getCurrentFortnight();
   }
 
-  Future<void> updateCrop(int id, String cropName, String plantingDate,
+  Future<void> updateCrop(int cropID, String cropName, String plantingDate,
       String harvestingDate, String transplantingDate) async {
-    final isar = await _getDatabase();
-      await isar.writeTxn(() async {
-        final crop = await isar.crops.get(id);
-        if (crop != null) {
-          crop.cropName = cropName;
-          crop.plantationDates = plantingDate;
-          crop.harvestingDates = harvestingDate;
-          crop.transplantingDates = transplantingDate;
-          await isar.crops.put(crop); // insert & update
-        }
-      });
+    await CropService.singleton.updateCrop(
+        cropID, cropName, plantingDate, harvestingDate, transplantingDate);
+  }
+
+  String getCropPlantationDate(Crop crop) {
+    return CropService.singleton.getCropPlantationDate(crop);
+  }
+
+  String getCropTransplantingDate(Crop crop) {
+    return CropService.singleton.getCropTransplantingDate(crop);
+  }
+
+  String getCropHarvestingDate(Crop crop) {
+    return CropService.singleton.getCropHarvestingDate(crop);
+  }
+
+  int searchCropID(String cropName) {
+    return CropService.singleton.getCropID(cropName);
   }
 }
