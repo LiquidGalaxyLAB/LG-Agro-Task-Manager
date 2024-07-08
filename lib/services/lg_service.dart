@@ -10,8 +10,8 @@ import 'orbit_service.dart';
 
 class LGService {
   SSHClient? _client;
-  final spainPath = 'resources/Espanya.kml';
-  final indiaPath = 'resources/India.kml';
+  final spainPath = 'resources/kml/Espanya.kml';
+  final indiaPath = 'resources/kml/India.kml';
   late String ip;
   late int port;
   late String username;
@@ -76,7 +76,6 @@ class LGService {
     if (country == "Spain") {
       filePath = spainPath;
     }
-
     try {
       final kmlContent = await File(filePath).readAsString();
       final kmlSection = extractKmlSection(kmlContent, name);
