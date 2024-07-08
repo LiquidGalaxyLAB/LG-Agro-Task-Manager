@@ -105,25 +105,10 @@ class LGService {
     return null;
   }
 
-  Future<SSHSession?> goToGranollers() async {
-    try {
-      if (_client == null) {
-        print("Error, the client is not initialized");
-        return null;
-      }
-      final session =
-      await _client!.execute('echo "search=Barcelona" >/tmp/query.txt');
-      return session;
-    } catch (e) {
-      print('An error occurred while executing the command: $e');
-      return null;
-    }
-  }
-
   makeFile(String filename, String content) async {
     try {
       var localPath = await getApplicationDocumentsDirectory();
-      File localFile = File('${localPath.path}/${filename}.kml');
+      File localFile = File('${localPath.path}/$filename.kml');
       await localFile.writeAsString(content);
 
       return localFile;
