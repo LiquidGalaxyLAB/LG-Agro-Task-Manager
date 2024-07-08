@@ -207,6 +207,19 @@ class _RobotsViewState extends State<RobotsView> {
                             color: Colors.black),
                         )
                   ),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(
+                      onPressed: () async {
+                        viewModel.visualizeTask();
+                      },
+                      style: ElevatedButton.styleFrom(backgroundColor: myGreen),
+                      child: const Text(
+                        'Visualize',
+                        style: TextStyle(
+                          color: Colors.black
+                        ),
+                      )
+                  ),
                 ],
               ),
             ),
@@ -249,8 +262,8 @@ class _RobotsViewState extends State<RobotsView> {
               );
             }));
           },
-          child: const Icon(Icons.add),
           backgroundColor: myGreen,
+          child: const Icon(Icons.add),
         ),
       ),
     );

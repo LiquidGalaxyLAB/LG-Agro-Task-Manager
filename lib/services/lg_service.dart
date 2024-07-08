@@ -4,11 +4,14 @@ import 'dart:io';
 import 'package:dartssh2/dartssh2.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'package:xml/xml.dart' as xml;
 import 'look_at_service.dart';
 import 'orbit_service.dart';
 
 class LGService {
   SSHClient? _client;
+  final spainPath = 'resources/Espanya.kml';
+  final indiaPath = 'resources/India.kml';
   late String ip;
   late int port;
   late String username;
@@ -39,6 +42,15 @@ class LGService {
   static LGService get instance => _instance;
 
 
+  String extractKmlSection(String kmlContent, String sectionName) {
+    final document = xml.XmlDocument.parse(kmlContent);
+    final folder = document.findAllElements('Folder').firstWhere(
+          (element) => element.findElements('name').any((name) => name.text == sectionName),
+    );
+
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">${folder.toXmlString()}</kml>';
+    }
+
   Future<bool> connectToLG() async {
     try {
       final socket = await SSHSocket.connect(ip, port,
@@ -57,6 +69,22 @@ class LGService {
       return false;
     }
     return false;
+  }
+
+  Future<void> displaySpecificKML(String name, String country) async {
+    var filePath = indiaPath;
+    if (country == "Spain") {
+      filePath = spainPath;
+    }
+
+    try {
+      final kmlContent = await File(filePath).readAsString();
+      final kmlSection = extractKmlSection(kmlContent, name);
+      final localFile = await makeFile(name, kmlSection);
+      await uploadKMLFile(localFile, name, "Task_Balloon");
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   Future<SSHSession?> relaunch() async {
@@ -107,7 +135,7 @@ class LGService {
 
   loadKML(String kmlName, String task) async {
     try {
-      final v = await _client!.execute(
+      await _client!.execute(
           "echo 'http://lg1:81/$kmlName.kml' > /var/www/html/kmls.txt");
 
       if (task == "Task_Orbit") {
@@ -144,7 +172,7 @@ class LGService {
 
   beginOrbiting() async {
     try {
-      final res = await _client!.run('echo "playtour=Orbit" > /tmp/query.txt');
+      await _client!.run('echo "playtour=Orbit" > /tmp/query.txt');
     } catch (error) {
       await beginOrbiting();
     }
@@ -152,7 +180,6 @@ class LGService {
 
   uploadKMLFile(File inputFile, String kmlName, String task) async {
     try {
-      bool uploading = true;
       final sftp = await _client!.sftp();
       final file = await sftp.open('/var/www/html/$kmlName.kml',
           mode: SftpFileOpenMode.create |
@@ -161,7 +188,6 @@ class LGService {
       var fileSize = await inputFile.length();
       file.write(inputFile.openRead().cast(), onProgress: (progress) async {
         if (fileSize == progress) {
-          uploading = false;
           if (task == "Task_Orbit") {
             await loadKML("OrbitKML", task);
           } else if (task == "Task_Balloon") {

@@ -1,6 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/services/database_service.dart';
+import 'package:taskmanager/services/lg_service.dart';
 
 import '../model/robot.dart';
 
@@ -32,6 +33,10 @@ class RobotsService {
   Future<void> initialize() async {
     final List<Robot> robots = await fetchRobots();
     taskManager = TaskManager(robots: robots);
+  }
+
+  Future<void> goToLocation(String name, String country) async {
+    LGService.instance.displaySpecificKML(name, country);
   }
 
   TaskManager getTaskManager(){

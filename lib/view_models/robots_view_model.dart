@@ -76,4 +76,16 @@ class RobotsViewModel{
   List<Task> fetchRemainingTasks() {
     return currentRobot.remainingTasks;
   }
+
+  visualizeTask() {
+    if(currentRobot.id == 0 || currentRobot.id == 1){
+      RobotsService.singleton.goToLocation("Seròs 1", "Espanya");
+    }
+    else if(currentRobot.id == 2){
+      RobotsService.singleton.goToLocation("Rajauya 1", "India");
+    }
+    else{
+      RobotsService.singleton.goToLocation("Nagjhiri 2", "India");
+    }
+  }
 }
