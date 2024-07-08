@@ -33,7 +33,7 @@ class MainViewModel {
 
     int? start = int.tryParse(dates[0]);
     int? end = int.tryParse(dates[1]);
-    
+
     if (start == null || end == null) return false;
     return start <= currentFortnight && currentFortnight <= end;
   }

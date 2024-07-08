@@ -14,12 +14,9 @@ class _ConnectionPageView extends State<ConnectionPageView> {
   bool connectionStatus = false;
   late LGService lg;
 
-  final Color customGreen = Color(0xFF3E9671);
-  final Color customDarkGrey = Color(0xFF333333);
+  final Color customGreen = const Color(0xFF3E9671);
+  final Color customDarkGrey = const Color(0xFF333333);
 
-  Future<void> _connectToLG() async {
-
-  }
 
   final TextEditingController _ipController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
@@ -160,7 +157,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                   labelText: 'SSH Port',
                   labelStyle: TextStyle(color: customGreen),
                   hintText: '22',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: customGreen),
                   ),
