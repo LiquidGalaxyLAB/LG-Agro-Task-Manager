@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartssh2/dartssh2.dart';
@@ -63,7 +62,6 @@ class LGService {
       );
       if (_client != null) {
         connected = true;
-        setLogos();
         return true;
       }
     } catch (e) {
@@ -149,8 +147,6 @@ class LGService {
       return null;
     }
   }
-
-
 
   String orbitLookAtLinear(double latitude, double longitude, double zoom,
       double tilt, double bearing) {
@@ -254,9 +250,6 @@ class LGService {
     }
   }
 
-
-
-
   Future<void> orbitAtMyCity() async {
     try {
       if (_client == null) {
@@ -278,55 +271,57 @@ class LGService {
 
   Future<void> setLogos() async {
     int infoSlave;
-    if (screensNum == 3) {
-      infoSlave = 2;
+    if (screensNum == 1) {
+      infoSlave = 1;
     } else {
-      infoSlave = 4;
+      infoSlave = (screensNum / 2).floor() + 2;
     }
+
     try {
       String imagePath = 'resources/images/logosLG.png';
+      String imageName = 'logosLG.png';
 
       ByteData imageData = await rootBundle.load(imagePath);
       Uint8List imageBytes = imageData.buffer.asUint8List();
-      String imageBase64 = base64Encode(imageBytes);
 
-      /*String kmlContent = """<?xml version="1.0" encoding="UTF-8"?>
+      var localPath = await getApplicationDocumentsDirectory();
+      File imageFile = File('${localPath.path}/$imageName');
+      await imageFile.writeAsBytes(imageBytes);
+
+      await uploadKMLFile(imageFile, imageName, "imatge");
+
+      String imageUrl = 'http://lg1:81/images/$imageName';
+
+      String kmlContent = '''
+<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
-  <GroundOverlay>
-    <name>LogoOverlay</name>
-    <Icon>
-      <href>data:image/png;base64,$imageBase64</href>
-    </Icon>
-    <LatLonBox>
-      <north>28.638478</north>
-      <south>28.637978</south>
-      <east>-17.841286</east>
-      <west>-17.841786</west>
-    </LatLonBox>
-  </GroundOverlay>
-</kml>""";
-      String command = """echo '$kmlContent' > /var/www/html/kml/slave_$infoSlave.kml""";*/
-      
-      await _client?.execute("""chmod 777 /var/www/html/kml/slave_$infoSlave.kml; echo '<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
-  <GroundOverlay>
-    <name>LogoOverlay</name>
-    <Icon>
-      <href>data:image/png;base64,$imageBase64</href>
-    </Icon>
-    <LatLonBox>
-      <north>28.638478</north>
-      <south>28.637978</south>
-      <east>-17.841286</east>
-      <west>-17.841786</west>
-    </LatLonBox>
-  </GroundOverlay>
+  <Document>
+    <name>LogoOverlay</name> 
+    <GroundOverlay>
+      <name>LogoOverlay</name>
+      <Icon>
+        <href>$imageUrl</href>
+      </Icon>
+      <LatLonBox>
+        <north>28.638478</north>
+        <south>28.637978</south>
+        <east>-17.841286</east>
+        <west>-17.841786</west>
+      </LatLonBox>
+    </GroundOverlay>
+  </Document>
 </kml>
-' > /var/www/html/kml/slave_$infoSlave.kml""");
+''';
+
+      String kmlFileName = 'slave_$infoSlave.kml';
+      File? kmlFile = await makeFile(kmlFileName, kmlContent);
+
+      uploadKMLFile(kmlFile, kmlFileName, "logoo");
+
+      print("Logos set successfully for slave $infoSlave");
     } catch (e) {
       print(e);
     }
-    print("logos set succesfully");
   }
 
 
