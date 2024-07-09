@@ -85,7 +85,7 @@ class RobotsViewModel{
       RobotsService.singleton.goToLocation("Rajauya 1", "India");
     }
     else{
-      RobotsService.singleton.goToLocation("Nagjhiri 2", "India");
+      RobotsService.singleton.goToLocation("Nagjhiri 3", "India");
     }
   }
 }
