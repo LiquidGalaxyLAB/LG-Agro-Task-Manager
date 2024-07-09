@@ -69,6 +69,7 @@ flutter:
     - resources/images/robots.png
     - resources/images/settings.jpg
     - resources/images/crops.jpg
+    - resources/images/logosLG.png
     - resources/kml/India.kml
     - resources/kml/Espanya.kml
 

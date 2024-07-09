@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartssh2/dartssh2.dart';
@@ -62,6 +63,7 @@ class LGService {
       );
       if (_client != null) {
         connected = true;
+        setLogos();
         return true;
       }
     } catch (e) {
@@ -97,7 +99,6 @@ class LGService {
     } catch (e) {
       print('Error: $e');
     }
-    print("display acabat");
   }
 
   List<double>? extractCoordinates(String kmlContent) {
@@ -142,7 +143,6 @@ class LGService {
       String sanitizedFilename = filename.replaceAll(' ', '_');
       File localFile = File('${localPath.path}/$sanitizedFilename.kml');
       await localFile.writeAsString(content);
-      print("File created: ${localFile.path}");
       return localFile;
     } catch (e) {
       print("Error creating file: $e");
@@ -150,21 +150,6 @@ class LGService {
     }
   }
 
-
-  Future<void> loadKML(String kmlName, String task) async {
-    try {
-      print("entrat a load");
-      _client?.execute("echo 'http://lg1:81/$kmlName.kml' > /var/www/html/kmls.txt");
-      print("executat");
-
-        if (task == "Task_Orbit") {
-          await beginOrbiting();
-        }
-
-    } catch (error) {
-      print("Error loading KML: $error");
-    }
-  }
 
 
   String orbitLookAtLinear(double latitude, double longitude, double zoom,
@@ -231,7 +216,6 @@ class LGService {
           mode: SftpFileOpenMode.create |
           SftpFileOpenMode.truncate |
           SftpFileOpenMode.write);
-      print("file obert");
 
       var bytes = await inputFile.readAsBytes();
 
@@ -294,64 +278,58 @@ class LGService {
 
   Future<void> setLogos() async {
     int infoSlave;
-    if (screensNum == 1) {
-      infoSlave = 1;
+    if (screensNum == 3) {
+      infoSlave = 2;
     } else {
-      infoSlave = (screensNum / 2).floor() + 1;
+      infoSlave = 4;
     }
     try {
-      String command =
-      """chmod 777 /var/www/html/kml/slave_$infoSlave.kml; echo '<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
-  <Document>
-    <name>historic.kml</name> 
-    <Style id="purple_paddle">
-      <BalloonStyle>
-        <text>\$[description]</text>
-        <bgColor>ffffffff</bgColor>
-      </BalloonStyle>
-    </Style>
-    <Placemark id="0A7ACC68BF23CB81B354">
-      <name>Baloon</name>
-      <Snippet maxLines="0"></Snippet>
-      <description>
-      <![CDATA[<!-- BalloonStyle background color: ffffffff -->
-        <table width="400" height="300" align="left">
-          <tr>
-            <td colspan="2" align="center">
-              <h1>David Mas</h1>
-              <h2> Universitat de Lleida (UdL)</h2>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" align="center">
-              <h1>Granollers, Catalonia, Spain</h1>
-            </td>
-          </tr>
-        </table>]]>
-      </description>
-      <LookAt>
-        <longitude>-17.841486</longitude>
-        <latitude>28.638478</latitude>
-        <altitude>0</altitude>
-        <heading>0</heading>
-        <tilt>0</tilt>
-        <range>24000</range>
-      </LookAt>
-      <styleUrl>#purple_paddle</styleUrl>
-      <gx:balloonVisibility>1</gx:balloonVisibility>
-      <Point>
-        <coordinates>-17.841486,28.638478,0</coordinates>
-      </Point>
-    </Placemark>
-  </Document>
+      String imagePath = 'resources/images/logosLG.png';
+
+      ByteData imageData = await rootBundle.load(imagePath);
+      Uint8List imageBytes = imageData.buffer.asUint8List();
+      String imageBase64 = base64Encode(imageBytes);
+
+      /*String kmlContent = """<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <GroundOverlay>
+    <name>LogoOverlay</name>
+    <Icon>
+      <href>data:image/png;base64,$imageBase64</href>
+    </Icon>
+    <LatLonBox>
+      <north>28.638478</north>
+      <south>28.637978</south>
+      <east>-17.841286</east>
+      <west>-17.841786</west>
+    </LatLonBox>
+  </GroundOverlay>
+</kml>""";
+      String command = """echo '$kmlContent' > /var/www/html/kml/slave_$infoSlave.kml""";*/
+      
+      await _client?.execute("""chmod 777 /var/www/html/kml/slave_$infoSlave.kml; echo '<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <GroundOverlay>
+    <name>LogoOverlay</name>
+    <Icon>
+      <href>data:image/png;base64,$imageBase64</href>
+    </Icon>
+    <LatLonBox>
+      <north>28.638478</north>
+      <south>28.637978</south>
+      <east>-17.841286</east>
+      <west>-17.841786</west>
+    </LatLonBox>
+  </GroundOverlay>
 </kml>
-' > /var/www/html/kml/slave_$infoSlave.kml""";
-      await _client!.execute(command);
+' > /var/www/html/kml/slave_$infoSlave.kml""");
     } catch (e) {
       print(e);
     }
+    print("logos set succesfully");
   }
+
+
 
   stopOrbit() async {
     try {
