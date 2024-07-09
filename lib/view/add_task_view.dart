@@ -18,7 +18,6 @@ class AddTaskView extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final oneFourthHeight = screenHeight / 4;
 
     return Scaffold(
       appBar: AppBar(
@@ -32,7 +31,7 @@ class AddTaskView extends StatelessWidget {
       backgroundColor: Colors.grey[900],
       body: Column(
         children: [
-          SizedBox(height: oneFourthHeight),
+          SizedBox(height: screenHeight/6),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -60,7 +59,7 @@ class AddTaskView extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: oneFourthHeight),
+          SizedBox(height: screenHeight/6),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -88,7 +87,7 @@ class AddTaskView extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: screenHeight / 7),
+          SizedBox(height: screenHeight / 10),
           IconButton(
             icon: const Icon(Icons.home, color: Colors.blue),
             onPressed: () {

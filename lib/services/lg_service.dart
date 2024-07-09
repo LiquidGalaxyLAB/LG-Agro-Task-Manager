@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dartssh2/dartssh2.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:xml/xml.dart' as xml;
@@ -72,18 +73,25 @@ class LGService {
   }
 
   Future<void> displaySpecificKML(String name, String country) async {
-    var filePath = indiaPath;
-    if (country == "Spain") {
-      filePath = spainPath;
+    String filePath = "none";
+    if(country == "India") {
+      filePath = indiaPath;
     }
-    try {
-      final kmlContent = await File(filePath).readAsString();
-      final kmlSection = extractKmlSection(kmlContent, name);
-      final localFile = await makeFile(name, kmlSection);
-      await uploadKMLFile(localFile, name, "Task_Balloon");
-    } catch (e) {
-      print('Error: $e');
+    if (country == "Espanya") {
+        filePath = spainPath;
     }
+      try {
+        final kmlContent = await rootBundle.loadString(filePath);
+        print("read");
+        final kmlSection = extractKmlSection(kmlContent, name);
+        print("extract");
+        final localFile = await makeFile(name, kmlSection);
+        print("make");
+        await uploadKMLFile(localFile, name, "Task_Balloon");
+        print("upload");
+      } catch (e) {
+        print('Error: $e');
+      }
   }
 
   Future<SSHSession?> relaunch() async {
@@ -169,6 +177,7 @@ class LGService {
           mode: SftpFileOpenMode.create |
           SftpFileOpenMode.truncate |
           SftpFileOpenMode.write);
+      await cleanKML();
       var fileSize = await inputFile.length();
       file.write(inputFile.openRead().cast(), onProgress: (progress) async {
         if (fileSize == progress) {

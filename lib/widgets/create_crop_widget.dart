@@ -72,148 +72,143 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
     final isEditing = widget.crop != null;
     return AlertDialog(
       title: Text(isEditing ? 'Edit Crop' : 'Add Crop'),
-      content: Form(
-        key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              autofocus: true,
-              controller: cropNameController,
-              decoration: const InputDecoration(hintText: 'Crop Name'),
-              validator: (value) => value != null && value.isEmpty
-                  ? 'Crop Name is required'
-                  : null,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: TextFormField(
-                      controller: plantingDateController1,
-                      decoration:
-                          const InputDecoration(hintText: 'Planting Date'),
-                      validator: (value) {
-                        if (value != null && value.isNotEmpty) {
-                          final List<String> values = value.split('-');
-                          if (values.length == 1) {
-                            final intValue1 = int.tryParse(values[0]);
-                            if (intValue1 == null ||
-                                intValue1 < 1 ||
-                                intValue1 > 24) {
-                              return 'Value must be between 1 and 24';
-                            }
-                          }
-                        }
-                      }),
-                ),
-                Expanded(
-                  child: TextFormField(
-                      controller: plantingDateController2,
-                      decoration:
-                          const InputDecoration(hintText: 'Planting Date'),
-                      validator: (value) {
-                        if (value != null && value.isNotEmpty) {
-                          final List<String> values = value.split('-');
-                          if (values.length == 1) {
-                            final intValue1 = int.tryParse(values[0]);
-                            if (intValue1 == null ||
-                                intValue1 < 1 ||
-                                intValue1 > 24) {
-                              return 'Value must be between 1 and 24';
-                            }
-                          }
-                        }
-                      }),
-                )
-              ],
-            ),
-            Row(mainAxisSize: MainAxisSize.min, children: [
-              Expanded(
-                child: TextFormField(
-                    controller: transplantingDateController1,
-                    decoration:
-                        const InputDecoration(hintText: 'Transplanting Date'),
-                    validator: (value) {
-                      if (value != null && value.isNotEmpty) {
-                        final List<String> values = value.split('-');
-                        if (values.length == 1) {
-                          final intValue1 = int.tryParse(values[0]);
-                          if (intValue1 == null ||
-                              intValue1 < 1 ||
-                              intValue1 > 24) {
-                            return 'Value must be between 1 and 24';
-                          }
-                        }
-                      }
-                    }),
+      content: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                autofocus: true,
+                controller: cropNameController,
+                decoration: const InputDecoration(hintText: 'Crop Name'),
+                validator: (value) => value != null && value.isEmpty
+                    ? 'Crop Name is required'
+                    : null,
               ),
-              Expanded(
-                child: TextFormField(
-                    controller: transplantingDateController2,
-                    decoration:
-                        const InputDecoration(hintText: 'Transplanting Date'),
-                    validator: (value) {
-                      if (value != null && value.isNotEmpty) {
-                        final List<String> values = value.split('-');
-                        if (values.length == 1) {
-                          final intValue1 = int.tryParse(values[0]);
-                          if (intValue1 == null ||
-                              intValue1 < 1 ||
-                              intValue1 > 24) {
-                            return 'Value must be between 1 and 24';
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                        controller: plantingDateController1,
+                        decoration:
+                        const InputDecoration(hintText: 'Planting Date'),
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty) {
+                            final List<String> values = value.split('-');
+                            if (values.length == 1) {
+                              final intValue1 = int.tryParse(values[0]);
+                              if (intValue1 == null ||
+                                  intValue1 < 1 ||
+                                  intValue1 > 24) {
+                                return 'Value must be between 1 and 24';
+                              }
+                            }
                           }
-                        }
-                      }
-                    }),
-              )
-            ]),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
+                          return null;
+                        }),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                        controller: plantingDateController2,
+                        decoration:
+                        const InputDecoration(hintText: 'Planting Date'),
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty) {
+                            final List<String> values = value.split('-');
+                            if (values.length == 1) {
+                              final intValue1 = int.tryParse(values[0]);
+                              if (intValue1 == null ||
+                                  intValue1 < 1 ||
+                                  intValue1 > 24) {
+                                return 'Value must be between 1 and 24';
+                              }
+                            }
+                          }
+                          return null;
+                        }),
+                  )
+                ],
+              ),
+              Row(mainAxisSize: MainAxisSize.min, children: [
                 Expanded(
                   child: TextFormField(
-                      controller: harvestingDateController1,
-                      decoration:
-                          const InputDecoration(hintText: 'Harvesting Date'),
+                      controller: transplantingDateController1,
+                      decoration: const InputDecoration(hintText: 'Transplanting Date'),
                       validator: (value) {
                         if (value != null && value.isNotEmpty) {
-                          final intValue1 = int.tryParse(value);
-                          if (intValue1 == null ||
-                              intValue1 < 1 ||
-                              intValue1 > 24) {
-                            return 'Value must be between 1 and 24';
+                          final List<String> values = value.split('-');
+                          if (values.length == 1) {
+                            final intValue1 = int.tryParse(values[0]);
+                            if (intValue1 == null || intValue1 < 1 || intValue1 > 24) {
+                              return 'Value must be between 1 and 24';
+                            }
                           }
                         }
+                        return null;
                       }),
                 ),
                 Expanded(
                   child: TextFormField(
-                      controller: harvestingDateController2,
-                      decoration:
-                          const InputDecoration(hintText: 'Harvesting Date'),
+                      controller: transplantingDateController2,
+                      decoration: const InputDecoration(hintText: 'Transplanting Date'),
                       validator: (value) {
                         if (value != null && value.isNotEmpty) {
-                          final intValue1 = int.tryParse(value);
-                          if (intValue1 == null ||
-                              intValue1 < 1 ||
-                              intValue1 > 24) {
-                            return 'Value must be between 1 and 24';
+                          final List<String> values = value.split('-');
+                          if (values.length == 1) {
+                            final intValue1 = int.tryParse(values[0]);
+                            if (intValue1 == null || intValue1 < 1 || intValue1 > 24) {
+                              return 'Value must be between 1 and 24';
+                            }
                           }
                         }
+                        return null;
                       }),
                 )
-              ],
-            ),
-          ],
+              ]),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                        controller: harvestingDateController1,
+                        decoration: const InputDecoration(hintText: 'Harvesting Date'),
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty) {
+                            final intValue1 = int.tryParse(value);
+                            if (intValue1 == null || intValue1 < 1 || intValue1 > 24) {
+                              return 'Value must be between 1 and 24';
+                            }
+                          }
+                          return null;
+                        }),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                        controller: harvestingDateController2,
+                        decoration: const InputDecoration(hintText: 'Harvesting Date'),
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty) {
+                            final intValue1 = int.tryParse(value);
+                            if (intValue1 == null || intValue1 < 1 || intValue1 > 24) {
+                              return 'Value must be between 1 and 24';
+                            }
+                          }
+                          return null;
+                        }),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancel',
-            )),
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
         TextButton(
           onPressed: () {
             final cropName = cropNameController.text;
@@ -231,7 +226,7 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
             }
           },
           child: const Text('OK'),
-        )
+        ),
       ],
     );
   }

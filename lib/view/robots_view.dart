@@ -158,7 +158,7 @@ class _RobotsViewState extends State<RobotsView> {
                     },
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 2,
+                    height: MediaQuery.of(context).size.height / 4,
                     width: MediaQuery.of(context).size.width,
                     child: StreamBuilder<List<Task>>(
                       stream: queueController.stream,
