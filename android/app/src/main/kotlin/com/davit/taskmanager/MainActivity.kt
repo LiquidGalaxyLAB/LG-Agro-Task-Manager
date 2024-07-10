@@ -1,4 +1,4 @@
-package com.davit.taskmanager
+package com.vit.taskmanager
 
 import io.flutter.embedding.android.FlutterActivity
 
