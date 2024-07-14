@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../components/connection_flag.dart';
 import '../services/lg_service.dart';
 
@@ -48,7 +49,9 @@ class _ConnectionPageView extends State<ConnectionPageView> {
     } catch (e) {
       SharedPreferences.setMockInitialValues({});
     }
-    final port = _sshPortController.text.isEmpty ? 0 : int.parse(_sshPortController.text);
+    final port = _sshPortController.text.isEmpty
+        ? 0
+        : int.parse(_sshPortController.text);
     LGService.initialize(
       ip: _ipController.text,
       port: port,
@@ -86,7 +89,8 @@ class _ConnectionPageView extends State<ConnectionPageView> {
         backgroundColor: customDarkGrey,
         appBar: AppBar(
           backgroundColor: customGreen,
-          title: const Text('Connection Settings', style: TextStyle(color: Colors.white)),
+          title: const Text('Connection Settings',
+              style: TextStyle(color: Colors.white)),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),

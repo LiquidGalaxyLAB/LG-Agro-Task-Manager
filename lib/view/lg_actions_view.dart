@@ -1,7 +1,6 @@
-import 'package:dartssh2/dartssh2.dart';
 import 'package:flutter/material.dart';
+
 import '../services/lg_service.dart';
-import 'connection_page_view.dart';
 
 class LGActionsView extends StatefulWidget {
   const LGActionsView({super.key});
@@ -11,7 +10,6 @@ class LGActionsView extends StatefulWidget {
 }
 
 class _LGActionsViewState extends State<LGActionsView> {
-
   @override
   void initState() {
     super.initState();
@@ -19,14 +17,18 @@ class _LGActionsViewState extends State<LGActionsView> {
 
   @override
   Widget build(BuildContext context) {
-    Color myGreen = const Color(0xFF3E9671);
+    final Color customGreen = const Color(0xFF3E9671);
+    final Color customDarkGrey = const Color(0xFF333333);
+
+    final double buttonWidth = MediaQuery.of(context).size.width / 4;
 
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: customDarkGrey,
         appBar: AppBar(
-          backgroundColor: Colors.grey[900],
-          title: const Text('Liquid Galaxy Actions', style: TextStyle(color: Colors.white)),
+          backgroundColor: customGreen,
+          title: const Text('Liquid Galaxy Actions',
+              style: TextStyle(color: Colors.white)),
           centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -35,70 +37,86 @@ class _LGActionsViewState extends State<LGActionsView> {
             },
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () async {
-                      await LGService.instance.connectToLG();
-                      await LGService.instance.relaunch();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: myGreen,
-                      fixedSize: const Size(200, 50),
-                    ),
-                    child: const Text('Reboot LG', style: TextStyle(color: Colors.white)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await LGService.instance.connectToLG();
-                      await LGService.instance.cleanKML();
-                      await LGService.instance.cleanSlaves();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: myGreen,
-                      fixedSize: const Size(200, 50),
-                    ),
-                    child: const Text('Clear info', style: TextStyle(color: Colors.white)),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () async {
-                      await LGService.instance.connectToLG();
-                      await LGService.instance.startOrbit();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: myGreen,
-                      fixedSize: const Size(200, 50),
-                    ),
-                    child: const Text('Orbit around position', style: TextStyle(color: Colors.white)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await LGService.instance.connectToLG();
-                      await LGService.instance.cleanKML();
-                      await LGService.instance.cleanSlaves();
-                      await LGService.instance.setLogos();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: myGreen,
-                      fixedSize: const Size(200, 50),
-                    ),
-                    child: const Text('Print info', style: TextStyle(color: Colors.white)),
-                  ),
-                ],
-              ),
-            ],
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _buildActionButton(
+                  context: context,
+                  label: 'Reboot LG',
+                  onPressed: () async {
+                    await LGService.instance.connectToLG();
+                    await LGService.instance.relaunch();
+                  },
+                  width: buttonWidth,
+                ),
+                const SizedBox(height: 20),
+                _buildActionButton(
+                  context: context,
+                  label: 'Clear info',
+                  onPressed: () async {
+                    await LGService.instance.connectToLG();
+                    await LGService.instance.cleanKML();
+                    await LGService.instance.cleanSlaves();
+                  },
+                  width: buttonWidth,
+                ),
+                const SizedBox(height: 20),
+                _buildActionButton(
+                  context: context,
+                  label: 'Orbit around position',
+                  onPressed: () async {
+                    await LGService.instance.connectToLG();
+                    await LGService.instance.startOrbit();
+                  },
+                  width: buttonWidth,
+                ),
+                const SizedBox(height: 20),
+                _buildActionButton(
+                  context: context,
+                  label: 'Print info',
+                  onPressed: () async {
+                    await LGService.instance.connectToLG();
+                    await LGService.instance.cleanKML();
+                    await LGService.instance.cleanSlaves();
+                    await LGService.instance.setLogos();
+                  },
+                  width: buttonWidth,
+                ),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required BuildContext context,
+    required String label,
+    required VoidCallback onPressed,
+    required double width,
+  }) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF3E9671),
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        fixedSize: Size(width, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }
