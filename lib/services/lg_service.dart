@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:dartssh2/dartssh2.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'package:xml/xml.dart' as xml;
+
 import '../utils/logger.dart';
 import 'look_at_service.dart';
 import 'orbit_service.dart';
@@ -46,8 +46,10 @@ class LGService {
   String extractKmlSection(String kmlContent, String sectionName) {
     final document = xml.XmlDocument.parse(kmlContent);
     final folder = document.findAllElements('Folder').firstWhere(
-          (element) => element.findElements('name').any((name) => name.value == sectionName),
-    );
+          (element) => element
+              .findElements('name')
+              .any((name) => name.value == sectionName),
+        );
 
     return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">${folder.toXmlString()}</kml>';
   }
@@ -75,7 +77,7 @@ class LGService {
 
   Future<void> displaySpecificKML(String name, String country) async {
     String filePath = "none";
-    if(country == "India") {
+    if (country == "India") {
       filePath = indiaPath;
     } else if (country == "Espanya") {
       filePath = spainPath;
@@ -87,7 +89,7 @@ class LGService {
 
       await printKMLFileContent(name.replaceAll(' ', '_'));
 
-      await uploadKMLFile(localFile, name.replaceAll(' ', '_'), "Task_Balloon");
+      await uploadKMLFile(localFile, name.replaceAll(' ', '_'));
 
       final coordinates = extractCoordinates(kmlSection);
       if (coordinates != null) {
@@ -167,7 +169,8 @@ class LGService {
       Logger.printInDebug(executeResult);
       return executeResult;
     } catch (e) {
-      Logger.printInDebug('MESSAGE :: AN ERROR HAS OCCURRED WHILE EXECUTING THE COMMAND: $e');
+      Logger.printInDebug(
+          'MESSAGE :: AN ERROR HAS OCCURRED WHILE EXECUTING THE COMMAND: $e');
       return null;
     }
   }
@@ -198,7 +201,7 @@ class LGService {
     }
   }
 
-  Future<void> uploadKMLFile(File? inputFile, String kmlName, String task) async {
+  Future<void> uploadKMLFile(File? inputFile, String kmlName) async {
     if (inputFile == null) {
       Logger.printInDebug("Input file is null");
       return;
@@ -211,8 +214,8 @@ class LGService {
       final sftp = await _client!.sftp();
       final file = await sftp.open('/var/www/html/$kmlName.kml',
           mode: SftpFileOpenMode.create |
-          SftpFileOpenMode.truncate |
-          SftpFileOpenMode.write);
+              SftpFileOpenMode.truncate |
+              SftpFileOpenMode.write);
 
       var bytes = await inputFile.readAsBytes();
 
@@ -224,7 +227,6 @@ class LGService {
       Logger.printInDebug("Error uploading file: $e");
     }
   }
-
 
   Future<SSHSession?> goToCoordinates(double latitude, double longitude) async {
     try {
@@ -264,7 +266,7 @@ class LGService {
           lng: 2.287730, lat: 41.607970, range: 7000, tilt: 60, heading: 0)));
 
       File? inputFile = await makeFile("OrbitKML", orbitKML);
-      await uploadKMLFile(inputFile, "OrbitKML", "Task_Orbit");
+      await uploadKMLFile(inputFile, "OrbitKML");
     } catch (e) {
       Logger.printInDebug("Error");
     }
@@ -277,7 +279,6 @@ class LGService {
     } else {
       infoSlave = (screensNum / 2).floor() + 2;
     }
-
     try {
       String imagePath = 'resources/images/logosLG.png';
       String imageName = 'logosLG.png';
@@ -289,7 +290,7 @@ class LGService {
       File imageFile = File('${localPath.path}/$imageName');
       await imageFile.writeAsBytes(imageBytes);
 
-      await uploadKMLFile(imageFile, imageName, "imatge");
+      await uploadKMLFile(imageFile, imageName);
 
       String imageUrl = 'http://lg1:81/images/$imageName';
 
@@ -317,15 +318,13 @@ class LGService {
       String kmlFileName = 'slave_$infoSlave.kml';
       File? kmlFile = await makeFile(kmlFileName, kmlContent);
 
-      uploadKMLFile(kmlFile, kmlFileName, "logoo");
+      uploadKMLFile(kmlFile, kmlFileName);
 
       Logger.printInDebug("Logos set successfully for slave $infoSlave");
     } catch (e) {
       Logger.printInDebug(e);
     }
   }
-
-
 
   stopOrbit() async {
     try {
