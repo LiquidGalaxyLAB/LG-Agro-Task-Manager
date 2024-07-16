@@ -38,51 +38,53 @@ class _AddRobotWidgetState extends State<AddRobotWidget> {
     final isEditing = widget.robot != null;
     return AlertDialog(
       title: Text(isEditing ? 'Edit Robot' : 'Add Robot'),
-      content: Form(
-        key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: robotNameController,
-              decoration: const InputDecoration(hintText: "Robot name"),
-              validator: (value) {
-                if (value == "") {
-                  return 'El nom del robot és obligatori';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: robotIPController,
-              decoration: const InputDecoration(hintText: 'Robot IP'),
-              validator: (value) {
-                if (value == "") {
-                  return "L'IP és obligatòria";
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: robotSNController,
-              decoration:
-                  const InputDecoration(hintText: 'Robot serial number'),
-              validator: (value) {
-                if (value == "") {
-                  return 'El nombre de sèrie és obligatori';
-                }
-                return null;
-              },
-            )
-          ],
+      content: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: robotNameController,
+                decoration: const InputDecoration(hintText: "Robot name"),
+                validator: (value) {
+                  if (value == "") {
+                    return 'El nom del robot és obligatori';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: robotIPController,
+                decoration: const InputDecoration(hintText: 'Robot IP'),
+                validator: (value) {
+                  if (value == "") {
+                    return "L'IP és obligatòria";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: robotSNController,
+                decoration: const InputDecoration(hintText: 'Robot serial number'),
+                validator: (value) {
+                  if (value == "") {
+                    return 'El nombre de sèrie és obligatori';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancel',
-            )),
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
         TextButton(
           onPressed: () {
             final robotName = robotNameController.text;
@@ -91,11 +93,12 @@ class _AddRobotWidgetState extends State<AddRobotWidget> {
 
             if (formKey.currentState!.validate()) {
               widget.onSubmit(robotName, robotIP, robotSN);
+              Navigator.pop(context); // Close the dialog after submission
             }
             RobotsService.singleton.fetchRobots();
           },
           child: const Text('OK'),
-        )
+        ),
       ],
     );
   }
