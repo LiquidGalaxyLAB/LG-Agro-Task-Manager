@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:xml/xml.dart' as xml;
+import '../utils/logger.dart';
 import 'look_at_service.dart';
 import 'orbit_service.dart';
 
@@ -45,7 +46,7 @@ class LGService {
   String extractKmlSection(String kmlContent, String sectionName) {
     final document = xml.XmlDocument.parse(kmlContent);
     final folder = document.findAllElements('Folder').firstWhere(
-          (element) => element.findElements('name').any((name) => name.text == sectionName),
+          (element) => element.findElements('name').any((name) => name.value == sectionName),
     );
 
     return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">${folder.toXmlString()}</kml>';
@@ -65,7 +66,7 @@ class LGService {
         return true;
       }
     } catch (e) {
-      print("Connection error: $e");
+      Logger.printInDebug("Connection error: $e");
       connected = false;
       return false;
     }
@@ -92,10 +93,10 @@ class LGService {
       if (coordinates != null) {
         await goToCoordinates(coordinates[0], coordinates[1]);
       } else {
-        print("No coordinates");
+        Logger.printInDebug("No coordinates");
       }
     } catch (e) {
-      print('Error: $e');
+      Logger.printInDebug('Error: $e');
     }
   }
 
@@ -103,7 +104,7 @@ class LGService {
     try {
       final document = xml.XmlDocument.parse(kmlContent);
       final coordinatesElement = document.findAllElements('coordinates').first;
-      final coordinatesText = coordinatesElement.text.trim();
+      final coordinatesText = coordinatesElement.value?.trim() ?? "";
       final coordinatesParts = coordinatesText.split(',');
 
       final longitude = double.parse(coordinatesParts[0]);
@@ -111,7 +112,7 @@ class LGService {
 
       return [latitude, longitude];
     } catch (e) {
-      print("Error at extractCoord: $e");
+      Logger.printInDebug("Error at extractCoord: $e");
       return null;
     }
   }
@@ -119,17 +120,17 @@ class LGService {
   Future<SSHSession?> relaunch() async {
     try {
       if (_client == null) {
-        print("Error, the client is not initialized");
+        Logger.printInDebug("Error, the client is not initialized");
         return null;
       }
       for (int i = 5; i > 0; i--) {
         await _client!.execute(
             'sshpass -p $password ssh -t lg$i "echo $password | sudo -S reboot" ');
-        print(
+        Logger.printInDebug(
             'sshpass -p $password ssh -t lg$i "echo $password | sudo -S reboot"');
       }
     } catch (e) {
-      print("An error has occured: $e");
+      Logger.printInDebug("An error has occured: $e");
       return null;
     }
     return null;
@@ -143,7 +144,7 @@ class LGService {
       await localFile.writeAsString(content);
       return localFile;
     } catch (e) {
-      print("Error creating file: $e");
+      Logger.printInDebug("Error creating file: $e");
       return null;
     }
   }
@@ -157,16 +158,16 @@ class LGService {
       double tilt, double bearing) async {
     try {
       if (_client == null) {
-        print('MESSAGE :: SSH CLIENT IS NOT INITIALISED');
+        Logger.printInDebug('MESSAGE :: SSH CLIENT IS NOT INITIALISED');
         return null;
       }
 
       final executeResult = await _client!.execute(
           'echo "flytoview=${orbitLookAtLinear(latitude, longitude, zoom, tilt, bearing)}" > /tmp/query.txt');
-      print(executeResult);
+      Logger.printInDebug(executeResult);
       return executeResult;
     } catch (e) {
-      print('MESSAGE :: AN ERROR HAS OCCURRED WHILE EXECUTING THE COMMAND: $e');
+      Logger.printInDebug('MESSAGE :: AN ERROR HAS OCCURRED WHILE EXECUTING THE COMMAND: $e');
       return null;
     }
   }
@@ -177,29 +178,29 @@ class LGService {
       File localFile = File('${localPath.path}/$filename.kml');
       if (await localFile.exists()) {
         String fileContent = await localFile.readAsString();
-        print("Content of $filename.kml:");
-        print(fileContent);
+        Logger.printInDebug("Content of $filename.kml:");
+        Logger.printInDebug(fileContent);
       } else {
-        print("File $filename.kml does not exist.");
+        Logger.printInDebug("File $filename.kml does not exist.");
       }
     } catch (e) {
-      print("Error reading file: $e");
+      Logger.printInDebug("Error reading file: $e");
     }
   }
 
   Future<void> beginOrbiting() async {
     try {
       await _client!.run('echo "playtour=Orbit" > /tmp/query.txt');
-      print("Orbiting started");
+      Logger.printInDebug("Orbiting started");
     } catch (error) {
-      print("Error starting orbit: $error");
+      Logger.printInDebug("Error starting orbit: $error");
       await beginOrbiting();
     }
   }
 
   Future<void> uploadKMLFile(File? inputFile, String kmlName, String task) async {
     if (inputFile == null) {
-      print("Input file is null");
+      Logger.printInDebug("Input file is null");
       return;
     }
     try {
@@ -220,7 +221,7 @@ class LGService {
       await _client!.execute(
           "echo 'http://lg1:81/$kmlName.kml' > /var/www/html/kmls.txt");
     } catch (e) {
-      print("Error uploading file: $e");
+      Logger.printInDebug("Error uploading file: $e");
     }
   }
 
@@ -228,7 +229,7 @@ class LGService {
   Future<SSHSession?> goToCoordinates(double latitude, double longitude) async {
     try {
       if (_client == null) {
-        print("Error, the client is not initialized");
+        Logger.printInDebug("Error, the client is not initialized");
         return null;
       }
 
@@ -245,7 +246,7 @@ class LGService {
       final session = await _client!.execute(command);
       return session;
     } catch (e) {
-      print('An error occurred while executing the command: $e');
+      Logger.printInDebug('An error occurred while executing the command: $e');
       return null;
     }
   }
@@ -253,7 +254,7 @@ class LGService {
   Future<void> orbitAtMyCity() async {
     try {
       if (_client == null) {
-        print('MESSAGE :: SSH CLIENT IS NOT INITIALISED');
+        Logger.printInDebug('MESSAGE :: SSH CLIENT IS NOT INITIALISED');
         return;
       }
 
@@ -265,7 +266,7 @@ class LGService {
       File? inputFile = await makeFile("OrbitKML", orbitKML);
       await uploadKMLFile(inputFile, "OrbitKML", "Task_Orbit");
     } catch (e) {
-      print("Error");
+      Logger.printInDebug("Error");
     }
   }
 
@@ -318,9 +319,9 @@ class LGService {
 
       uploadKMLFile(kmlFile, kmlFileName, "logoo");
 
-      print("Logos set successfully for slave $infoSlave");
+      Logger.printInDebug("Logos set successfully for slave $infoSlave");
     } catch (e) {
-      print(e);
+      Logger.printInDebug(e);
     }
   }
 

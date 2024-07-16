@@ -6,12 +6,12 @@ class CropViewModel {
   Future<List<Crop>>? futureCrops;
   late Isar isar;
 
-  Future<void> initializeDatabase() async {
-    isar = await DataBaseService.singleton.getDatabase();
+  void initializeDatabase() {
+    isar = DataBaseService.singleton.getDatabase();
   }
 
-  Future<void> fetchCrops() async {
-    isar = await DataBaseService.singleton.getDatabase();
+  void fetchCrops() {
+    isar = DataBaseService.singleton.getDatabase();
     futureCrops = isar.crops.where().findAll();
   }
 
@@ -37,8 +37,9 @@ class CropViewModel {
   Future<int> searchByCropName(String cropName) async {
     final isar = await _getDataBase();
     final crop = await isar.crops.filter().cropNameEqualTo(cropName).findFirst();
-    if(crop == null) return -1;
-    else {
+    if(crop == null) {
+      return -1;
+    } else {
       return crop.id;
     }
   }

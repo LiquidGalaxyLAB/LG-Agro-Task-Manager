@@ -5,7 +5,7 @@ class RobotPage extends StatefulWidget {
   final List<Robot> robots;
   final Function(Robot) onRobotSelected;
 
-  const RobotPage({Key? key, required this.robots, required this.onRobotSelected}) : super(key: key);
+  const RobotPage({super.key, required this.robots, required this.onRobotSelected});
 
   @override
   State<RobotPage> createState() => _RobotPageState();

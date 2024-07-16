@@ -20,8 +20,8 @@ class _CropViewState extends State<CropView> {
     _initialize();
   }
 
-  Future<void> _initialize() async {
-    await viewModel.initializeDatabase();
+  void _initialize() {
+    viewModel.initializeDatabase();
     setState(() {
       viewModel.fetchCrops();
     });
@@ -97,7 +97,7 @@ class _CropViewState extends State<CropView> {
                     trailing: IconButton(
                       onPressed: () async {
                         await viewModel.deleteCrops(crop.cropName);
-                        await viewModel.fetchCrops();
+                        viewModel.fetchCrops();
                         setState(() {});
                       },
                       icon: const Icon(Icons.delete, color: Colors.red),
@@ -109,7 +109,7 @@ class _CropViewState extends State<CropView> {
                           builder: (context) => CropDetailView(
                             crop: crop,
                             onUpdate: () async {
-                              await viewModel.fetchCrops();
+                              viewModel.fetchCrops();
                               setState(() {});
                             },
                           ),
@@ -133,9 +133,9 @@ class _CropViewState extends State<CropView> {
             builder: (_) => CreateCropWidget(
               onSubmit: (cropName, plantingDate, harvestingDate, transplantingDate) async {
                 await viewModel.createCrop(cropName, plantingDate, harvestingDate, transplantingDate);
-                await viewModel.fetchCrops();
+                viewModel.fetchCrops();
                 setState(() {});
-                Navigator.of(context).pop();
+                if(context.mounted) Navigator.of(context).pop();
               },
             ),
           );

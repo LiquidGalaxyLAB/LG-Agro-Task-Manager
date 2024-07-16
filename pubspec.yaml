@@ -38,12 +38,12 @@ dependencies:
   isar_flutter_libs: ^3.1.0
   provider: ^5.0.0
   xml: ^6.1.0
+  dartssh2: ^2.8.2
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  dartssh2: ^2.8.2
-  shared_preferences: ^2.2.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -65,13 +65,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - resources/images/logo.png
-    - resources/images/robots.png
-    - resources/images/settings.jpg
-    - resources/images/crops.jpg
-    - resources/images/logosLG.png
-    - resources/kml/India.kml
-    - resources/kml/Espanya.kml
+    - resources/images/
+    - resources/kml/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -8,10 +8,10 @@ class AddRobotWidget extends StatefulWidget {
   final Function(String, String, String) onSubmit;
 
   const AddRobotWidget({
-    Key? key,
+    super.key,
     this.robot,
     required this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   State<AddRobotWidget> createState() => _AddRobotWidgetState();

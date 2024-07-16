@@ -7,10 +7,10 @@ class CreateCropWidget extends StatefulWidget {
   final Function(String, String, String, String) onSubmit;
 
   const CreateCropWidget({
-    Key? key,
+    super.key,
     this.crop,
     required this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   State<CreateCropWidget> createState() => _CreateCropWidgetState();

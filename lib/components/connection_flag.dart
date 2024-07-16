@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ConnectionFlag extends StatelessWidget {
-  ConnectionFlag({required this.status});
+  const ConnectionFlag({super.key, required this.status});
   final bool status;
 
   @override
@@ -14,7 +14,7 @@ class ConnectionFlag extends StatelessWidget {
           Icons.circle,
           color: color,
         ),
-        SizedBox(
+        const SizedBox(
           width: 5.0,
         ),
         Text(

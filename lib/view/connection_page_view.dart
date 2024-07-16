@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/connection_flag.dart';
 import '../services/lg_service.dart';
+import '../utils/logger.dart';
 
 class ConnectionPageView extends StatefulWidget {
   const ConnectionPageView({super.key});
@@ -38,17 +39,13 @@ class _ConnectionPageView extends State<ConnectionPageView> {
   }
 
   Future<void> _loadSettings() async {
-    try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      setState(() {
-        _ipController.text = prefs.getString('ipAddress') ?? '';
-        _usernameController.text = prefs.getString('username') ?? '';
-        _passwordController.text = prefs.getString('password') ?? '';
-        _sshPortController.text = prefs.getString('sshPort') ?? '';
-      });
-    } catch (e) {
-      SharedPreferences.setMockInitialValues({});
-    }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _ipController.text = prefs.getString('ipAddress') ?? '';
+      _usernameController.text = prefs.getString('username') ?? '';
+      _passwordController.text = prefs.getString('password') ?? '';
+      _sshPortController.text = prefs.getString('sshPort') ?? '';
+    });
     final port = _sshPortController.text.isEmpty
         ? 0
         : int.parse(_sshPortController.text);
@@ -80,11 +77,8 @@ class _ConnectionPageView extends State<ConnectionPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pop(context, connectionStatus);
-        return true;
-      },
+    return PopScope(
+      canPop: true,
       child: Scaffold(
         backgroundColor: customDarkGrey,
         appBar: AppBar(
@@ -111,7 +105,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                   labelText: 'IP address',
                   labelStyle: TextStyle(color: customGreen),
                   hintText: 'Enter Master IP',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: customGreen),
                   ),
@@ -130,7 +124,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                   labelText: 'LG Username',
                   labelStyle: TextStyle(color: customGreen),
                   hintText: 'LG username',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: customGreen),
                   ),
@@ -193,7 +187,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                   setState(() {
                     connectionStatus = result;
                   });
-                  if (connectionStatus) print('Connected to LG successfully');
+                  if (connectionStatus) Logger.printInDebug('Connected to LG successfully');
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

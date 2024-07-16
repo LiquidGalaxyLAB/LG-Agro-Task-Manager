@@ -44,8 +44,9 @@ class _RobotsViewState extends State<RobotsView> {
     await viewModel.setCurrentRobotInit();
     viewModel.setCurrentTask();
 
-    if (viewModel.currentRobot.currentTask != null)
+    if (viewModel.currentRobot.currentTask != null) {
       _taskController.add(viewModel.currentRobot.currentTask!);
+    }
     _currentRobotController.add(viewModel.currentRobot);
     robots = await viewModel.fetchRobots();
     robotsController.add(robots);
@@ -109,7 +110,7 @@ class _RobotsViewState extends State<RobotsView> {
               if (snapshot.hasData) {
                 return Text(
                   snapshot.data!.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: customGreen,
@@ -134,21 +135,23 @@ class _RobotsViewState extends State<RobotsView> {
                         children: [
                           Text(
                             'Current Task: ${snapshot.data!.taskName.isEmpty ? "Cap" : snapshot.data!.taskName}',
-                            style: TextStyle(color: customGreen, fontSize: 16),
+                            style: const TextStyle(
+                                color: customGreen, fontSize: 16),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 16.0),
                             child: CircularProgressIndicator(
                               value: snapshot.data!.completionPercentage / 100,
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(customGreen),
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                  customGreen),
                               backgroundColor: Colors.grey,
                               strokeWidth: 10.0,
                             ),
                           ),
                           Text(
                             '${snapshot.data!.completionPercentage}% completat',
-                            style: TextStyle(color: customGreen, fontSize: 16),
+                            style: const TextStyle(
+                                color: customGreen, fontSize: 16),
                           ),
                         ],
                       );
@@ -172,7 +175,7 @@ class _RobotsViewState extends State<RobotsView> {
                               child: ListTile(
                                 title: Text(
                                   snapshot.data![index].taskName,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
                               ),
@@ -189,7 +192,8 @@ class _RobotsViewState extends State<RobotsView> {
                   onPressed: () async {
                     robots = await viewModel.fetchRobots();
                     Robot robot = robots[0];
-                    Navigator.pushNamed(
+                    if(context.mounted) {
+                      Navigator.pushNamed(
                       context,
                       '/add_task',
                       arguments: {
@@ -197,6 +201,7 @@ class _RobotsViewState extends State<RobotsView> {
                         'robot': robot,
                       },
                     );
+                    }
                     robots = await viewModel.fetchRobots();
                     robotsController.add(robots);
 
@@ -263,7 +268,7 @@ class _RobotsViewState extends State<RobotsView> {
                 await viewModel.createRobot(robotName, robotSN, robotIP);
                 robots = await viewModel.fetchRobots();
                 robotsController.add(robots);
-                Navigator.of(context).pop();
+                if(context.mounted) Navigator.of(context).pop();
               },
             );
           }));

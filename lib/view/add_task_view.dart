@@ -20,7 +20,6 @@ class AddTaskView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +83,7 @@ class AddTaskView extends StatelessWidget {
             color: Colors.black.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 4,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -95,7 +94,7 @@ class AddTaskView extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: myGreen,
-          padding: EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.symmetric(vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

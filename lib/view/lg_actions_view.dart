@@ -17,8 +17,8 @@ class _LGActionsViewState extends State<LGActionsView> {
 
   @override
   Widget build(BuildContext context) {
-    final Color customGreen = const Color(0xFF3E9671);
-    final Color customDarkGrey = const Color(0xFF333333);
+    const Color customGreen = Color(0xFF3E9671);
+    const Color customDarkGrey = Color(0xFF333333);
 
     final double buttonWidth = MediaQuery.of(context).size.width / 4;
 

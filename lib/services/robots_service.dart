@@ -10,10 +10,10 @@ class RobotsService {
   late TaskManager taskManager;
   static RobotsService singleton = RobotsService();
 
-  Future<Isar> _getDataBase() async => DataBaseService.singleton.getDatabase();
+  Isar _getDataBase() => DataBaseService.singleton.getDatabase();
 
   Future<List<Robot>> fetchRobots() async {
-    final isar = await _getDataBase();
+    final isar = _getDataBase();
     return isar.robots.where().findAll();
   }
 
@@ -22,7 +22,7 @@ class RobotsService {
   }
 
   Future<void> createRobot(String robotName, String serialCode, String robotIP ) async {
-    final isar = await _getDataBase();
+    final isar = _getDataBase();
     return await isar.writeTxn(() async {
       await isar.robots.put(Robot(name: robotName,
           serialNumber: serialCode,

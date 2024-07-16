@@ -186,7 +186,7 @@ packages:
     source: hosted
     version: "2.3.2"
   dartssh2:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: dartssh2
       sha256: "53a230c7dd6f487b704ceef1b29323ad64d19be89e786ccbc81e157a70417a56"
@@ -577,7 +577,7 @@ packages:
     source: hosted
     version: "1.3.0"
   shared_preferences:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: shared_preferences
       sha256: d3bbe5553a986e83980916ded2f0b435ef2e1893dfaa29d5a7a790d0eca12180
