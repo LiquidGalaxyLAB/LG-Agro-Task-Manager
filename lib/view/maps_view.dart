@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapsView extends StatefulWidget {
   const MapsView({super.key});
@@ -10,7 +11,12 @@ class MapsView extends StatefulWidget {
 class _MapsViewState extends State<MapsView> {
   static const Color customGreen = Color(0xFF3E9671);
   static const Color customDarkGrey = Color(0xFF333333);
-  static const Color customLightGrey = Color(0xFF4F4F4F);
+  late GoogleMapController mapController;
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   //TODO: apply google maps UI in this whole view
   @override
@@ -25,8 +31,12 @@ class _MapsViewState extends State<MapsView> {
         title: const Text('Maps view'),
         backgroundColor: customGreen,
       ),
-      body: const Column(
-        children: [],
+      body: GoogleMap(
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(
+          target: _center,
+          zoom: 11.0,
+        ),
       ),
     );
   }

@@ -11,6 +11,10 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
+def googleMapsApiKey = localProperties.getProperty('API_KEY_MAPS')
+if (googleMapsApiKey == null) {
+    throw new GradleException("API KEY property not found. Define location in the local.properties file.")
+}
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
@@ -55,6 +59,7 @@ android {
         targetSdkVersion 34
         versionCode 7
         versionName "1.0.6"
+        manifestPlaceholders["googleMapsApiKey"] = googleMapsApiKey
     }
 
     buildTypes {

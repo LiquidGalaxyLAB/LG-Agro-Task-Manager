@@ -218,8 +218,9 @@ class _RobotsViewState extends State<RobotsView> {
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () {
                     viewModel.visualizeTask();
+                    Navigator.pushNamed(context, '/maps_view');
                   },
                   style: ElevatedButton.styleFrom(backgroundColor: customGreen),
                   child: const Text(

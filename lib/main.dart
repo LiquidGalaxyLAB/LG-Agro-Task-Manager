@@ -6,6 +6,7 @@ import 'package:taskmanager/services/robots_service.dart';
 import 'package:taskmanager/view/add_task_view.dart';
 import 'package:taskmanager/view/connection_page_view.dart';
 import 'package:taskmanager/view/lg_actions_view.dart';
+import 'package:taskmanager/view/maps_view.dart';
 import 'package:taskmanager/view/robots_view.dart';
 
 
@@ -33,6 +34,7 @@ Future<void> main() async {
       '/robot_page': (context) => const RobotsView(),
       '/settings_page': (context) => const ConnectionPageView(),
       '/lg_actions': (context) => const LGActionsView(),
+      '/maps_view': (context) => const MapsView(),
     },
   ));
 }
