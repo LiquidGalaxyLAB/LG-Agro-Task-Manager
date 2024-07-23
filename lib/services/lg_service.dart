@@ -67,6 +67,7 @@ class LGService {
         connected = true;
         return true;
       }
+      setLogos();
     } catch (e) {
       Logger.printInDebug("Connection error: $e");
       connected = false;
@@ -207,7 +208,7 @@ class LGService {
       return;
     }
     try {
-      await connectToLG();
+      //await connectToLG();
       cleanKML();
       cleanSlaves();
 
