@@ -21,12 +21,13 @@ class RobotsService {
     taskManager = tm;
   }
 
-  Future<void> createRobot(String robotName, String serialCode, String robotIP ) async {
+  Future<void> createRobot(String robotName, String serialCode, String robotIP, String field) async {
     final isar = _getDataBase();
     return await isar.writeTxn(() async {
       await isar.robots.put(Robot(name: robotName,
           serialNumber: serialCode,
-          robotIP: robotIP)); // insert & update
+          robotIP: robotIP,
+          field: field)); // insert & update
     });
   }
 

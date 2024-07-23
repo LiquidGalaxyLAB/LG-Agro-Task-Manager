@@ -17,18 +17,23 @@ const RobotSchema = CollectionSchema(
   name: r'Robot',
   id: -2559628957862773206,
   properties: {
-    r'name': PropertySchema(
+    r'field': PropertySchema(
       id: 0,
+      name: r'field',
+      type: IsarType.string,
+    ),
+    r'name': PropertySchema(
+      id: 1,
       name: r'name',
       type: IsarType.string,
     ),
     r'robotIP': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'robotIP',
       type: IsarType.string,
     ),
     r'serialNumber': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'serialNumber',
       type: IsarType.string,
     )
@@ -53,6 +58,7 @@ int _robotEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.field.length * 3;
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.robotIP.length * 3;
   bytesCount += 3 + object.serialNumber.length * 3;
@@ -65,9 +71,10 @@ void _robotSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
-  writer.writeString(offsets[1], object.robotIP);
-  writer.writeString(offsets[2], object.serialNumber);
+  writer.writeString(offsets[0], object.field);
+  writer.writeString(offsets[1], object.name);
+  writer.writeString(offsets[2], object.robotIP);
+  writer.writeString(offsets[3], object.serialNumber);
 }
 
 Robot _robotDeserialize(
@@ -77,9 +84,10 @@ Robot _robotDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Robot(
-    name: reader.readString(offsets[0]),
-    robotIP: reader.readString(offsets[1]),
-    serialNumber: reader.readString(offsets[2]),
+    field: reader.readString(offsets[0]),
+    name: reader.readString(offsets[1]),
+    robotIP: reader.readString(offsets[2]),
+    serialNumber: reader.readString(offsets[3]),
   );
   object.id = id;
   return object;
@@ -97,6 +105,8 @@ P _robotDeserializeProp<P>(
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -191,6 +201,134 @@ extension RobotQueryWhere on QueryBuilder<Robot, Robot, QWhereClause> {
 }
 
 extension RobotQueryFilter on QueryBuilder<Robot, Robot, QFilterCondition> {
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'field',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'field',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'field',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'field',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'field',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'field',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'field',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'field',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'field',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterFilterCondition> fieldIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'field',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Robot, Robot, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -637,6 +775,18 @@ extension RobotQueryObject on QueryBuilder<Robot, Robot, QFilterCondition> {}
 extension RobotQueryLinks on QueryBuilder<Robot, Robot, QFilterCondition> {}
 
 extension RobotQuerySortBy on QueryBuilder<Robot, Robot, QSortBy> {
+  QueryBuilder<Robot, Robot, QAfterSortBy> sortByField() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'field', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterSortBy> sortByFieldDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'field', Sort.desc);
+    });
+  }
+
   QueryBuilder<Robot, Robot, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -675,6 +825,18 @@ extension RobotQuerySortBy on QueryBuilder<Robot, Robot, QSortBy> {
 }
 
 extension RobotQuerySortThenBy on QueryBuilder<Robot, Robot, QSortThenBy> {
+  QueryBuilder<Robot, Robot, QAfterSortBy> thenByField() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'field', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Robot, Robot, QAfterSortBy> thenByFieldDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'field', Sort.desc);
+    });
+  }
+
   QueryBuilder<Robot, Robot, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -725,6 +887,13 @@ extension RobotQuerySortThenBy on QueryBuilder<Robot, Robot, QSortThenBy> {
 }
 
 extension RobotQueryWhereDistinct on QueryBuilder<Robot, Robot, QDistinct> {
+  QueryBuilder<Robot, Robot, QDistinct> distinctByField(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'field', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Robot, Robot, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -751,6 +920,12 @@ extension RobotQueryProperty on QueryBuilder<Robot, Robot, QQueryProperty> {
   QueryBuilder<Robot, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Robot, String, QQueryOperations> fieldProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'field');
     });
   }
 

@@ -264,8 +264,8 @@ class _RobotsViewState extends State<RobotsView> {
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) {
             return AddRobotWidget(
-              onSubmit: (robotName, robotIP, robotSN) async {
-                await viewModel.createRobot(robotName, robotSN, robotIP);
+              onSubmit: (robotName, robotIP, robotSN, field) async {
+                await viewModel.createRobot(robotName, robotSN, robotIP, field);
                 robots = await viewModel.fetchRobots();
                 robotsController.add(robots);
                 if(context.mounted) Navigator.of(context).pop();
