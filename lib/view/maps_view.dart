@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:taskmanager/view_models/maps_view_model.dart';
 
 class MapsView extends StatefulWidget {
   final String field;
@@ -16,27 +17,16 @@ class _MapsViewState extends State<MapsView> {
   late GoogleMapController mapController;
   late LatLng _center;
   late String field;
+  final MapsViewModel viewModel = MapsViewModel();
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
-  LatLng decideCoords() {
-    field = widget.field;
-    switch (field) {
-      case 'Seròs 1':
-        return const LatLng(41.46418749774492, 0.3979543781084849);
-      case 'Seròs 2':
-        return const LatLng(41.47251603794711, 0.4084249020488806);
-      default:
-        return const LatLng(41.46418749774492, 0.3979543781084849);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    _center = decideCoords();
+    _center = viewModel.decideCoords(widget.field);
   }
 
   @override
