@@ -192,15 +192,15 @@ class _RobotsViewState extends State<RobotsView> {
                   onPressed: () async {
                     robots = await viewModel.fetchRobots();
                     Robot robot = robots[0];
-                    if(context.mounted) {
+                    if (context.mounted) {
                       Navigator.pushNamed(
-                      context,
-                      '/add_task',
-                      arguments: {
-                        'tmTemp': viewModel.getTaskManager(),
-                        'robot': robot,
-                      },
-                    );
+                        context,
+                        '/add_task',
+                        arguments: {
+                          'tmTemp': viewModel.getTaskManager(),
+                          'robot': robot,
+                        },
+                      );
                     }
                     robots = await viewModel.fetchRobots();
                     robotsController.add(robots);
@@ -220,7 +220,13 @@ class _RobotsViewState extends State<RobotsView> {
                 ElevatedButton(
                   onPressed: () {
                     viewModel.visualizeTask();
-                    Navigator.pushNamed(context, '/maps_view');
+                    Navigator.pushNamed(
+                      context,
+                      '/maps_view',
+                      arguments: {
+                        'field': viewModel.currentRobot.field,
+                      },
+                    );
                   },
                   style: ElevatedButton.styleFrom(backgroundColor: customGreen),
                   child: const Text(
@@ -269,7 +275,7 @@ class _RobotsViewState extends State<RobotsView> {
                 await viewModel.createRobot(robotName, robotSN, robotIP, field);
                 robots = await viewModel.fetchRobots();
                 robotsController.add(robots);
-                if(context.mounted) Navigator.of(context).pop();
+                if (context.mounted) Navigator.of(context).pop();
               },
             );
           }));

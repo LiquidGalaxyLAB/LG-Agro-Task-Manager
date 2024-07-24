@@ -34,7 +34,11 @@ Future<void> main() async {
       '/robot_page': (context) => const RobotsView(),
       '/settings_page': (context) => const ConnectionPageView(),
       '/lg_actions': (context) => const LGActionsView(),
-      '/maps_view': (context) => const MapsView(),
+      '/maps_view': (context) {
+        final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        final field = args ['field'] as String;
+        return MapsView(field: field);
+      }
     },
   ));
 }
