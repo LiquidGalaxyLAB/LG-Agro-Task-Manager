@@ -6,9 +6,9 @@ import 'package:taskmanager/services/lg_service.dart';
 import '../model/robot.dart';
 
 class RobotsService {
-
   late TaskManager taskManager;
   static RobotsService singleton = RobotsService();
+  Robot _tempCurrent = Robot.empty();
 
   Isar _getDataBase() => DataBaseService.singleton.getDatabase();
 
@@ -17,17 +17,34 @@ class RobotsService {
     return isar.robots.where().findAll();
   }
 
-  void setTaskManager(TaskManager tm){
+  void setTaskManager(TaskManager tm) {
     taskManager = tm;
   }
 
-  Future<void> createRobot(String robotName, String serialCode, String robotIP, String field) async {
+  void changeTempCurrentRobot(Robot r){
+    _tempCurrent = r;
+  }
+
+  Robot getCurrentRobot(){
+    return _tempCurrent;
+  }
+
+  Future<void> createRobot(
+      String robotName, String serialCode, String robotIP, String field) async {
     final isar = _getDataBase();
     return await isar.writeTxn(() async {
-      await isar.robots.put(Robot(name: robotName,
+      await isar.robots.put(Robot(
+          name: robotName,
           serialNumber: serialCode,
           robotIP: robotIP,
           field: field)); // insert & update
+    });
+  }
+
+  Future<void> deleteRobot(int id) async {
+    final isar = _getDataBase();
+    return await isar.writeTxn(() async {
+      await isar.robots.delete(id);
     });
   }
 
@@ -40,7 +57,7 @@ class RobotsService {
     LGService.instance.displaySpecificKML(name, country);
   }
 
-  TaskManager getTaskManager(){
+  TaskManager getTaskManager() {
     return taskManager;
   }
 }

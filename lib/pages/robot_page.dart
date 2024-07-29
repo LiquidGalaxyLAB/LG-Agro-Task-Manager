@@ -4,8 +4,14 @@ import '../model/robot.dart';
 class RobotPage extends StatefulWidget {
   final List<Robot> robots;
   final Function(Robot) onRobotSelected;
+  final Function(Robot) onRobotDeleted;
 
-  const RobotPage({super.key, required this.robots, required this.onRobotSelected});
+  const RobotPage({
+    super.key,
+    required this.robots,
+    required this.onRobotSelected,
+    required this.onRobotDeleted,
+  });
 
   @override
   State<RobotPage> createState() => _RobotPageState();
@@ -31,11 +37,24 @@ class _RobotPageState extends State<RobotPage> {
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: Center(
-                child: Text(
-                  robot.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+              child: Stack(
+                children: [
+                  Center(
+                    child: Text(
+                      robot.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        widget.onRobotDeleted(robot);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

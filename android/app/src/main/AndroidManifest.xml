@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     package="com.davit.taskmanager"
     <application
-        android:label="taskmanager"
+        android:label="Agro Task Manager for Liquid Galaxy"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

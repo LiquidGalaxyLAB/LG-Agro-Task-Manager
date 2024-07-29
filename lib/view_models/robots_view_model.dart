@@ -10,8 +10,12 @@ class RobotsViewModel {
   late TaskManager taskManager;
   late List<Robot> robots;
 
-  void setCurrentRobot(Robot robot) {
-    currentRobot = robot;
+  void setCurrentRobot() {
+    currentRobot = RobotsService.singleton.getCurrentRobot();
+  }
+
+  void setCurrentRobotInService(Robot robot){
+    RobotsService.singleton.changeTempCurrentRobot(robot);
   }
 
   void fetchTaskManager() {
@@ -20,6 +24,7 @@ class RobotsViewModel {
 
   void setCurrentTask() {
     fetchTaskManager();
+    RobotsService.singleton.taskManager = taskManager;
     if (currentRobot.currentTask != null) {
       remainingTasks = taskManager.getRobot(currentRobot.name)?.remainingTasks;
       if (currentRobot.currentTask!.completionPercentage >= 100) {
@@ -57,7 +62,12 @@ class RobotsViewModel {
     robots = await fetchRobots();
     if (robots.isNotEmpty) {
       currentRobot = robots[0];
+      RobotsService.singleton.changeTempCurrentRobot(robots[0]);
     }
+  }
+
+  Future<void> deleteRobot() async {
+    RobotsService.singleton.deleteRobot(currentRobot.id);
   }
 
   Task? fetchCurrentTask() {

@@ -7,6 +7,7 @@ import 'package:taskmanager/widgets/add_robot_widget.dart';
 
 import '../model/robot.dart';
 import '../model/task.dart';
+import '../utils/logger.dart';
 
 class RobotsView extends StatefulWidget {
   const RobotsView({super.key});
@@ -65,6 +66,7 @@ class _RobotsViewState extends State<RobotsView> {
           _taskController.isClosed ||
           _currentRobotController.isClosed) return;
       viewModel.fetchTaskManager();
+      viewModel.setCurrentRobot();
 
       robots = await viewModel.fetchRobots();
       robotsController.add(robots);
@@ -247,16 +249,24 @@ class _RobotsViewState extends State<RobotsView> {
                   return RobotPage(
                     robots: snapshot.data!,
                     onRobotSelected: (robot) {
+                      Logger.printInDebug('Selected robot: ${robot.name}');
                       viewModel.fetchTaskManager();
-                      viewModel.setCurrentRobot(robot);
+                      viewModel.setCurrentRobotInService(robot);
+                      viewModel.setCurrentRobot();
                       _currentRobotController.add(robot);
+                      Logger.printInDebug("robots: ${robot.name}");
                       viewModel.setCurrentTask();
+                      setState(() {});
                       if (viewModel.currentRobot.currentTask != null) {
                         _taskController
                             .add(viewModel.currentRobot.currentTask!);
                       }
                       queueController
                           .add(viewModel.currentRobot.remainingTasks);
+                    },
+                    onRobotDeleted: (Robot r) async {
+                      viewModel.deleteRobot();
+                      robots = await viewModel.fetchRobots();
                     },
                   );
                 } else {
