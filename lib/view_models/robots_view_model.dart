@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/services/robots_service.dart';
 
 import '../model/robot.dart';
 import '../model/task.dart';
 
-class RobotsViewModel {
+class RobotsViewModel extends ChangeNotifier {
   Robot currentRobot = Robot.empty();
   late List<Task>? remainingTasks;
   late TaskManager taskManager;
@@ -12,10 +13,12 @@ class RobotsViewModel {
 
   void setCurrentRobot() {
     currentRobot = RobotsService.singleton.getCurrentRobot();
+    notifyListeners();
   }
 
-  void setCurrentRobotInService(Robot robot){
+  void setCurrentRobotInService(Robot robot) {
     RobotsService.singleton.changeTempCurrentRobot(robot);
+    setCurrentRobot();
   }
 
   void fetchTaskManager() {
@@ -37,6 +40,7 @@ class RobotsViewModel {
       currentRobot.currentTask =
           taskManager.getRobot(currentRobot.name)?.currentTask;
     }
+    notifyListeners();
   }
 
   Future<List<Robot>> fetchRobots() async {
@@ -54,8 +58,10 @@ class RobotsViewModel {
 
   Future<void> createRobot(String robotName, String robotIP,
       String serialNumber, String field) async {
-    RobotsService.singleton
+    await RobotsService.singleton
         .createRobot(robotName, robotIP, serialNumber, field);
+    robots = await fetchRobots();
+    notifyListeners();
   }
 
   Future<void> setCurrentRobotInit() async {
@@ -63,11 +69,20 @@ class RobotsViewModel {
     if (robots.isNotEmpty) {
       currentRobot = robots[0];
       RobotsService.singleton.changeTempCurrentRobot(robots[0]);
+      notifyListeners();
     }
   }
 
   Future<void> deleteRobot() async {
-    RobotsService.singleton.deleteRobot(currentRobot.id);
+    await RobotsService.singleton.deleteRobot(currentRobot.id);
+    robots = await fetchRobots();
+    if (robots.isNotEmpty) {
+      currentRobot = robots[0];
+      RobotsService.singleton.changeTempCurrentRobot(robots[0]);
+    } else {
+      currentRobot = Robot.empty();
+    }
+    notifyListeners();
   }
 
   Task? fetchCurrentTask() {
@@ -75,6 +90,7 @@ class RobotsViewModel {
     Robot? currentRobot2 = taskManager.getRobot(currentRobot.name);
     if (currentRobot2 != null && currentRobot2.currentTask != null) {
       currentRobot = currentRobot2;
+      notifyListeners();
       return currentRobot.currentTask;
     } else {
       return null;
@@ -83,13 +99,14 @@ class RobotsViewModel {
 
   Future<void> simulateTask() async {
     await currentRobot.taskSimulation();
+    notifyListeners(); // Notifica a la vista després de la simulació de la tasca
   }
 
   List<Task> fetchRemainingTasks() {
     return currentRobot.remainingTasks;
   }
 
-  visualizeTask() {
+  void visualizeTask() {
     String field = currentRobot.field;
     String country;
     String city = field.split(' ')[0];

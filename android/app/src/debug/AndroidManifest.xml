@@ -13,7 +13,7 @@
         android:requiresSmallestWidthDp="600" />
 
     <application
-        android:label="taskmanager"
+        android:label="Agro Task Manager for Liquid Galaxy"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
