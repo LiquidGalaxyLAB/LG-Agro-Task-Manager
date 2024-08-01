@@ -199,7 +199,7 @@ class _RobotsViewState extends State<RobotsView> {
                     ElevatedButton(
                       onPressed: () async {
                         robots = await viewModel.fetchRobots();
-                        Robot robot = robots[0];
+                        Robot robot = viewModel.currentRobot;
                         if (context.mounted) {
                           Navigator.pushNamed(
                             context,
@@ -215,8 +215,9 @@ class _RobotsViewState extends State<RobotsView> {
 
                         viewModel.fetchTaskManager();
                         Task? currentTask = viewModel.fetchCurrentTask();
-                        if (currentTask != null)
+                        if (currentTask != null) {
                           _taskController.add(currentTask);
+                        }
                         queueController.add(viewModel.fetchRemainingTasks());
                       },
                       style: ElevatedButton.styleFrom(
