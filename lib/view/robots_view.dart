@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:taskmanager/pages/robot_page.dart';
 import 'package:taskmanager/view_models/robots_view_model.dart';
 import 'package:taskmanager/widgets/add_robot_widget.dart';
 
 import '../model/robot.dart';
-import '../utils/logger.dart';
 
 class RobotsView extends StatefulWidget {
   const RobotsView({super.key});
@@ -17,6 +17,7 @@ class RobotsView extends StatefulWidget {
 class _RobotsViewState extends State<RobotsView> {
   TextEditingController itemController = TextEditingController();
   late List<Robot> robots;
+  final RobotsViewModel viewModel = RobotsViewModel();
 
   static const Color customGreen = Color(0xFF3E9671);
   static const Color customDarkGrey = Color(0xFF333333);
@@ -54,9 +55,38 @@ class _RobotsViewState extends State<RobotsView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Current Task: ${viewModel.currentRobot.currentTask != null ? "Cap" : viewModel.currentRobot.currentTask?.taskName}',
+                      'Current Task: ${viewModel.currentRobot.currentTask != null ? viewModel.currentRobot.currentTask?.taskName : ""}',
                       style: const TextStyle(color: customGreen, fontSize: 16),
                     ),
+                    const SizedBox(height: 10),
+                    viewModel.currentRobot.currentTask != null
+                        ? Column(
+                            children: [
+                              CircularPercentIndicator(
+                                radius: 50.0,
+                                lineWidth: 10.0,
+                                percent: viewModel.currentRobot.currentTask!
+                                        .completionPercentage /
+                                    100,
+                                center: Text(
+                                  '${viewModel.currentRobot.currentTask!.completionPercentage.toStringAsFixed(1)}%',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                progressColor: customGreen,
+                                backgroundColor: customLightGrey,
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          )
+                        : const Text(
+                            'No current task',
+                            style: TextStyle(color: customGreen, fontSize: 16),
+                          ),
+                    const SizedBox(height: 20),
                     SizedBox(
                         height: MediaQuery.of(context).size.height / 4,
                         width: MediaQuery.of(context).size.width,
@@ -79,20 +109,18 @@ class _RobotsViewState extends State<RobotsView> {
                         )),
                     ElevatedButton(
                       onPressed: () async {
-                        Robot robot = viewModel.currentRobot;
                         if (context.mounted) {
                           await Navigator.pushNamed(
                             context,
                             '/add_task',
                             arguments: {
                               'tmTemp': viewModel.getTaskManager(),
-                              'robot': robot,
+                              'robot': viewModel.currentRobot,
                             },
                           );
                         }
                         robots = await viewModel.fetchRobots();
-
-                        viewModel.fetchTaskManager();
+                        viewModel.setCurrentTask();
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: customGreen),
@@ -129,10 +157,8 @@ class _RobotsViewState extends State<RobotsView> {
                   child: RobotPage(
                     robots: viewModel.robots,
                     onRobotSelected: (robot) {
-                      Logger.printInDebug('Selected robot: ${robot.name}');
                       viewModel.fetchTaskManager();
                       viewModel.setCurrentRobot(robot);
-                      Logger.printInDebug("robots: ${robot.name}");
                       viewModel.setCurrentTask();
                     },
                     onRobotDeleted: (Robot r) async {

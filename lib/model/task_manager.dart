@@ -1,32 +1,25 @@
 import 'package:taskmanager/model/robot.dart';
 import 'package:taskmanager/model/task.dart';
 
-class TaskManager{
+class TaskManager {
   List<Robot> robots;
 
-  TaskManager({
-    required this.robots
-  });
+  TaskManager({required this.robots});
 
-  void addRobots(Robot r){
+  void addRobots(Robot r) {
     robots.add(r);
   }
 
-  void removeRobots(Robot r){
+  void removeRobots(Robot r) {
     robots.remove(r);
   }
 
-  void addTaskToRobot(Task task, String name){
-    for(int i = 0; i < robots.length; ++i){
-      if (robots[i].name == name) robots[i].addTask(task);
-    }
+  void addTaskToRobot(Task task, String robotName) {
+    Robot? robot = robots.firstWhere((r) => r.name == robotName);
+    robot.addTask(task);
   }
 
-  Robot? getRobot(String robotName){
-    for(int i = 0; i < robots.length; ++i){
-      if (robots[i].name == robotName) return robots[i];
-    }
-    return null;
+  Robot? getRobot(String robotName) {
+    return robots.firstWhere((r) => r.name == robotName);
   }
-
 }

@@ -21,11 +21,11 @@ class RobotsService {
     taskManager = tm;
   }
 
-  void changeTempCurrentRobot(Robot r){
+  void changeTempCurrentRobot(Robot r) {
     _tempCurrent = r;
   }
 
-  Robot getCurrentRobot(){
+  Robot getCurrentRobot() {
     return _tempCurrent;
   }
 
@@ -37,7 +37,7 @@ class RobotsService {
           name: robotName,
           serialNumber: serialCode,
           robotIP: robotIP,
-          field: field)); // insert & update
+          field: field));
     });
   }
 

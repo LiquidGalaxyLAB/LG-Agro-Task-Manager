@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/services/robots_service.dart';
+import 'package:taskmanager/utils/logger.dart';
 
 import '../model/robot.dart';
 import '../model/task.dart';
@@ -11,8 +12,14 @@ class RobotsViewModel extends ChangeNotifier {
   late TaskManager taskManager;
   late List<Robot> robots;
 
-  RobotsViewModel(){
+  RobotsViewModel() {
+    create();
+  }
 
+  Future<void> create() async {
+    robots = await fetchRobots();
+    setCurrentRobotInit();
+    setCurrentTask();
   }
 
   void setCurrentRobot(Robot robot) {
@@ -38,7 +45,11 @@ class RobotsViewModel extends ChangeNotifier {
     } else {
       currentRobot.currentTask =
           taskManager.getRobot(currentRobot.name)?.currentTask;
+      currentRobot.remainingTasks =
+          taskManager.getRobot(currentRobot.name)!.remainingTasks;
     }
+    Logger.printInDebug(
+        "Task manager rebut al Robots viewModel! Current Robot: ${currentRobot.name}, Current Task = ${currentRobot.currentTask?.taskName}, Remaining Tasks: ${currentRobot.remainingTasks}");
     notifyListeners();
   }
 
@@ -98,7 +109,7 @@ class RobotsViewModel extends ChangeNotifier {
 
   Future<void> simulateTask() async {
     await currentRobot.taskSimulation();
-    notifyListeners(); // Notifica a la vista després de la simulació de la tasca
+    notifyListeners();
   }
 
   List<Task> fetchRemainingTasks() {
