@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/services/database_service.dart';
 import 'package:taskmanager/services/lg_service.dart';
+import 'package:taskmanager/utils/logger.dart';
 
 import '../model/robot.dart';
 
@@ -51,6 +52,7 @@ class RobotsService {
   Future<void> initialize() async {
     final List<Robot> robots = await fetchRobots();
     taskManager = TaskManager(robots: robots);
+    Logger.printInDebug("initialized");
   }
 
   Future<void> goToLocation(String name, String country) async {

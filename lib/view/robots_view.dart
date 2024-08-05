@@ -41,7 +41,7 @@ class _RobotsViewState extends State<RobotsView> {
             children: [
               const SizedBox(height: 20),
               Text(
-                viewModel.currentRobot.name,
+                viewModel.getCurrentRobot().name,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -55,21 +55,23 @@ class _RobotsViewState extends State<RobotsView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Current Task: ${viewModel.currentRobot.currentTask != null ? viewModel.currentRobot.currentTask?.taskName : ""}',
+                      'Current Task: ${viewModel.getCurrentRobot().currentTask != null ? viewModel.getCurrentRobot().currentTask?.taskName : ""}',
                       style: const TextStyle(color: customGreen, fontSize: 16),
                     ),
                     const SizedBox(height: 10),
-                    viewModel.currentRobot.currentTask != null
+                    viewModel.getCurrentRobot().currentTask != null
                         ? Column(
                             children: [
                               CircularPercentIndicator(
                                 radius: 50.0,
                                 lineWidth: 10.0,
-                                percent: viewModel.currentRobot.currentTask!
+                                percent: viewModel
+                                        .getCurrentRobot()
+                                        .currentTask!
                                         .completionPercentage /
                                     100,
                                 center: Text(
-                                  '${viewModel.currentRobot.currentTask!.completionPercentage.toStringAsFixed(1)}%',
+                                  '${viewModel.getCurrentRobot().currentTask!.completionPercentage.toStringAsFixed(1)}%',
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -92,13 +94,15 @@ class _RobotsViewState extends State<RobotsView> {
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
                           itemCount:
-                              viewModel.currentRobot.remainingTasks.length,
+                              viewModel.getCurrentRobot().remainingTasks.length,
                           itemBuilder: (context, index) {
                             return Card(
                               color: customLightGrey,
                               child: ListTile(
                                 title: Text(
-                                  viewModel.currentRobot.remainingTasks[index]
+                                  viewModel
+                                      .getCurrentRobot()
+                                      .remainingTasks[index]
                                       .taskName,
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 16),
@@ -115,7 +119,7 @@ class _RobotsViewState extends State<RobotsView> {
                             '/add_task',
                             arguments: {
                               'tmTemp': viewModel.getTaskManager(),
-                              'robot': viewModel.currentRobot,
+                              'robot': viewModel.getCurrentRobot(),
                             },
                           );
                         }
@@ -137,7 +141,7 @@ class _RobotsViewState extends State<RobotsView> {
                           context,
                           '/maps_view',
                           arguments: {
-                            'field': viewModel.currentRobot.field,
+                            'field': viewModel.getCurrentRobot().field,
                           },
                         );
                       },
@@ -155,7 +159,7 @@ class _RobotsViewState extends State<RobotsView> {
               SizedBox(
                   height: MediaQuery.of(context).size.height / 10,
                   child: RobotPage(
-                    robots: viewModel.robots,
+                    robots: viewModel.getRobots(),
                     onRobotSelected: (robot) {
                       viewModel.fetchTaskManager();
                       viewModel.setCurrentRobot(robot);

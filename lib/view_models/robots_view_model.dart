@@ -1,56 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/model/task_manager.dart';
 import 'package:taskmanager/services/robots_service.dart';
-import 'package:taskmanager/utils/logger.dart';
 
 import '../model/robot.dart';
 import '../model/task.dart';
 
 class RobotsViewModel extends ChangeNotifier {
-  Robot currentRobot = Robot.empty();
-  late List<Task>? remainingTasks;
-  late TaskManager taskManager;
-  late List<Robot> robots;
+  TaskManager taskManager = RobotsService.singleton.getTaskManager();
 
   RobotsViewModel() {
-    create();
-  }
-
-  Future<void> create() async {
-    robots = await fetchRobots();
-    setCurrentRobotInit();
-    setCurrentTask();
+    taskManager.setCurrentRobotInit();
+    taskManager.setCurrentTask();
   }
 
   void setCurrentRobot(Robot robot) {
-    currentRobot = robot;
+    taskManager.currentRobot = robot;
     notifyListeners();
+  }
+
+  Robot getCurrentRobot() {
+    return taskManager.currentRobot;
+  }
+
+  void setCurrentTask() {
+    taskManager.setCurrentTask();
+  }
+
+  getRobots() {
+    return taskManager.robots;
   }
 
   void fetchTaskManager() {
     taskManager = RobotsService.singleton.taskManager;
-  }
-
-  void setCurrentTask() {
-    fetchTaskManager();
-    RobotsService.singleton.taskManager = taskManager;
-    if (currentRobot.currentTask != null) {
-      remainingTasks = taskManager.getRobot(currentRobot.name)?.remainingTasks;
-      if (currentRobot.currentTask!.completionPercentage >= 100) {
-        currentRobot.currentTask = remainingTasks?[0];
-        remainingTasks?.removeAt(0);
-        taskManager.getRobot(currentRobot.name)?.remainingTasks.removeAt(0);
-        currentRobot.taskSimulation();
-      }
-    } else {
-      currentRobot.currentTask =
-          taskManager.getRobot(currentRobot.name)?.currentTask;
-      currentRobot.remainingTasks =
-          taskManager.getRobot(currentRobot.name)!.remainingTasks;
-    }
-    Logger.printInDebug(
-        "Task manager rebut al Robots viewModel! Current Robot: ${currentRobot.name}, Current Task = ${currentRobot.currentTask?.taskName}, Remaining Tasks: ${currentRobot.remainingTasks}");
-    notifyListeners();
   }
 
   Future<List<Robot>> fetchRobots() async {
@@ -70,54 +51,33 @@ class RobotsViewModel extends ChangeNotifier {
       String serialNumber, String field) async {
     await RobotsService.singleton
         .createRobot(robotName, robotIP, serialNumber, field);
-    robots = await fetchRobots();
+    taskManager.robots = await fetchRobots();
     notifyListeners();
-  }
-
-  Future<void> setCurrentRobotInit() async {
-    robots = await fetchRobots();
-    if (robots.isNotEmpty) {
-      currentRobot = robots[0];
-      RobotsService.singleton.changeTempCurrentRobot(robots[0]);
-      notifyListeners();
-    }
   }
 
   Future<void> deleteRobot() async {
-    await RobotsService.singleton.deleteRobot(currentRobot.id);
-    robots = await fetchRobots();
-    if (robots.isNotEmpty) {
-      currentRobot = robots[0];
-      RobotsService.singleton.changeTempCurrentRobot(robots[0]);
+    await RobotsService.singleton.deleteRobot(taskManager.currentRobot.id);
+    await taskManager.fetchRobots();
+    if (taskManager.robots.isNotEmpty) {
+      taskManager.currentRobot = taskManager.robots[0];
+      RobotsService.singleton.changeTempCurrentRobot(taskManager.robots[0]);
     } else {
-      currentRobot = Robot.empty();
+      taskManager.currentRobot = Robot.empty();
     }
     notifyListeners();
   }
 
-  Task? fetchCurrentTask() {
-    taskManager = RobotsService.singleton.getTaskManager();
-    Robot? currentRobot2 = taskManager.getRobot(currentRobot.name);
-    if (currentRobot2 != null && currentRobot2.currentTask != null) {
-      currentRobot = currentRobot2;
-      notifyListeners();
-      return currentRobot.currentTask;
-    } else {
-      return null;
-    }
-  }
-
   Future<void> simulateTask() async {
-    await currentRobot.taskSimulation();
+    await taskManager.currentRobot.taskSimulation();
     notifyListeners();
   }
 
   List<Task> fetchRemainingTasks() {
-    return currentRobot.remainingTasks;
+    return taskManager.currentRobot.remainingTasks;
   }
 
   void visualizeTask() {
-    String field = currentRobot.field;
+    String field = taskManager.currentRobot.field;
     String country;
     String city = field.split(' ')[0];
     if (city == 'Seròs' || city == 'Anaquela del Ducado' || city == 'Soria') {
