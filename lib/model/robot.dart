@@ -5,7 +5,7 @@ part 'robot.g.dart';
 
 @collection
 class Robot {
-  Id id = Isar.autoIncrement; // you can also use id = null to auto increment
+  Id id = Isar.autoIncrement;
   String name;
   String serialNumber;
   String robotIP;

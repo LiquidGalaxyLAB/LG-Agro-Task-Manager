@@ -11,14 +11,13 @@ class RobotsViewModel extends ChangeNotifier {
   late TaskManager taskManager;
   late List<Robot> robots;
 
-  void setCurrentRobot() {
-    currentRobot = RobotsService.singleton.getCurrentRobot();
-    notifyListeners();
+  RobotsViewModel(){
+
   }
 
-  void setCurrentRobotInService(Robot robot) {
-    RobotsService.singleton.changeTempCurrentRobot(robot);
-    setCurrentRobot();
+  void setCurrentRobot(Robot robot) {
+    currentRobot = robot;
+    notifyListeners();
   }
 
   void fetchTaskManager() {

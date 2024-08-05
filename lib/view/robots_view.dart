@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskmanager/pages/robot_page.dart';
@@ -7,7 +5,6 @@ import 'package:taskmanager/view_models/robots_view_model.dart';
 import 'package:taskmanager/widgets/add_robot_widget.dart';
 
 import '../model/robot.dart';
-import '../model/task.dart';
 import '../utils/logger.dart';
 
 class RobotsView extends StatefulWidget {
@@ -19,78 +16,11 @@ class RobotsView extends StatefulWidget {
 
 class _RobotsViewState extends State<RobotsView> {
   TextEditingController itemController = TextEditingController();
-  late StreamController<List<Task>> queueController;
-  late StreamController<List<Robot>> robotsController;
-  late StreamController<Task> _taskController;
-  late StreamController<Robot> _currentRobotController;
   late List<Robot> robots;
-  late StreamSubscription _periodicSubscription;
 
   static const Color customGreen = Color(0xFF3E9671);
   static const Color customDarkGrey = Color(0xFF333333);
   static const Color customLightGrey = Color(0xFF4F4F4F);
-
-  @override
-  void initState() {
-    super.initState();
-    queueController = StreamController<List<Task>>.broadcast();
-    robotsController = StreamController<List<Robot>>.broadcast();
-    _taskController = StreamController<Task>.broadcast();
-    _currentRobotController = StreamController<Robot>.broadcast();
-
-    _initializeViewModel();
-  }
-
-  Future<void> _initializeViewModel() async {
-    final viewModel = Provider.of<RobotsViewModel>(context, listen: false);
-    await viewModel.setCurrentRobotInit();
-    viewModel.setCurrentTask();
-
-    if (viewModel.currentRobot.currentTask != null) {
-      _taskController.add(viewModel.currentRobot.currentTask!);
-    }
-    _currentRobotController.add(viewModel.currentRobot);
-    robots = await viewModel.fetchRobots();
-    robotsController.add(robots);
-
-    List<Task> initialQueue = viewModel.currentRobot.remainingTasks;
-    queueController.add(initialQueue);
-
-    _startPeriodicUpdates();
-  }
-
-  void _startPeriodicUpdates() {
-    final viewModel = Provider.of<RobotsViewModel>(context, listen: false);
-    _periodicSubscription =
-        Stream.periodic(const Duration(seconds: 2)).listen((_) async {
-      if (queueController.isClosed ||
-          robotsController.isClosed ||
-          _taskController.isClosed ||
-          _currentRobotController.isClosed) return;
-      viewModel.fetchTaskManager();
-
-      robots = await viewModel.fetchRobots();
-      robotsController.add(robots);
-
-      Task? currentTask = viewModel.fetchCurrentTask();
-      if (currentTask != null) _taskController.add(currentTask);
-
-      List<Task> remainingTasks = viewModel.fetchRemainingTasks();
-      queueController.add(remainingTasks);
-
-      await viewModel.simulateTask();
-    });
-  }
-
-  @override
-  void dispose() {
-    queueController.close();
-    robotsController.close();
-    _taskController.close();
-    _currentRobotController.close();
-    _periodicSubscription.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,22 +39,13 @@ class _RobotsViewState extends State<RobotsView> {
           return Column(
             children: [
               const SizedBox(height: 20),
-              StreamBuilder<Robot>(
-                stream: _currentRobotController.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Text(
-                      snapshot.data!.name,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: customGreen,
-                      ),
-                    );
-                  } else {
-                    return const Text('Loading...');
-                  }
-                },
+              Text(
+                viewModel.currentRobot.name,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: customGreen,
+                ),
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -132,76 +53,35 @@ class _RobotsViewState extends State<RobotsView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    StreamBuilder<Task>(
-                      stream: _taskController.stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Column(
-                            children: [
-                              Text(
-                                'Current Task: ${snapshot.data!.taskName.isEmpty ? "Cap" : snapshot.data!.taskName}',
-                                style: const TextStyle(
-                                    color: customGreen, fontSize: 16),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 16.0),
-                                child: CircularProgressIndicator(
-                                  value:
-                                      snapshot.data!.completionPercentage / 100,
-                                  valueColor:
-                                      const AlwaysStoppedAnimation<Color>(
-                                          customGreen),
-                                  backgroundColor: Colors.grey,
-                                  strokeWidth: 10.0,
-                                ),
-                              ),
-                              Text(
-                                '${snapshot.data!.completionPercentage}% completat',
-                                style: const TextStyle(
-                                    color: customGreen, fontSize: 16),
-                              ),
-                            ],
-                          );
-                        } else {
-                          return const CircularProgressIndicator();
-                        }
-                      },
+                    Text(
+                      'Current Task: ${viewModel.currentRobot.currentTask != null ? "Cap" : viewModel.currentRobot.currentTask?.taskName}',
+                      style: const TextStyle(color: customGreen, fontSize: 16),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 4,
-                      width: MediaQuery.of(context).size.width,
-                      child: StreamBuilder<List<Task>>(
-                        stream: queueController.stream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  color: customLightGrey,
-                                  child: ListTile(
-                                    title: Text(
-                                      snapshot.data![index].taskName,
-                                      style: const TextStyle(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ),
-                                );
-                              },
+                        height: MediaQuery.of(context).size.height / 4,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView.builder(
+                          itemCount:
+                              viewModel.currentRobot.remainingTasks.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              color: customLightGrey,
+                              child: ListTile(
+                                title: Text(
+                                  viewModel.currentRobot.remainingTasks[index]
+                                      .taskName,
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                ),
+                              ),
                             );
-                          } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                        },
-                      ),
-                    ),
+                          },
+                        )),
                     ElevatedButton(
                       onPressed: () async {
-                        robots = await viewModel.fetchRobots();
                         Robot robot = viewModel.currentRobot;
                         if (context.mounted) {
-                          Navigator.pushNamed(
+                          await Navigator.pushNamed(
                             context,
                             '/add_task',
                             arguments: {
@@ -211,14 +91,8 @@ class _RobotsViewState extends State<RobotsView> {
                           );
                         }
                         robots = await viewModel.fetchRobots();
-                        robotsController.add(robots);
 
                         viewModel.fetchTaskManager();
-                        Task? currentTask = viewModel.fetchCurrentTask();
-                        if (currentTask != null) {
-                          _taskController.add(currentTask);
-                        }
-                        queueController.add(viewModel.fetchRemainingTasks());
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: customGreen),
@@ -251,39 +125,21 @@ class _RobotsViewState extends State<RobotsView> {
               ),
               const Spacer(),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 10,
-                child: StreamBuilder<List<Robot>>(
-                  stream: robotsController.stream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return RobotPage(
-                        robots: snapshot.data!,
-                        onRobotSelected: (robot) {
-                          Logger.printInDebug('Selected robot: ${robot.name}');
-                          viewModel.fetchTaskManager();
-                          viewModel.setCurrentRobotInService(robot);
-                          _currentRobotController.add(robot);
-                          Logger.printInDebug("robots: ${robot.name}");
-                          viewModel.setCurrentTask();
-                          if (viewModel.currentRobot.currentTask != null) {
-                            _taskController
-                                .add(viewModel.currentRobot.currentTask!);
-                          }
-                          queueController
-                              .add(viewModel.currentRobot.remainingTasks);
-                        },
-                        onRobotDeleted: (Robot r) async {
-                          await viewModel.deleteRobot();
-                          robots = await viewModel.fetchRobots();
-                          robotsController.add(robots);
-                        },
-                      );
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
-              ),
+                  height: MediaQuery.of(context).size.height / 10,
+                  child: RobotPage(
+                    robots: viewModel.robots,
+                    onRobotSelected: (robot) {
+                      Logger.printInDebug('Selected robot: ${robot.name}');
+                      viewModel.fetchTaskManager();
+                      viewModel.setCurrentRobot(robot);
+                      Logger.printInDebug("robots: ${robot.name}");
+                      viewModel.setCurrentTask();
+                    },
+                    onRobotDeleted: (Robot r) async {
+                      await viewModel.deleteRobot();
+                      robots = await viewModel.fetchRobots();
+                    },
+                  )),
             ],
           );
         },
@@ -297,7 +153,6 @@ class _RobotsViewState extends State<RobotsView> {
                     Provider.of<RobotsViewModel>(context, listen: false);
                 await viewModel.createRobot(robotName, robotSN, robotIP, field);
                 robots = await viewModel.fetchRobots();
-                robotsController.add(robots);
                 if (context.mounted) Navigator.of(context).pop();
               },
             );

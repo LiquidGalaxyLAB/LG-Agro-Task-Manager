@@ -77,174 +77,173 @@ class _ConnectionPageView extends State<ConnectionPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: true,
-      child: Scaffold(
-        backgroundColor: customDarkGrey,
-        appBar: AppBar(
-          backgroundColor: customGreen,
-          title: const Text('Connection Settings',
-              style: TextStyle(color: Colors.white)),
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: ConnectionFlag(status: connectionStatus),
+    return Scaffold(
+      backgroundColor: customDarkGrey,
+      appBar: AppBar(
+        backgroundColor: customGreen,
+        title: const Text('Connection Settings',
+            style: TextStyle(color: Colors.white)),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ConnectionFlag(status: connectionStatus),
+              ),
+            ),
+            TextField(
+              controller: _ipController,
+              style: TextStyle(color: customGreen),
+              decoration: InputDecoration(
+                labelText: 'IP address',
+                labelStyle: TextStyle(color: customGreen),
+                hintText: 'Enter Master IP',
+                hintStyle: const TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
                 ),
               ),
-              TextField(
-                controller: _ipController,
-                style: TextStyle(color: customGreen),
-                decoration: InputDecoration(
-                  labelText: 'IP address',
-                  labelStyle: TextStyle(color: customGreen),
-                  hintText: 'Enter Master IP',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _usernameController,
+              keyboardType: TextInputType.text,
+              style: TextStyle(color: customGreen),
+              decoration: InputDecoration(
+                labelText: 'LG Username',
+                labelStyle: TextStyle(color: customGreen),
+                hintText: 'LG username',
+                hintStyle: const TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
                 ),
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _usernameController,
-                keyboardType: TextInputType.text,
-                style: TextStyle(color: customGreen),
-                decoration: InputDecoration(
-                  labelText: 'LG Username',
-                  labelStyle: TextStyle(color: customGreen),
-                  hintText: 'LG username',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
                 ),
               ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                style: TextStyle(color: customGreen),
-                decoration: InputDecoration(
-                  labelText: 'LG Password',
-                  labelStyle: TextStyle(color: customGreen),
-                  hintText: 'Enter LG password',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _passwordController,
+              style: TextStyle(color: customGreen),
+              decoration: InputDecoration(
+                labelText: 'LG Password',
+                labelStyle: TextStyle(color: customGreen),
+                hintText: 'Enter LG password',
+                hintStyle: const TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
                 ),
-                obscureText: true,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
+                ),
               ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _sshPortController,
-                style: TextStyle(color: customGreen),
-                decoration: InputDecoration(
-                  labelText: 'SSH Port',
-                  labelStyle: TextStyle(color: customGreen),
-                  hintText: '22',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: customGreen),
-                  ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _sshPortController,
+              style: TextStyle(color: customGreen),
+              decoration: InputDecoration(
+                labelText: 'SSH Port',
+                labelStyle: TextStyle(color: customGreen),
+                hintText: '22',
+                hintStyle: const TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
                 ),
-                keyboardType: TextInputType.number,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: customGreen),
+                ),
               ),
-              const SizedBox(height: 10),
-              const SizedBox(height: 20),
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(customGreen),
-                  shape: WidgetStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                    ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 10),
+            const SizedBox(height: 20),
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(customGreen),
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                 ),
-                onPressed: () async {
-                  await _saveSettings();
-                  await _loadSettings();
-                  bool result = await LGService.instance.connectToLG();
-                  setState(() {
-                    connectionStatus = result;
-                  });
-                  if (connectionStatus) Logger.printInDebug('Connected to LG successfully');
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.cast, color: Colors.white),
-                        SizedBox(width: 20),
-                        Text(
-                          'CONNECT TO LG',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
+              ),
+              onPressed: () async {
+                await _saveSettings();
+                await _loadSettings();
+                bool result = await LGService.instance.connectToLG();
+                setState(() {
+                  connectionStatus = result;
+                });
+                if (connectionStatus) {
+                  Logger.printInDebug('Connected to LG successfully');
+                }
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.cast, color: Colors.white),
+                      SizedBox(width: 20),
+                      Text(
+                        'CONNECT TO LG',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(customGreen),
-                  shape: WidgetStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                    ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(customGreen),
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/lg_actions');
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(width: 20),
-                        Text(
-                          'TAKE LG ACTIONS',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/lg_actions');
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 20),
+                      Text(
+                        'TAKE LG ACTIONS',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
