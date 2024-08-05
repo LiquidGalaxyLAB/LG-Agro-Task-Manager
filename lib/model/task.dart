@@ -1,4 +1,3 @@
-
 class Task {
   String taskName;
   double completionPercentage;
@@ -7,7 +6,7 @@ class Task {
 
   Future<void> simulateCompletion() async {
     completionPercentage = 0;
-    while(completionPercentage < 100){
+    while (completionPercentage < 100) {
       await Future.delayed(const Duration(seconds: 2));
       completionPercentage += 2;
     }
