@@ -24,6 +24,7 @@ class RobotsViewModel extends ChangeNotifier {
 
   void setCurrentTask() {
     taskManager.setCurrentTask();
+    notifyListeners();
   }
 
   getRobots() {
@@ -32,6 +33,7 @@ class RobotsViewModel extends ChangeNotifier {
 
   void fetchTaskManager() {
     taskManager = RobotsService.singleton.taskManager;
+    notifyListeners();
   }
 
   Future<List<Robot>> fetchRobots() async {

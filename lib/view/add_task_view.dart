@@ -60,12 +60,16 @@ class AddTaskView extends StatelessWidget {
             ],
           ),
           SizedBox(height: screenHeight / 10),
-          IconButton(
-            icon: const Icon(Icons.home, color: Colors.blue),
+          ElevatedButton(
             onPressed: () {
               Navigator.pop(context, taskManager);
             },
-          ),
+            style: ElevatedButton.styleFrom(backgroundColor: myGreen),
+            child: const Text(
+              'Confirm',
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+          )
         ],
       ),
     );
