@@ -65,8 +65,7 @@ class _RobotsViewState extends State<RobotsView> {
                               CircularPercentIndicator(
                                 radius: 50.0,
                                 lineWidth: 10.0,
-                                percent: percentage /
-                                    100,
+                                percent: percentage / 100,
                                 center: Text(
                                   '${percentage.toStringAsFixed(1)}%',
                                   style: const TextStyle(
@@ -157,12 +156,15 @@ class _RobotsViewState extends State<RobotsView> {
                   child: RobotPage(
                     robots: viewModel.getRobots(),
                     onRobotSelected: (robot) {
-                      viewModel.fetchTaskManager();
-                      viewModel.setCurrentRobot(robot);
-                      robot.currentTask?.callback = updateValues;
+                      setState(() {
+                        viewModel.fetchTaskManager();
+                        viewModel.setCurrentRobot(robot);
+                        robot.currentTask?.callback = updateValues;
+                      });
                     },
                     onRobotDeleted: (Robot r) async {
                       await viewModel.deleteRobot();
+                      setState(() {});
                     },
                   )),
             ],

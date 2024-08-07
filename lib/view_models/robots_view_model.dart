@@ -21,7 +21,7 @@ class RobotsViewModel extends ChangeNotifier {
   }
 
   void update() {
-
+    fetchTaskManager();
   }
 
   void fetchTaskManager() {
