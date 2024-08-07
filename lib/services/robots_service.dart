@@ -11,6 +11,11 @@ class RobotsService {
   static RobotsService singleton = RobotsService();
   Robot _tempCurrent = Robot.empty();
 
+  RobotsService() {
+    taskManager.setCurrentRobotInit();
+    taskManager.setCurrentTask();
+  }
+
   Isar _getDataBase() => DataBaseService.singleton.getDatabase();
 
   Future<List<Robot>> fetchRobots() async {

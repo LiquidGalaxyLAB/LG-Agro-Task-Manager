@@ -8,11 +8,6 @@ import '../model/task.dart';
 class RobotsViewModel extends ChangeNotifier {
   TaskManager taskManager = RobotsService.singleton.getTaskManager();
 
-  RobotsViewModel() {
-    taskManager.setCurrentRobotInit();
-    taskManager.setCurrentTask();
-  }
-
   void setCurrentRobot(Robot robot) {
     taskManager.currentRobot = robot;
     notifyListeners();
