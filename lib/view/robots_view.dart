@@ -15,8 +15,7 @@ class RobotsView extends StatefulWidget {
 }
 
 class _RobotsViewState extends State<RobotsView> {
-  TextEditingController itemController = TextEditingController();
-  late List<Robot> robots;
+  final TextEditingController itemController = TextEditingController();
   final RobotsViewModel viewModel = RobotsViewModel();
 
   static const Color customGreen = Color(0xFF3E9671);
@@ -123,7 +122,6 @@ class _RobotsViewState extends State<RobotsView> {
                             },
                           );
                         }
-                        robots = await viewModel.fetchRobots();
                         viewModel.setCurrentTask();
                       },
                       style: ElevatedButton.styleFrom(
@@ -167,7 +165,6 @@ class _RobotsViewState extends State<RobotsView> {
                     },
                     onRobotDeleted: (Robot r) async {
                       await viewModel.deleteRobot();
-                      robots = await viewModel.fetchRobots();
                     },
                   )),
             ],
@@ -182,7 +179,6 @@ class _RobotsViewState extends State<RobotsView> {
                 final viewModel =
                     Provider.of<RobotsViewModel>(context, listen: false);
                 await viewModel.createRobot(robotName, robotSN, robotIP, field);
-                robots = await viewModel.fetchRobots();
                 if (context.mounted) Navigator.of(context).pop();
               },
             );
