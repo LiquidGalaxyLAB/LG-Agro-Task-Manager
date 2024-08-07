@@ -9,26 +9,23 @@ class RobotsViewModel extends ChangeNotifier {
   TaskManager taskManager = RobotsService.singleton.getTaskManager();
 
   void setCurrentRobot(Robot robot) {
-    taskManager.currentRobot = robot;
-    notifyListeners();
+    taskManager.setCurrentRobot(robot);
   }
 
   Robot getCurrentRobot() {
     return taskManager.currentRobot;
   }
 
-  void setCurrentTask() {
-    taskManager.setCurrentTask();
-    notifyListeners();
-  }
-
   getRobots() {
     return taskManager.robots;
   }
 
+  void update() {
+
+  }
+
   void fetchTaskManager() {
     taskManager = RobotsService.singleton.taskManager;
-    notifyListeners();
   }
 
   Future<List<Robot>> fetchRobots() async {
@@ -49,24 +46,11 @@ class RobotsViewModel extends ChangeNotifier {
     await RobotsService.singleton
         .createRobot(robotName, robotIP, serialNumber, field);
     taskManager.robots = await fetchRobots();
-    notifyListeners();
   }
 
   Future<void> deleteRobot() async {
     await RobotsService.singleton.deleteRobot(taskManager.currentRobot.id);
-    await taskManager.fetchRobots();
-    if (taskManager.robots.isNotEmpty) {
-      taskManager.currentRobot = taskManager.robots[0];
-      RobotsService.singleton.changeTempCurrentRobot(taskManager.robots[0]);
-    } else {
-      taskManager.currentRobot = Robot.empty();
-    }
-    notifyListeners();
-  }
-
-  Future<void> simulateTask() async {
-    await taskManager.currentRobot.taskSimulation();
-    notifyListeners();
+    taskManager.deleteRobot(taskManager.currentRobot.id);
   }
 
   List<Task> fetchRemainingTasks() {

@@ -1,7 +1,7 @@
 class Task {
   String taskName;
   double completionPercentage;
-  Function(double) callback = (double _) {};
+  Function(double)? callback;
 
   Task(this.taskName, this.completionPercentage);
 
@@ -14,7 +14,9 @@ class Task {
     while (completionPercentage < 100) {
       await Future.delayed(const Duration(seconds: 2));
       completionPercentage += 2;
-      callback(completionPercentage);
+      if (callback != null) {
+        callback!(completionPercentage);
+      }
     }
   }
 }

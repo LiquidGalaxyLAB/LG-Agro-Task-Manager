@@ -9,7 +9,6 @@ import '../model/robot.dart';
 class RobotsService {
   late TaskManager taskManager;
   static RobotsService singleton = RobotsService();
-  Robot _tempCurrent = Robot.empty();
 
   Isar _getDataBase() => DataBaseService.singleton.getDatabase();
 
@@ -20,14 +19,6 @@ class RobotsService {
 
   void setTaskManager(TaskManager tm) {
     taskManager = tm;
-  }
-
-  void changeTempCurrentRobot(Robot r) {
-    _tempCurrent = r;
-  }
-
-  Robot getCurrentRobot() {
-    return _tempCurrent;
   }
 
   Future<void> createRobot(
@@ -54,7 +45,6 @@ class RobotsService {
     taskManager = TaskManager(robots: robots);
     Logger.printInDebug("Robot Service Initialize");
     taskManager.setCurrentRobotInit(robots);
-    taskManager.setCurrentTask();
   }
 
   Future<void> goToLocation(String name, String country) async {

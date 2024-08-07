@@ -17,6 +17,7 @@ class RobotsView extends StatefulWidget {
 class _RobotsViewState extends State<RobotsView> {
   final TextEditingController itemController = TextEditingController();
   final RobotsViewModel viewModel = RobotsViewModel();
+  double percentage = 0.0;
 
   static const Color customGreen = Color(0xFF3E9671);
   static const Color customDarkGrey = Color(0xFF333333);
@@ -64,13 +65,10 @@ class _RobotsViewState extends State<RobotsView> {
                               CircularPercentIndicator(
                                 radius: 50.0,
                                 lineWidth: 10.0,
-                                percent: viewModel
-                                        .getCurrentRobot()
-                                        .currentTask!
-                                        .completionPercentage /
+                                percent: percentage /
                                     100,
                                 center: Text(
-                                  '${viewModel.getCurrentRobot().currentTask!.completionPercentage.toStringAsFixed(1)}%',
+                                  '${percentage.toStringAsFixed(1)}%',
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -122,7 +120,7 @@ class _RobotsViewState extends State<RobotsView> {
                             },
                           );
                         }
-                        viewModel.setCurrentTask();
+                        viewModel.update();
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: customGreen),
@@ -161,7 +159,7 @@ class _RobotsViewState extends State<RobotsView> {
                     onRobotSelected: (robot) {
                       viewModel.fetchTaskManager();
                       viewModel.setCurrentRobot(robot);
-                      viewModel.setCurrentTask();
+                      robot.currentTask?.callback = updateValues;
                     },
                     onRobotDeleted: (Robot r) async {
                       await viewModel.deleteRobot();
@@ -188,5 +186,11 @@ class _RobotsViewState extends State<RobotsView> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void updateValues(double newValue) {
+    setState(() {
+      percentage = newValue;
+    });
   }
 }

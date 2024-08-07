@@ -19,9 +19,7 @@ class Robot {
       {required this.name,
       required this.serialNumber,
       required this.robotIP,
-      required this.field}) {
-    _checkAndAssignTask();
-  }
+      required this.field});
 
   factory Robot.empty() {
     return Robot(
@@ -39,14 +37,15 @@ class Robot {
     _checkAndAssignTask();
   }
 
-  void setCurrentTask(Task t) {
-    currentTask = t;
+  bool isStopped() {
+    return currentTask == null;
   }
 
   void _checkAndAssignTask() {
-    if (currentTask == null && remainingTasks.isNotEmpty) {
+    if (isStopped() && remainingTasks.isNotEmpty) {
       currentTask = remainingTasks[0];
       remainingTasks.removeAt(0);
+      taskSimulation();
     }
   }
 }

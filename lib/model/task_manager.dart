@@ -6,7 +6,7 @@ import '../services/robots_service.dart';
 class TaskManager {
   List<Robot> robots;
   Robot currentRobot = Robot.empty();
-  late List<Task>? remainingTasks;
+  Function(double)? _didUpdate;
 
   TaskManager({required this.robots});
 
@@ -14,9 +14,19 @@ class TaskManager {
     robots.add(r);
   }
 
-  void removeRobots(Robot r) {
-    robots.remove(r);
+  void deleteRobot(int id) {
+    final robot = getRobotById(id);
+    if (robot != null) {
+      robots.remove(robot);
+    }
+    if (robots.isNotEmpty) {
+      setCurrentRobot(robots[0]);
+    } else {
+      setCurrentRobot(Robot.empty());
+    }
   }
+
+  void addCallback(Function(double)? didUpdate) => _didUpdate = didUpdate;
 
   void addTaskToRobot(Task task, String robotName) {
     Robot? robot = robots.firstWhere((r) => r.name == robotName);
@@ -28,19 +38,9 @@ class TaskManager {
     return null;
   }
 
-  void setCurrentTask() {
-    RobotsService.singleton.taskManager = this;
-    if (currentRobot.currentTask != null) {
-      remainingTasks = currentRobot.remainingTasks;
-      if (currentRobot.currentTask!.completionPercentage >= 100) {
-        currentRobot.currentTask = remainingTasks?[0];
-        remainingTasks?.removeAt(0);
-        currentRobot.remainingTasks.removeAt(0);
-        currentRobot.taskSimulation();
-      }
-    }
-    //Logger.printInDebug(
-    //"Task manager rebut al Robots viewModel! Current Robot: ${currentRobot.name}, Current Task = ${currentRobot.currentTask?.taskName}, Remaining Tasks: ${currentRobot.remainingTasks}");
+  Robot? getRobotById(int id) {
+    if (robots.isNotEmpty) return robots.firstWhere((r) => r.id == id);
+    return null;
   }
 
   Future<List<Robot>> fetchRobots() async {
@@ -50,18 +50,13 @@ class TaskManager {
   void setCurrentRobotInit(List<Robot> robots) {
     this.robots = robots;
     if (robots.isNotEmpty) {
-      currentRobot = robots[0];
-      RobotsService.singleton.changeTempCurrentRobot(robots[0]);
+      setCurrentRobot(robots[0]);
     }
   }
 
-  Task? fetchCurrentTask() {
-    Robot? currentRobot2 = getRobot(currentRobot.name);
-    if (currentRobot2 != null && currentRobot2.currentTask != null) {
-      currentRobot = currentRobot2;
-      return currentRobot.currentTask;
-    } else {
-      return null;
-    }
+  void setCurrentRobot(Robot newRobot) {
+    currentRobot.currentTask?.callback = null;
+    currentRobot = newRobot;
+    currentRobot.currentTask?.callback = _didUpdate;
   }
 }
