@@ -11,11 +11,6 @@ class RobotsService {
   static RobotsService singleton = RobotsService();
   Robot _tempCurrent = Robot.empty();
 
-  RobotsService() {
-    taskManager.setCurrentRobotInit();
-    taskManager.setCurrentTask();
-  }
-
   Isar _getDataBase() => DataBaseService.singleton.getDatabase();
 
   Future<List<Robot>> fetchRobots() async {
@@ -57,7 +52,9 @@ class RobotsService {
   Future<void> initialize() async {
     final List<Robot> robots = await fetchRobots();
     taskManager = TaskManager(robots: robots);
-    Logger.printInDebug("initialized");
+    Logger.printInDebug("Robot Service Initialize");
+    taskManager.setCurrentRobotInit(robots);
+    taskManager.setCurrentTask();
   }
 
   Future<void> goToLocation(String name, String country) async {

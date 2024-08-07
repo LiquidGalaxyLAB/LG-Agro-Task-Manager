@@ -47,18 +47,12 @@ class TaskManager {
     return RobotsService.singleton.fetchRobots();
   }
 
-  Future<void> setCurrentRobotInit() async {
-    robots = await fetchRobots();
+  void setCurrentRobotInit(List<Robot> robots) {
+    this.robots = robots;
     if (robots.isNotEmpty) {
       currentRobot = robots[0];
       RobotsService.singleton.changeTempCurrentRobot(robots[0]);
     }
-  }
-
-  Future<void> create() async {
-    robots = await fetchRobots();
-    setCurrentRobotInit();
-    setCurrentTask();
   }
 
   Task? fetchCurrentTask() {
