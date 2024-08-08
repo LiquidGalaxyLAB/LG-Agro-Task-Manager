@@ -19,4 +19,8 @@ class Task {
       }
     }
   }
+
+  void removeCallback() {
+    callback = null;
+  }
 }
