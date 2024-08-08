@@ -16,7 +16,7 @@ class _MapsViewState extends State<MapsView> {
   static const Color customDarkGrey = Color(0xFF333333);
   late GoogleMapController mapController;
   late LatLng _center;
-  late String field;
+  late Marker _marker;
   final MapsViewModel viewModel = MapsViewModel();
 
   void _onMapCreated(GoogleMapController controller) {
@@ -27,6 +27,16 @@ class _MapsViewState extends State<MapsView> {
   void initState() {
     super.initState();
     _center = viewModel.decideCoords(widget.field);
+
+    _marker = Marker(
+      markerId: const MarkerId('fieldMarker'),
+      position: _center,
+      infoWindow: InfoWindow(
+        title: widget.field,
+        snippet: 'Location of the field',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+    );
   }
 
   @override
@@ -47,6 +57,8 @@ class _MapsViewState extends State<MapsView> {
           target: _center,
           zoom: 16.0,
         ),
+        markers: {_marker},
+        mapType: MapType.satellite,
       ),
     );
   }

@@ -132,7 +132,9 @@ class _RobotsViewState extends State<RobotsView> {
                               },
                             );
                           }
-                          viewModel.update();
+                          setState(() {
+                            viewModel.fetchTaskManager();
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: customGreen),
@@ -212,6 +214,11 @@ class _RobotsViewState extends State<RobotsView> {
   void updateValues(double newValue) {
     setState(() {
       percentage = newValue;
+      if (percentage >= 100) {
+        viewModel.getCurrentRobot().currentTask?.removeCallback();
+        percentage = 0;
+        viewModel.getCurrentRobot().currentTask?.callback = updateValues;
+      }
     });
   }
 }

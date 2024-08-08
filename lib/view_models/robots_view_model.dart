@@ -20,10 +20,6 @@ class RobotsViewModel extends ChangeNotifier {
     return taskManager.robots;
   }
 
-  void update() {
-    fetchTaskManager();
-  }
-
   void fetchTaskManager() {
     taskManager = RobotsService.singleton.taskManager;
   }
