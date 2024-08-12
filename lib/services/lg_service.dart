@@ -45,13 +45,27 @@ class LGService {
 
   String extractKmlSection(String kmlContent, String sectionName) {
     final document = xml.XmlDocument.parse(kmlContent);
-    final folder = document.findAllElements('Folder').firstWhere(
-          (element) => element
-              .findElements('name')
-              .any((name) => name.value == sectionName),
-        );
+    var usedFolder;
 
-    return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">${folder.toXmlString()}</kml>';
+    final folders = document.findAllElements('Folder');
+    for (var folder in folders) {
+      final nameElement = folder.findElements('name').first;
+      if (nameElement.text == sectionName) {
+        usedFolder = folder;
+        break;
+      }
+    }
+    /*final folder = document.findAllElements('Folder').firstWhere(
+          (element) => element
+          .findElements('name')
+          .any((name) => name.value == sectionName),
+      orElse: () {
+        Logger.printInDebug("No s'ha trobat cap folder amb el nom $sectionName.");
+        return xml.XmlElement("" as xml.XmlName);
+      },
+    );*/
+
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">${usedFolder.toXmlString()}</kml>';
   }
 
   Future<bool> connectToLG() async {
@@ -84,14 +98,19 @@ class LGService {
       filePath = spainPath;
     }
     try {
+      Logger.printInDebug("dins try");
+
       final kmlContent = await rootBundle.loadString(filePath);
+
+      List<String> lines = kmlContent.split('\n');
+
+      for (int i = 0; i < lines.length; i += 50) {
+        Logger.printInDebug(lines.sublist(i, i + 50 > lines.length ? lines.length : i + 50).join('\n'));
+      }
       final kmlSection = extractKmlSection(kmlContent, name);
       final localFile = await makeFile(name, kmlSection);
-
       await printKMLFileContent(name.replaceAll(' ', '_'));
-
       await uploadKMLFile(localFile, name.replaceAll(' ', '_'));
-
       final coordinates = extractCoordinates(kmlSection);
       if (coordinates != null) {
         await goToCoordinates(coordinates[0], coordinates[1]);
@@ -106,8 +125,12 @@ class LGService {
   List<double>? extractCoordinates(String kmlContent) {
     try {
       final document = xml.XmlDocument.parse(kmlContent);
+      Logger.printInDebug(document);
       final coordinatesElement = document.findAllElements('coordinates').first;
-      final coordinatesText = coordinatesElement.value?.trim() ?? "";
+      Logger.printInDebug("elemen: $coordinatesElement");
+      Logger.printInDebug("elemen value: ${coordinatesElement.value}");
+      final coordinatesText = coordinatesElement.text.trim();
+      Logger.printInDebug("coords = $coordinatesText");
       final coordinatesParts = coordinatesText.split(',');
 
       final longitude = double.parse(coordinatesParts[0]);
@@ -208,7 +231,7 @@ class LGService {
       return;
     }
     try {
-      //await connectToLG();
+      await connectToLG();
       cleanKML();
       cleanSlaves();
 

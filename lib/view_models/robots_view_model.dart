@@ -57,7 +57,7 @@ class RobotsViewModel extends ChangeNotifier {
     String field = taskManager.currentRobot.field;
     String country;
     String city = field.split(' ')[0];
-    if (city == 'Seròs' || city == 'Anaquela del Ducado' || city == 'Soria') {
+    if (city == 'Seròs' || city == 'Anaquela' || city == 'Soria') {
       country = "Espanya";
     } else {
       country = "India";
