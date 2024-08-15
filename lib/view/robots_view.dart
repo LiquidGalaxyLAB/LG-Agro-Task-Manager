@@ -147,6 +147,7 @@ class _RobotsViewState extends State<RobotsView> {
                       ElevatedButton(
                         onPressed: () {
                           viewModel.visualizeTask();
+                          viewModel.sendTaskKML();
                           Navigator.pushNamed(
                             context,
                             '/maps_view',

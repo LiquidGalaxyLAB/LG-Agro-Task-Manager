@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/model/task_manager.dart';
+import 'package:taskmanager/services/lg_service.dart';
 import 'package:taskmanager/services/robots_service.dart';
 
 import '../model/robot.dart';
@@ -63,5 +64,14 @@ class RobotsViewModel extends ChangeNotifier {
       country = "India";
     }
     RobotsService.singleton.goToLocation(field, country);
+  }
+
+  void sendTaskKML() {
+    if (taskManager.currentRobot.currentTask != null) {
+      LGService.instance.sendTaskKML(
+          taskManager.currentRobot.name,
+          taskManager.currentRobot.currentTask!.taskName,
+          taskManager.currentRobot.field);
+    }
   }
 }
