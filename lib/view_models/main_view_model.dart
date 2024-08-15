@@ -62,7 +62,7 @@ class MainViewModel {
     }
   }
 
-  void sendPendingTasks() {
+  Future<void> sendPendingTasks() async {
     final List<Crop> crops = getCropsInCurrentFortnight();
     List<String> names = [];
     List<String> tasks = [];
@@ -70,6 +70,6 @@ class MainViewModel {
       names.add(crop.cropName);
       tasks.add(_getInSeasonTaskName(crop));
     }
-    LGService.instance.visualizePendingTasks(names, tasks);
+    await LGService.instance.visualizePendingTasks(names, tasks);
   }
 }

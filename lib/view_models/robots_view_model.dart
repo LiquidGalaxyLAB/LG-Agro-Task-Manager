@@ -66,9 +66,9 @@ class RobotsViewModel extends ChangeNotifier {
     RobotsService.singleton.goToLocation(field, country);
   }
 
-  void sendTaskKML() {
+  Future<void> sendTaskKML() async {
     if (taskManager.currentRobot.currentTask != null) {
-      LGService.instance.sendTaskKML(
+      await LGService.instance.sendTaskKML(
           taskManager.currentRobot.name,
           taskManager.currentRobot.currentTask!.taskName,
           taskManager.currentRobot.field);
