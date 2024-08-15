@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<kml>
 <Document>
 	<name>India.kml</name>
 	<StyleMap id="m_ylw-pushpin">
@@ -18,7 +19,7 @@
 			<Icon>
 				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
 			</Icon>
-			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels" />
 		</IconStyle>
 	</Style>
 	<Style id="s_ylw-pushpin_hl">
@@ -27,7 +28,7 @@
 			<Icon>
 				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
 			</Icon>
-			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels" />
 		</IconStyle>
 	</Style>
 	<Folder>
@@ -48,14 +49,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.7030686258918,23.80400997959392,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.7030686258918,23.80400997959392,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -65,14 +62,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70460161747334,23.80403933394657,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70460161747334,23.80403933394657,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -82,14 +75,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70509736428384,23.80405881095909,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70509736428384,23.80405881095909,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -99,14 +88,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70597321735801,23.80418067088457,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70597321735801,23.80418067088457,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -116,14 +101,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70678140042423,23.80410278410289,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70678140042423,23.80410278410289,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -133,14 +114,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70855571826061,23.80427205752624,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70855571826061,23.80427205752624,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -150,14 +127,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70847889401961,23.80375753171302,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70847889401961,23.80375753171302,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 8</name>
 						<LookAt>
@@ -167,14 +140,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70756234528292,23.80338802733319,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70756234528292,23.80338802733319,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 9</name>
 						<LookAt>
@@ -184,14 +153,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70570456478345,23.80348405171033,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70570456478345,23.80348405171033,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 10</name>
 						<LookAt>
@@ -201,14 +166,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70475728991663,23.80362936791116,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70475728991663,23.80362936791116,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 11</name>
 						<LookAt>
@@ -218,14 +179,10 @@
 							<heading>11.11032969446293</heading>
 							<tilt>20.42257020244648</tilt>
 							<range>968.1231160255336</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70318405636598,23.80363393710054,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70318405636598,23.80363393710054,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 			<Folder>
@@ -241,14 +198,10 @@
 							<heading>26.12529201411179</heading>
 							<tilt>26.22403691838657</tilt>
 							<range>239.251225456041</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.69493868862918,23.80703511452968,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.69493868862918,23.80703511452968,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -258,14 +211,10 @@
 							<heading>26.12529201411179</heading>
 							<tilt>26.22403691838657</tilt>
 							<range>239.251225456041</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.69576139502568,23.80663645027028,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.69576139502568,23.80663645027028,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -275,14 +224,10 @@
 							<heading>26.12529201411179</heading>
 							<tilt>26.22403691838657</tilt>
 							<range>239.251225456041</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.69513937681762,23.80592212662842,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.69513937681762,23.80592212662842,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -292,14 +237,10 @@
 							<heading>26.12529201411179</heading>
 							<tilt>26.22403691838657</tilt>
 							<range>239.251225456041</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.69454810081767,23.8062190998917,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.69454810081767,23.8062190998917,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -309,14 +250,10 @@
 							<heading>26.12529201411179</heading>
 							<tilt>26.22403691838657</tilt>
 							<range>239.251225456041</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.69473580648362,23.80653376286115,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.69473580648362,23.80653376286115,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -326,14 +263,10 @@
 							<heading>26.12529201411179</heading>
 							<tilt>26.22403691838657</tilt>
 							<range>239.251225456041</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.69457385049118,23.80663369659962,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.69457385049118,23.80663369659962,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -343,14 +276,10 @@
 							<heading>26.12529201411179</heading>
 							<tilt>26.22403691838657</tilt>
 							<range>239.251225456041</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.694772178048,23.80682370750169,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.694772178048,23.80682370750169,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 			<Folder>
@@ -366,14 +295,10 @@
 							<heading>26.13025006461937</heading>
 							<tilt>16.5340563718221</tilt>
 							<range>509.9733839614215</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70189894502302,23.81138787894285,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70189894502302,23.81138787894285,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -383,14 +308,10 @@
 							<heading>26.13025006461937</heading>
 							<tilt>16.5340563718221</tilt>
 							<range>509.9733839614215</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70238105172442,23.81124868109491,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70238105172442,23.81124868109491,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -400,14 +321,10 @@
 							<heading>26.13025006461937</heading>
 							<tilt>16.5340563718221</tilt>
 							<range>509.9733839614215</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70276064837601,23.81133310967106,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70276064837601,23.81133310967106,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -417,14 +334,10 @@
 							<heading>26.13025006461937</heading>
 							<tilt>16.5340563718221</tilt>
 							<range>509.9733839614215</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70309643327857,23.81101557775882,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70309643327857,23.81101557775882,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -434,14 +347,10 @@
 							<heading>26.12991494826256</heading>
 							<tilt>16.5346416257535</tilt>
 							<range>802.4615456489728</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70298780068029,23.81055961635633,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70298780068029,23.81055961635633,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -451,14 +360,10 @@
 							<heading>26.12991494826256</heading>
 							<tilt>16.5346416257535</tilt>
 							<range>802.4615456489728</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70283378457206,23.81033405238668,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70283378457206,23.81033405238668,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -468,14 +373,10 @@
 							<heading>26.12991494826256</heading>
 							<tilt>16.5346416257535</tilt>
 							<range>802.4615456489728</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70286225081487,23.8101401941655,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70286225081487,23.8101401941655,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 8</name>
 						<LookAt>
@@ -485,14 +386,10 @@
 							<heading>26.12991494826256</heading>
 							<tilt>16.5346416257535</tilt>
 							<range>802.4615456489728</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70293082658739,23.80985727327601,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70293082658739,23.80985727327601,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 9</name>
 						<LookAt>
@@ -502,14 +399,10 @@
 							<heading>26.12991494826256</heading>
 							<tilt>16.5346416257535</tilt>
 							<range>802.4615456489728</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70237818238823,23.80989435029923,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70237818238823,23.80989435029923,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 10</name>
 						<LookAt>
@@ -519,14 +412,10 @@
 							<heading>26.12991494826256</heading>
 							<tilt>16.5346416257535</tilt>
 							<range>802.4615456489728</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70158293409737,23.81012664415212,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70158293409737,23.81012664415212,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 11</name>
 						<LookAt>
@@ -536,14 +425,10 @@
 							<heading>26.12991494826256</heading>
 							<tilt>16.5346416257535</tilt>
 							<range>802.4615456489728</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>78.70184362254172,23.81090066007247,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>78.70184362254172,23.81090066007247,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 		</Folder>
@@ -562,14 +447,10 @@
 							<heading>24.33719207837619</heading>
 							<tilt>30.00207009070841</tilt>
 							<range>460.9020835623797</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68494982559524,21.78301190660023,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68494982559524,21.78301190660023,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -579,14 +460,10 @@
 							<heading>24.33626918186184</heading>
 							<tilt>29.74971881027084</tilt>
 							<range>1111.315298580033</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68582005048989,21.78302617738217,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68582005048989,21.78302617738217,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -596,14 +473,10 @@
 							<heading>24.33626918186184</heading>
 							<tilt>29.74971881027084</tilt>
 							<range>1111.315298580033</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68602262168834,21.78303596490232,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68602262168834,21.78303596490232,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -613,14 +486,10 @@
 							<heading>24.33626918186184</heading>
 							<tilt>29.74971881027084</tilt>
 							<range>1111.315298580033</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6861463689343,21.78320245808288,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6861463689343,21.78320245808288,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -630,14 +499,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68672643715956,21.78298072796674,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68672643715956,21.78298072796674,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -647,14 +512,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68672381758432,21.78259965264068,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68672381758432,21.78259965264068,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -664,14 +525,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68727824722656,21.7824901785533,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68727824722656,21.7824901785533,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 8</name>
 						<LookAt>
@@ -681,14 +538,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68712988772535,21.78186776742262,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68712988772535,21.78186776742262,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 9</name>
 						<LookAt>
@@ -698,14 +551,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6867587668356,21.78165543296954,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6867587668356,21.78165543296954,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 10</name>
 						<LookAt>
@@ -715,14 +564,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6858546394479,21.78072780990333,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6858546394479,21.78072780990333,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 11</name>
 						<LookAt>
@@ -732,14 +577,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6850723737504,21.78082106234704,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6850723737504,21.78082106234704,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 12</name>
 						<LookAt>
@@ -749,14 +590,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6843134638639,21.78079864725891,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6843134638639,21.78079864725891,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 13</name>
 						<LookAt>
@@ -766,14 +603,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68417731624891,21.78092565041142,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68417731624891,21.78092565041142,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 14</name>
 						<LookAt>
@@ -783,14 +616,10 @@
 							<heading>24.33686416761567</heading>
 							<tilt>30.00128771187138</tilt>
 							<range>286.7045167535234</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68420979097627,21.78137603856706,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68420979097627,21.78137603856706,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 15</name>
 						<LookAt>
@@ -800,14 +629,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68435946516969,21.78151408657286,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68435946516969,21.78151408657286,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 16</name>
 						<LookAt>
@@ -817,14 +642,10 @@
 							<heading>24.33699047998542</heading>
 							<tilt>29.74973503494219</tilt>
 							<range>1114.955079852838</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68456733227021,21.78154391249049,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68456733227021,21.78154391249049,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 17</name>
 						<LookAt>
@@ -834,14 +655,10 @@
 							<heading>24.33719207837619</heading>
 							<tilt>30.00207009070841</tilt>
 							<range>460.9020835623797</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68466309869497,21.78221799007254,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68466309869497,21.78221799007254,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 18</name>
 						<LookAt>
@@ -851,14 +668,10 @@
 							<heading>24.33719207837619</heading>
 							<tilt>30.00207009070841</tilt>
 							<range>460.9020835623797</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6847964649502,21.78289958010623,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6847964649502,21.78289958010623,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 19</name>
 						<LookAt>
@@ -868,14 +681,10 @@
 							<heading>24.33719207837619</heading>
 							<tilt>30.00207009070841</tilt>
 							<range>460.9020835623797</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.68493844549081,21.78290065401741,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.68493844549081,21.78290065401741,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 			<Folder>
@@ -891,14 +700,10 @@
 							<heading>24.33407848345942</heading>
 							<tilt>25.8770802721989</tilt>
 							<range>874.9737925390619</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69489179116759,21.78962960856349,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69489179116759,21.78962960856349,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -908,14 +713,10 @@
 							<heading>24.33614750884783</heading>
 							<tilt>27.03008747972769</tilt>
 							<range>516.3762904450667</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69441472454791,21.79049830740446,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69441472454791,21.79049830740446,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -925,14 +726,10 @@
 							<heading>24.33614750884783</heading>
 							<tilt>27.03008747972769</tilt>
 							<range>516.3762904450667</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69393879685302,21.79138555132223,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69393879685302,21.79138555132223,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -942,14 +739,10 @@
 							<heading>24.33614750884783</heading>
 							<tilt>27.03008747972769</tilt>
 							<range>516.3762904450667</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69451529903236,21.79156153840841,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69451529903236,21.79156153840841,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -959,14 +752,10 @@
 							<heading>24.33614750884783</heading>
 							<tilt>27.03008747972769</tilt>
 							<range>516.3762904450667</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69441132746833,21.79250989532813,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69441132746833,21.79250989532813,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -976,14 +765,10 @@
 							<heading>24.33627047474245</heading>
 							<tilt>27.03008766553139</tilt>
 							<range>516.4218432034372</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69509905602646,21.79266426277924,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69509905602646,21.79266426277924,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -993,14 +778,10 @@
 							<heading>24.33627047474245</heading>
 							<tilt>27.03008766553139</tilt>
 							<range>516.4218432034372</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69530997831117,21.79289259340421,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69530997831117,21.79289259340421,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 8</name>
 						<LookAt>
@@ -1010,14 +791,10 @@
 							<heading>24.33627047474245</heading>
 							<tilt>27.03008766553139</tilt>
 							<range>516.4218432034372</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69597463349722,21.79310863903647,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69597463349722,21.79310863903647,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 9</name>
 						<LookAt>
@@ -1027,14 +804,10 @@
 							<heading>24.32984081794832</heading>
 							<tilt>23.52588385947712</tilt>
 							<range>341.9412201763146</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6966780708287,21.79224868840645,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6966780708287,21.79224868840645,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 10</name>
 						<LookAt>
@@ -1044,14 +817,10 @@
 							<heading>24.32984081794832</heading>
 							<tilt>23.52588385947712</tilt>
 							<range>341.9412201763146</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69650495879198,21.79210972949095,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69650495879198,21.79210972949095,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 11</name>
 						<LookAt>
@@ -1061,14 +830,10 @@
 							<heading>24.32984081794832</heading>
 							<tilt>23.52588385947712</tilt>
 							<range>341.9412201763146</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69669530622423,21.79139774299709,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69669530622423,21.79139774299709,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 12</name>
 						<LookAt>
@@ -1078,14 +843,10 @@
 							<heading>24.32984081794832</heading>
 							<tilt>23.52588385947712</tilt>
 							<range>341.9412201763146</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69670337669764,21.79107749802627,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69670337669764,21.79107749802627,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 13</name>
 						<LookAt>
@@ -1095,14 +856,10 @@
 							<heading>24.3295395662749</heading>
 							<tilt>23.52626828024486</tilt>
 							<range>449.1591960132239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.69606004148297,21.79063486621765,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.69606004148297,21.79063486621765,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 			<Folder>
@@ -1119,14 +876,10 @@
 							<heading>24.32231211879942</heading>
 							<tilt>24.35891269773062</tilt>
 							<range>538.4165821965348</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.67220758436326,21.77887726452326,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.67220758436326,21.77887726452326,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -1136,14 +889,10 @@
 							<heading>24.32231211879942</heading>
 							<tilt>24.35891269773062</tilt>
 							<range>538.4165821965348</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.67395443857062,21.77857596901664,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.67395443857062,21.77857596901664,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -1153,14 +902,10 @@
 							<heading>24.32231211879942</heading>
 							<tilt>24.35891269773062</tilt>
 							<range>538.4165821965348</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.67435199443783,21.78030090354677,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.67435199443783,21.78030090354677,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -1170,14 +915,10 @@
 							<heading>24.32231211879942</heading>
 							<tilt>24.35891269773062</tilt>
 							<range>538.4165821965348</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.6726204712658,21.78057756802998,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.6726204712658,21.78057756802998,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -1187,14 +928,10 @@
 							<heading>24.32231211879942</heading>
 							<tilt>24.35891269773062</tilt>
 							<range>538.4165821965348</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.67186439588774,21.78040514246554,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.67186439588774,21.78040514246554,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -1204,14 +941,10 @@
 							<heading>24.32231211879942</heading>
 							<tilt>24.35891269773062</tilt>
 							<range>538.4165821965348</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.67209802791551,21.77964682512392,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.67209802791551,21.77964682512392,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -1221,14 +954,10 @@
 							<heading>24.32231211879942</heading>
 							<tilt>24.35891269773062</tilt>
 							<range>538.4165821965348</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>75.67219927494173,21.77914229050969,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>75.67219927494173,21.77914229050969,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 		</Folder>
@@ -1247,14 +976,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95635902082559,15.4400524534278,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95635902082559,15.4400524534278,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -1264,14 +989,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95789380683298,15.4399492702054,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95789380683298,15.4399492702054,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -1281,14 +1002,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95809903805235,15.43915895336867,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95809903805235,15.43915895336867,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -1298,14 +1015,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95848656094545,15.43878379742518,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95848656094545,15.43878379742518,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -1315,14 +1028,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95864796045153,15.43796908184585,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95864796045153,15.43796908184585,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -1332,14 +1041,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95720666198309,15.43817860282485,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95720666198309,15.43817860282485,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -1349,14 +1054,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95624982309575,15.43822896213002,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95624982309575,15.43822896213002,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 8</name>
 						<LookAt>
@@ -1366,14 +1067,10 @@
 							<heading>24.91992180597537</heading>
 							<tilt>30.00506829354596</tilt>
 							<range>1128.474641068208</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.95629468890994,15.43910793084652,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.95629468890994,15.43910793084652,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 			<Folder>
@@ -1389,14 +1086,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93900900268011,15.4430163619287,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93900900268011,15.4430163619287,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -1406,14 +1099,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93933958547041,15.44120715546387,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93933958547041,15.44120715546387,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -1423,14 +1112,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93960519010136,15.43972941504445,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93960519010136,15.43972941504445,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -1440,14 +1125,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93887653877535,15.4395929832921,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93887653877535,15.4395929832921,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -1457,14 +1138,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93832906024903,15.43987673470537,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93832906024903,15.43987673470537,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -1474,14 +1151,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93771971976736,15.44014513923393,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93771971976736,15.44014513923393,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -1491,14 +1164,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93683575085669,15.44014919998352,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93683575085669,15.44014919998352,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 8</name>
 						<LookAt>
@@ -1508,14 +1177,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93587158350859,15.43999491609173,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93587158350859,15.43999491609173,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 9</name>
 						<LookAt>
@@ -1525,14 +1190,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93577678817933,15.44030079085553,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93577678817933,15.44030079085553,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 10</name>
 						<LookAt>
@@ -1542,14 +1203,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93561327865164,15.44033717030683,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93561327865164,15.44033717030683,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 11</name>
 						<LookAt>
@@ -1559,14 +1216,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93550534689429,15.44135709108383,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93550534689429,15.44135709108383,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 12</name>
 						<LookAt>
@@ -1576,14 +1229,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93545016036403,15.44255433554047,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93545016036403,15.44255433554047,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 13</name>
 						<LookAt>
@@ -1593,14 +1242,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.936886717893,15.44266448791111,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.936886717893,15.44266448791111,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 14</name>
 						<LookAt>
@@ -1610,14 +1255,10 @@
 							<heading>24.91485311478749</heading>
 							<tilt>29.45834035408006</tilt>
 							<range>1632.171990567022</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93808165057432,15.44279171933412,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93808165057432,15.44279171933412,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 			<Folder>
@@ -1633,14 +1274,10 @@
 							<heading>24.91676825835152</heading>
 							<tilt>30.00634515048741</tilt>
 							<range>1412.770841021239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.94258481433118,15.43338613859232,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.94258481433118,15.43338613859232,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 2</name>
 						<LookAt>
@@ -1650,14 +1287,10 @@
 							<heading>24.91676825835152</heading>
 							<tilt>30.00634515048741</tilt>
 							<range>1412.770841021239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.9425608461606,15.43193383698414,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.9425608461606,15.43193383698414,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 3</name>
 						<LookAt>
@@ -1667,14 +1300,10 @@
 							<heading>24.91676825835152</heading>
 							<tilt>30.00634515048741</tilt>
 							<range>1412.770841021239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.94251639253096,15.43028305022811,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.94251639253096,15.43028305022811,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 4</name>
 						<LookAt>
@@ -1684,14 +1313,10 @@
 							<heading>24.91676825835152</heading>
 							<tilt>30.00634515048741</tilt>
 							<range>1412.770841021239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.94113167127233,15.42990082946063,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.94113167127233,15.42990082946063,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 5</name>
 						<LookAt>
@@ -1701,14 +1326,10 @@
 							<heading>24.91676825835152</heading>
 							<tilt>30.00634515048741</tilt>
 							<range>1412.770841021239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93985804482953,15.42961194027381,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93985804482953,15.42961194027381,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 6</name>
 						<LookAt>
@@ -1718,14 +1339,10 @@
 							<heading>24.91676825835152</heading>
 							<tilt>30.00634515048741</tilt>
 							<range>1412.770841021239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.93983530279584,15.43081202636602,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.93983530279584,15.43081202636602,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 					<Placemark>
 						<name>Punto 7</name>
 						<LookAt>
@@ -1735,17 +1352,14 @@
 							<heading>24.91676825835152</heading>
 							<tilt>30.00634515048741</tilt>
 							<range>1412.770841021239</range>
-							<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+							<altitudeMode>relativeToSeaFloor</altitudeMode>
 						</LookAt>
 						<styleUrl>#m_ylw-pushpin</styleUrl>
-						<Point>
-							<gx:drawOrder>1</gx:drawOrder>
-							<coordinates>76.94099542612454,15.43186772892381,0</coordinates>
-						</Point>
-					</Placemark>
+						<Polygon><outerBoundaryIs><LinearRing><coordinates>76.94099542612454,15.43186772892381,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 				</Folder>
 			</Folder>
 		</Folder>
 	</Folder>
 </Document>
+</kml>
 </kml>
