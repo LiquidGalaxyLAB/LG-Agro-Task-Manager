@@ -46,6 +46,7 @@ class _MainViewState extends State<MainView> {
                 _buildSectionHeader('Plants in season:', myGreen),
                 const SizedBox(height: 10),
                 _buildPlantsInSeasonList(screenWidth, screenHeight, myGreen),
+                _buildSendTasksButton(screenWidth, myGreen),
               ],
             ),
           ),
@@ -191,6 +192,23 @@ class _MainViewState extends State<MainView> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildSendTasksButton(double screenWidth, Color myGreen) {
+    return ElevatedButton(
+      onPressed: () => viewModel.sendPendingTasks(),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: myGreen,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        minimumSize: Size(screenWidth * 0.5, screenWidth * 0.12),
+      ),
+      child: const Text(
+        'Send Pending Tasks',
+        style: TextStyle(color: Colors.white, fontSize: 18),
       ),
     );
   }

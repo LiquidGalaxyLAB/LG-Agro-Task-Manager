@@ -252,6 +252,67 @@ class LGService {
     }
   }
 
+  Future<void> visualizePendingTasks(List<String> names, List<String> tasks) async {
+    if (names.length != tasks.length) {
+      throw ArgumentError('Les llistes de noms i tasques han de tenir la mateixa longitud');
+    }
+
+    int infoSlave = screensNum;
+
+    String tasksTable = "<table width='400' height='300' align='left'>";
+    tasksTable += "<tr><td colspan='2' align='center'><h1>Recommended Tasks</h1></td></tr>";
+
+    for (int i = 0; i < names.length; i++) {
+      tasksTable += "<tr><td align='left'><h2>${names[i]}</h2></td>";
+      tasksTable += "<td align='right'><h2>${tasks[i]}</h2></td></tr>";
+    }
+
+    tasksTable += "</table>";
+
+    try {
+      String command = """
+    chmod 777 /var/www/html/kml/slave_$infoSlave.kml; echo '<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document>
+    <name>Recommended_Tasks.kml</name> 
+    <Style id="purple_paddle">
+      <BalloonStyle>
+        <text>\$description</text>
+        <bgColor>ffffffff</bgColor>
+      </BalloonStyle>
+    </Style>
+    <Placemark id="0A7ACC68BF23CB81B354">
+      <name>Baloon</name>
+      <Snippet maxLines="0"></Snippet>
+      <description>
+      <![CDATA[$tasksTable]]>
+      </description>
+      <LookAt>
+        <longitude>-17.841486</longitude>
+        <latitude>28.638478</latitude>
+        <altitude>0</altitude>
+        <heading>0</heading>
+        <tilt>0</tilt>
+        <range>24000</range>
+      </LookAt>
+      <styleUrl>#purple_paddle</styleUrl>
+      <gx:balloonVisibility>1</gx:balloonVisibility>
+      <Point>
+        <coordinates>-17.841486,28.638478,0</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
+' > /var/www/html/kml/slave_$infoSlave.kml""";
+
+      await _client!.execute(command);
+    } catch (e) {
+      Logger.printInDebug(e);
+    }
+  }
+
+
+
   Future<void> sendTaskKML(String robotName, String taskName, String fieldName) async {
     int infoSlave;
     if (screensNum == 1) {
