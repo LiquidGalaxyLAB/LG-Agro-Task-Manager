@@ -73,7 +73,7 @@ class _RobotsViewState extends State<RobotsView> {
                           ? Column(
                               children: [
                                 CircularPercentIndicator(
-                                  radius: 50.0,
+                                  radius: 40.0,
                                   lineWidth: 10.0,
                                   percent: percentage / 100,
                                   center: Text(
@@ -95,9 +95,9 @@ class _RobotsViewState extends State<RobotsView> {
                               style:
                                   TextStyle(color: customGreen, fontSize: 16),
                             ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height / 4,
+                          height: MediaQuery.of(context).size.height / 6,
                           width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
                             itemCount: viewModel
@@ -119,7 +119,8 @@ class _RobotsViewState extends State<RobotsView> {
                                 ),
                               );
                             },
-                          )),
+                          )
+                      ),
                       ElevatedButton(
                         onPressed: () async {
                           if (context.mounted) {

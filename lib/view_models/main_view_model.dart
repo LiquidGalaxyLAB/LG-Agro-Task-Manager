@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:taskmanager/services/crop_service.dart';
 import 'package:taskmanager/services/lg_service.dart';
+import 'package:taskmanager/utils/logger.dart';
 
 import '../model/crop.dart';
 
@@ -66,10 +67,12 @@ class MainViewModel {
     final List<Crop> crops = getCropsInCurrentFortnight();
     List<String> names = [];
     List<String> tasks = [];
+
     for (Crop crop in crops) {
       names.add(crop.cropName);
       tasks.add(_getInSeasonTaskName(crop));
     }
+
     await LGService.instance.visualizePendingTasks(names, tasks);
   }
 }

@@ -257,60 +257,72 @@ class LGService {
       throw ArgumentError('Les llistes de noms i tasques han de tenir la mateixa longitud');
     }
 
-    int infoSlave = screensNum;
+    int infoSlave;
+    if (screensNum == 1) {
+      infoSlave = 1;
+    } else {
+      infoSlave = (screensNum / 2).floor() + 1;
+    }
 
     String tasksTable = "<table width='400' height='300' align='left'>";
     tasksTable += "<tr><td colspan='2' align='center'><h1>Recommended Tasks</h1></td></tr>";
 
+    String escapeXml(String input) {
+      return input.replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&apos;');
+    }
+
     for (int i = 0; i < names.length; i++) {
-      tasksTable += "<tr><td align='left'><h2>${names[i]}</h2></td>";
-      tasksTable += "<td align='right'><h2>${tasks[i]}</h2></td></tr>";
+      tasksTable += "<tr><td align='left'><h2>${escapeXml(names[i])}</h2></td>";
+      tasksTable += "<td align='right'><h2>${escapeXml(tasks[i])}</h2></td></tr>";
     }
 
     tasksTable += "</table>";
 
-    try {
-      String command = """
-    chmod 777 /var/www/html/kml/slave_$infoSlave.kml; echo '<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
-  <Document>
-    <name>Recommended_Tasks.kml</name> 
-    <Style id="purple_paddle">
-      <BalloonStyle>
-        <text>\$description</text>
-        <bgColor>ffffffff</bgColor>
-      </BalloonStyle>
-    </Style>
-    <Placemark id="0A7ACC68BF23CB81B354">
-      <name>Baloon</name>
-      <Snippet maxLines="0"></Snippet>
-      <description>
-      <![CDATA[$tasksTable]]>
-      </description>
-      <LookAt>
-        <longitude>-17.841486</longitude>
-        <latitude>28.638478</latitude>
-        <altitude>0</altitude>
-        <heading>0</heading>
-        <tilt>0</tilt>
-        <range>24000</range>
-      </LookAt>
-      <styleUrl>#purple_paddle</styleUrl>
-      <gx:balloonVisibility>1</gx:balloonVisibility>
-      <Point>
-        <coordinates>-17.841486,28.638478,0</coordinates>
-      </Point>
-    </Placemark>
-  </Document>
-</kml>
-' > /var/www/html/kml/slave_$infoSlave.kml""";
+    String command = """
+  chmod 777 /var/www/html/kml/slave_$infoSlave.kml; echo '<?xml version="1.0" encoding="UTF-8"?>
+  <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+    <Document>
+      <name>Recommended_Tasks.kml</name> 
+      <Style id="purple_paddle">
+        <BalloonStyle>
+          <text><![CDATA[$tasksTable]]></text>
+          <bgColor>ffffffff</bgColor>
+        </BalloonStyle>
+      </Style>
+      <Placemark id="0A7ACC68BF23CB81B354">
+        <name>Balloon</name>
+        <Snippet maxLines="0"></Snippet>
+        <description><![CDATA[$tasksTable]]></description>
+        <LookAt>
+          <longitude>-17.841486</longitude>
+          <latitude>28.638478</latitude>
+          <altitude>0</altitude>
+          <heading>0</heading>
+          <tilt>0</tilt>
+          <range>24000</range>
+        </LookAt>
+        <styleUrl>#purple_paddle</styleUrl>
+        <gx:balloonVisibility>1</gx:balloonVisibility>
+        <Point>
+          <coordinates>-17.841486,28.638478,0</coordinates>
+        </Point>
+      </Placemark>
+    </Document>
+  </kml>
+  ' > /var/www/html/kml/slave_$infoSlave.kml""";
 
+    print(command);
+
+    try {
       await _client!.execute(command);
     } catch (e) {
       Logger.printInDebug(e);
     }
   }
-
 
 
   Future<void> sendTaskKML(String robotName, String taskName, String fieldName) async {
@@ -328,26 +340,38 @@ class LGService {
     <name>historic.kml</name> 
     <Style id="purple_paddle">
       <BalloonStyle>
-        <text>\$description</text>
+        <text><![CDATA[
+        <table width="400" height="300" align="left">
+            <tr>
+              <td colspan="2" align="center">
+                <h1>Robot name: $robotName</h1> 
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center">
+                <h1>Current Task: $taskName</h1>  <h1>Field of action: $fieldName</h1>  </td>
+            </tr>
+          </table>
+        ]]></text>
         <bgColor>ffffffff</bgColor>
       </BalloonStyle>
     </Style>
     <Placemark id="0A7ACC68BF23CB81B354">
-      <name>Baloon</name>
+      <name>Balloon</name>
       <Snippet maxLines="0"></Snippet>
-      <description>
-      <![CDATA[<table width="400" height="300" align="left">
-          <tr>
-            <td colspan="2" align="center">
-              <h1>$robotName</h1> 
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" align="center">
-              <h1>Current Task: $taskName</h1>  <h1>Field of action: $fieldName</h1>  </td>
-          </tr>
-        </table>]]>
-      </description>
+      <description><![CDATA[
+        <table width="400" height="300" align="left">
+            <tr>
+              <td colspan="2" align="center">
+                <h1>$robotName</h1> 
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center">
+                <h1>Current Task: $taskName</h1>  <h1>Field of action: $fieldName</h1>  </td>
+            </tr>
+          </table>
+      ]]></description>
       <LookAt>
         <longitude>-17.841486</longitude>
         <latitude>28.638478</latitude>
@@ -365,6 +389,7 @@ class LGService {
   </Document>
 </kml>
 ' > /var/www/html/kml/slave_$infoSlave.kml""";
+
       await _client!.execute(command);
     } catch (e) {
       Logger.printInDebug(e);
