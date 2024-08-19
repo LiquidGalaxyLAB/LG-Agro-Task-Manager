@@ -185,6 +185,7 @@ class _ConnectionPageView extends State<ConnectionPageView> {
                 setState(() {
                   connectionStatus = result;
                 });
+                LGService.instance.setLogos();
                 if (connectionStatus) {
                   Logger.printInDebug('Connected to LG successfully');
                 }

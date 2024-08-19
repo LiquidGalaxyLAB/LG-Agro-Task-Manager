@@ -46,6 +46,7 @@ class LGService {
   String extractKmlSection(String kmlContent, String sectionName) {
     final document = xml.XmlDocument.parse(kmlContent);
     var usedFolder;
+    Logger.printInDebug("enro aquí");
 
     final folders = document.findAllElements('Folder');
     for (var folder in folders) {
@@ -98,19 +99,16 @@ class LGService {
       filePath = spainPath;
     }
     try {
-      Logger.printInDebug("dins try");
 
       final kmlContent = await rootBundle.loadString(filePath);
 
-      List<String> lines = kmlContent.split('\n');
-
-      for (int i = 0; i < lines.length; i += 50) {
-        Logger.printInDebug(lines.sublist(i, i + 50 > lines.length ? lines.length : i + 50).join('\n'));
-      }
       final kmlSection = extractKmlSection(kmlContent, name);
+      Logger.printInDebug("excraced");
       final localFile = await makeFile(name, kmlSection);
+      Logger.printInDebug("Made");
       await printKMLFileContent(name.replaceAll(' ', '_'));
       await uploadKMLFile(localFile, name.replaceAll(' ', '_'));
+      Logger.printInDebug("Uploaded");
       final coordinates = extractCoordinates(kmlSection);
       if (coordinates != null) {
         await goToCoordinates(coordinates[0], coordinates[1]);
@@ -125,12 +123,8 @@ class LGService {
   List<double>? extractCoordinates(String kmlContent) {
     try {
       final document = xml.XmlDocument.parse(kmlContent);
-      Logger.printInDebug(document);
       final coordinatesElement = document.findAllElements('coordinates').first;
-      Logger.printInDebug("elemen: $coordinatesElement");
-      Logger.printInDebug("elemen value: ${coordinatesElement.value}");
       final coordinatesText = coordinatesElement.text.trim();
-      Logger.printInDebug("coords = $coordinatesText");
       final coordinatesParts = coordinatesText.split(',');
 
       final longitude = double.parse(coordinatesParts[0]);
@@ -315,7 +309,6 @@ class LGService {
   </kml>
   ' > /var/www/html/kml/slave_$infoSlave.kml""";
 
-    print(command);
 
     try {
       await _client!.execute(command);
@@ -441,54 +434,32 @@ class LGService {
   }
 
   Future<void> setLogos() async {
-    int infoSlave;
-    if (screensNum == 1) {
-      infoSlave = 1;
-    } else {
-      infoSlave = (screensNum / 2).floor() + 2;
-    }
     try {
-      String imagePath = 'resources/images/logosLG.png';
-      String imageName = 'logosLG.png';
-
-      ByteData imageData = await rootBundle.load(imagePath);
-      Uint8List imageBytes = imageData.buffer.asUint8List();
-
-      var localPath = await getApplicationDocumentsDirectory();
-      File imageFile = File('${localPath.path}/$imageName');
-      await imageFile.writeAsBytes(imageBytes);
-
-      await uploadKMLFile(imageFile, imageName);
-
-      String imageUrl = 'http://lg1:81/images/$imageName';
-
-      String kmlContent = '''
+      await _client!.execute('''cat > /var/www/html/kml/slave_4.kml << EOF
 <?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
-  <Document>
-    <name>LogoOverlay</name> 
-    <GroundOverlay>
-      <name>LogoOverlay</name>
-      <Icon>
-        <href>$imageUrl</href>
-      </Icon>
-      <LatLonBox>
-        <north>28.638478</north>
-        <south>28.637978</south>
-        <east>-17.841286</east>
-        <west>-17.841786</west>
-      </LatLonBox>
-    </GroundOverlay>
-  </Document>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+ <Document>
+   <name>Pablo</name>
+   <open>1</open>
+   <Folder>
+     <name>Logos</name>
+           <ScreenOverlay>
+       <name>LogoSO</name>
+       <Icon>
+         <href>https://imgur.com/TL3V3pK.jpeg</href>
+       </Icon>
+       <color>ffffffff</color>
+       <overlayXY x="0.0" y="1.0" xunits="fraction" yunits="fraction"/>
+       <screenXY x="0.02" y="0.95" xunits="fraction" yunits="fraction"/>
+       <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+       <size x="700.0" y="382.0" xunits="pixels" yunits="pixels"/>
+     </ScreenOverlay>
+  
+   </Folder>
+ </Document>
 </kml>
-''';
-
-      String kmlFileName = 'slave_$infoSlave.kml';
-      File? kmlFile = await makeFile(kmlFileName, kmlContent);
-
-      uploadKMLFile(kmlFile, kmlFileName);
-
-      Logger.printInDebug("Logos set successfully for slave $infoSlave");
+''');
+      Logger.printInDebug("Logos set successfully for slave 4");
     } catch (e) {
       Logger.printInDebug(e);
     }
