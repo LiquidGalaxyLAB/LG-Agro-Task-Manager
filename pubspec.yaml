@@ -38,7 +38,7 @@ dependencies:
   isar_flutter_libs: ^3.1.0
   provider: ^5.0.0
   xml: ^6.1.0
-  dartssh2: ^2.8.2
+  dartssh4: ^4.0.0
   shared_preferences: ^2.2.2
   google_maps_flutter: ^2.6.1
   percent_indicator: ^4.2.2

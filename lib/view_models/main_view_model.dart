@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:taskmanager/services/crop_service.dart';
 import 'package:taskmanager/services/lg_service.dart';
-import 'package:taskmanager/utils/logger.dart';
 
 import '../model/crop.dart';
 

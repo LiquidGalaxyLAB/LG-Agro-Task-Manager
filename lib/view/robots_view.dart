@@ -25,11 +25,11 @@ class _RobotsViewState extends State<RobotsView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, result) async {
         viewModel.getCurrentRobot().currentTask?.removeCallback();
         viewModel.setCurrentRobot(Robot.empty());
-        return true;
       },
       child: Scaffold(
         backgroundColor: customDarkGrey,

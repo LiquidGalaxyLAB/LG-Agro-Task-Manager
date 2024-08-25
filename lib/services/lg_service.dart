@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dartssh2/dartssh2.dart';
+import 'package:dartssh4/dartssh4.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:xml/xml.dart' as xml;
+import 'package:xml/xml.dart';
 
 import '../utils/logger.dart';
 import 'look_at_service.dart';
@@ -45,28 +46,19 @@ class LGService {
 
   String extractKmlSection(String kmlContent, String sectionName) {
     final document = xml.XmlDocument.parse(kmlContent);
-    var usedFolder;
+    XmlElement? usedFolder;
     Logger.printInDebug("enro aquí");
 
     final folders = document.findAllElements('Folder');
     for (var folder in folders) {
       final nameElement = folder.findElements('name').first;
-      if (nameElement.text == sectionName) {
+      if (nameElement.value == sectionName) {
         usedFolder = folder;
         break;
       }
     }
-    /*final folder = document.findAllElements('Folder').firstWhere(
-          (element) => element
-          .findElements('name')
-          .any((name) => name.value == sectionName),
-      orElse: () {
-        Logger.printInDebug("No s'ha trobat cap folder amb el nom $sectionName.");
-        return xml.XmlElement("" as xml.XmlName);
-      },
-    );*/
 
-    return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">${usedFolder.toXmlString()}</kml>';
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">${usedFolder?.toXmlString()}</kml>';
   }
 
   Future<bool> connectToLG() async {
@@ -124,7 +116,7 @@ class LGService {
     try {
       final document = xml.XmlDocument.parse(kmlContent);
       final coordinatesElement = document.findAllElements('coordinates').first;
-      final coordinatesText = coordinatesElement.text.trim();
+      final coordinatesText = coordinatesElement.value?.trim() ?? "";
       final coordinatesParts = coordinatesText.split(',');
 
       final longitude = double.parse(coordinatesParts[0]);
@@ -259,7 +251,7 @@ class LGService {
     }
 
     String tasksTable = "<table width='400' height='300' align='left'>";
-    tasksTable += "<tr><td colspan='2' align='center'><h1>Recommended Tasks</h1></td></tr>";
+    tasksTable += "<tr><td colspan='2' style='text-align: center;'><h1>Recommended Tasks</h1></td></tr>";
 
     String escapeXml(String input) {
       return input.replaceAll('&', '&amp;')
@@ -270,8 +262,8 @@ class LGService {
     }
 
     for (int i = 0; i < names.length; i++) {
-      tasksTable += "<tr><td align='left'><h2>${escapeXml(names[i])}</h2></td>";
-      tasksTable += "<td align='right'><h2>${escapeXml(tasks[i])}</h2></td></tr>";
+      tasksTable += "<tr><td style='text-align: left;'><h2>${escapeXml(names[i])}</h2></td>";
+      tasksTable += "<td style='text-align: right;'><h2>${escapeXml(tasks[i])}</h2></td></tr>";
     }
 
     tasksTable += "</table>";

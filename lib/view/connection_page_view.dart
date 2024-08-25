@@ -171,8 +171,8 @@ class _ConnectionPageView extends State<ConnectionPageView> {
             const SizedBox(height: 20),
             TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(customGreen),
-                shape: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(customGreen),
+                shape: WidgetStateProperty.all(
                   const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
@@ -214,8 +214,8 @@ class _ConnectionPageView extends State<ConnectionPageView> {
             const SizedBox(height: 20),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(customGreen),
-                shape: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(customGreen),
+                shape: WidgetStateProperty.all(
                   const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
